@@ -12,9 +12,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 @Table(name="movies", uniqueConstraints = @UniqueConstraint(columnNames = {"title", "isTridimensional"}))
 public class Movie {
@@ -35,7 +37,7 @@ public class Movie {
 	private String director;
 	
 	@Column(nullable = false)
-	private String cast;
+	private String actors;
 	
 	@Column(nullable = false)
 	private String description;

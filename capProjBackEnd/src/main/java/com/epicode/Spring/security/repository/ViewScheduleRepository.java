@@ -1,6 +1,5 @@
 package com.epicode.Spring.security.repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.data.jpa.repository.Query;
@@ -12,9 +11,9 @@ import com.epicode.Spring.security.entity.ViewSchedule;
 
 public interface ViewScheduleRepository extends CrudRepository<ViewSchedule, Long>{
 	
-	@Query("SELECT v FROM ViewSchedule v WHERE v.hall=:hall AND (:startTime BETWEEN v.startTime AND v.endTime OR :endTime BETWEEN v.startTime AND v.endTime")
-	public ViewSchedule checkHallAvailability(Hall hall, LocalDateTime startTime, LocalDate endTime);
+	@Query("SELECT v FROM ViewSchedule v WHERE v.hall=:hall AND (:startTime BETWEEN v.startTime AND v.endTime OR :endTime BETWEEN v.startTime AND v.endTime)")
+	public ViewSchedule checkHallAvailability(Hall hall, LocalDateTime startTime, LocalDateTime endTime);
 	
-	@Query("SELECT v FROM ViewSchedule v WHERE v.endTime>:startTime AND v.film=:film")
-	public ViewSchedule checkMovieAvailability(LocalDateTime startTime, Movie movie);
+	@Query("SELECT v FROM ViewSchedule v WHERE v.movie=:movie AND (:startTime BETWEEN v.startTime AND v.endTime OR :endTime BETWEEN v.startTime AND v.endTime)")
+	public ViewSchedule checkMovieAvailability(Movie movie, LocalDateTime startTime, LocalDateTime endTime);
 }
