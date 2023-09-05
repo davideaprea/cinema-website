@@ -26,10 +26,4 @@ public class HallService {
 		if(!hallRepository.existsById(id) || id!=h.getId()) throw new EntityNotFoundException("Couldn't find this hall.");
 		return hallRepository.save(h);
 	}
-	
-	public String remove(long id) {
-		if(!hallRepository.existsById(id)) throw new EntityNotFoundException("Couldn't find this hall.");
-		hallRepository.deleteById(id);
-		return "Hall deleted successfully.";
-	}
 }

@@ -5,6 +5,8 @@ import java.util.Set;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
+import com.epicode.Spring.enums.HallStatus;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +33,9 @@ public class Hall {
 	@Column(nullable = false)
 	private Integer nSeatsPerRows;
 	
+	@Column(nullable = false)
+	private HallStatus status=HallStatus.AVAILABLE;
+	
 	@OneToMany(mappedBy = "hall", cascade = CascadeType.ALL)
 	private Set<Seat> seats;
 
@@ -55,5 +60,9 @@ public class Hall {
 				this.seats.add(s);
 			}
 		}
+	}
+
+	public void setStatus(HallStatus status) {
+		if(!status.equals(null)) this.status = status;
 	}
 }

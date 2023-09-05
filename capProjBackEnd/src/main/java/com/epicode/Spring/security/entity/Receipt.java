@@ -1,27 +1,29 @@
 package com.epicode.Spring.security.entity;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
 import com.epicode.Spring.enums.TicketPrice;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name="tickets", uniqueConstraints = @UniqueConstraint(columnNames = {"seat_id", "view_schedule_id"}))
-public class Ticket {
+@Table(name="receipts")
+public class Receipt {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -29,38 +31,30 @@ public class Ticket {
 	@ManyToOne
 	private User user;
 	
-	@ManyToOne
-	private ViewSchedule viewSchedule;
-	
-	@ManyToOne
-	private Seat seat;
+	@OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL)
+	private Set<Booking> bookings;
 	
 	@Column(nullable=false, updatable = false)
 	private LocalDateTime purchaseTime;
 	
 	@Column(nullable=false)
-	private Double price;
-
+	private Double totPrice;
+	
 	public void setUser(User user) {
 		if(!user.equals(null)) this.user = user;
 		else throw new DataIntegrityViolationException("Please, specify the customer for this ticket.");
 	}
 
-	public void setViewSchedule(ViewSchedule viewSchedule) {
-		if(!viewSchedule.equals(null)) this.viewSchedule = viewSchedule;
-		else throw new DataIntegrityViolationException("Please, specify the view schedule.");
-	}
-
-	public void setSeat(Seat seat) {
-		if(!seat.equals(null)) {
-			this.seat = seat;
-			if(viewSchedule.getHall().getNRows()-seat.getNRow()<=2) this.price=TicketPrice.VIP.getValue();
-			else this.price=TicketPrice.REGULAR.getValue();
-		}
-		else throw new DataIntegrityViolationException("Please, specify a seat for this ticket.");
-	}
-
-	public void setPurchaseTime() {
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
+		for(Booking b : bookings) b.setReceipt(this);
+		
+		int selectedRow=bookings.iterator().next().getSeat().getNRow();
+		int hallRows=bookings.iterator().next().getViewSchedule().getHall().getNRows();
+		
+		this.totPrice=hallRows-selectedRow<=2 ? bookings.size()*TicketPrice.VIP.getValue() : bookings.size()*TicketPrice.REGULAR.getValue();
+		if(bookings.iterator().next().getViewSchedule().getMovie().getIsTridimensional()) this.totPrice+=bookings.size()*TicketPrice.TRIDIMENSIONAL.getValue();
+		
 		this.purchaseTime = LocalDateTime.now();
 	}
 }

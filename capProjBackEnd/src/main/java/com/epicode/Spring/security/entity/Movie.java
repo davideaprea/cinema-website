@@ -3,6 +3,8 @@ package com.epicode.Spring.security.entity;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.epicode.Spring.enums.Genres;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

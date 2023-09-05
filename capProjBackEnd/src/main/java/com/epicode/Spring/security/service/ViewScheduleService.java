@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.epicode.Spring.enums.HallStatus;
 import com.epicode.Spring.security.entity.ViewSchedule;
 import com.epicode.Spring.security.repository.ViewScheduleRepository;
 
@@ -19,6 +20,9 @@ public class ViewScheduleService {
 		
 		if(!viewScheduleRepo.checkMovieAvailability(vs.getMovie(), vs.getStartTime(), vs.getEndTime()).equals(null))
 			throw new DataIntegrityViolationException("This movie is not available at this time.");
+		
+		if(vs.getHall().getStatus().equals(HallStatus.UNDER_MAINTENANCE))
+			throw new DataIntegrityViolationException("This hall is under maintenance.");
 		
 		return viewScheduleRepo.save(vs);
 	}
