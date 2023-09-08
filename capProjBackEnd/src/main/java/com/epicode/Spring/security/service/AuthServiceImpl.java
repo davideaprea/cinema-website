@@ -17,6 +17,7 @@ import com.epicode.Spring.security.entity.User;
 import com.epicode.Spring.security.exception.MyAPIException;
 import com.epicode.Spring.security.payload.LoginDto;
 import com.epicode.Spring.security.payload.RegisterDto;
+import com.epicode.Spring.security.payload.RegisterResponse;
 import com.epicode.Spring.security.repository.RoleRepository;
 import com.epicode.Spring.security.repository.UserRepository;
 import com.epicode.Spring.security.security.JwtTokenProvider;
@@ -44,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
     }
-
+    
     @Override
     public String login(LoginDto loginDto) {
         
@@ -52,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
         		new UsernamePasswordAuthenticationToken(
         				loginDto.getUsername(), loginDto.getPassword()
         		)
-        ); 
+        );
     	
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -62,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String register(RegisterDto registerDto) {
+    public RegisterResponse register(RegisterDto registerDto) {
 
         // add check for username exists in database
         if(userRepository.existsByUsername(registerDto.getUsername())){
@@ -96,7 +97,11 @@ public class AuthServiceImpl implements AuthService {
         System.out.println(user);
         userRepository.save(user);
 
-        return "User registered successfully!.";
+        return new RegisterResponse(
+				registerDto.getName(), 
+				registerDto.getUsername(), 
+				registerDto.getEmail(), 
+				"User registered successfully!.");
     }
     
     public ERole getRole(String role) {

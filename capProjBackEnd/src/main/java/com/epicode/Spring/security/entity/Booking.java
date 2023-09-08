@@ -1,20 +1,26 @@
 package com.epicode.Spring.security.entity;
 
 import org.springframework.dao.DataIntegrityViolationException;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
+@ToString
 @Entity
-@Table(name="bookings", uniqueConstraints = @UniqueConstraint(columnNames = {"seat_id", "view_schedule_id"}))
+@Table(name="bookings")
 public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +29,11 @@ public class Booking {
 	@ManyToOne
 	private ViewSchedule viewSchedule;
 	
-	@ManyToOne
+	@Embedded
+	@Column(nullable=false)
 	private Seat seat;
 	
+	@JsonBackReference
 	@ManyToOne
 	private Receipt receipt;
 
@@ -35,7 +43,7 @@ public class Booking {
 	}
 
 	public void setSeat(Seat seat) {
-		if(!seat.equals(null)) this.seat = seat;
+		if(seat!=null) this.seat = seat;
 		else throw new DataIntegrityViolationException("Please, specify a seat for this booking.");
 	}
 

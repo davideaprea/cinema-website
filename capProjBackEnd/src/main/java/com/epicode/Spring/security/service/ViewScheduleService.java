@@ -15,10 +15,10 @@ public class ViewScheduleService {
 	@Autowired private ViewScheduleRepository viewScheduleRepo;
 	
 	public ViewSchedule create(ViewSchedule vs) {
-		if(!viewScheduleRepo.checkHallAvailability(vs.getHall(), vs.getStartTime(), vs.getEndTime()).equals(null))
+		if(viewScheduleRepo.checkHallAvailability(vs.getHall(), vs.getStartTime(), vs.getEndTime()))
 			throw new DataIntegrityViolationException("This hall is not available at this time.");
 		
-		if(!viewScheduleRepo.checkMovieAvailability(vs.getMovie(), vs.getStartTime(), vs.getEndTime()).equals(null))
+		if(viewScheduleRepo.checkMovieAvailability(vs.getMovie(), vs.getStartTime(), vs.getEndTime()))
 			throw new DataIntegrityViolationException("This movie is not available at this time.");
 		
 		if(vs.getHall().getStatus().equals(HallStatus.UNDER_MAINTENANCE))

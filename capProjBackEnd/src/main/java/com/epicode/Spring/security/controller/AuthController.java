@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.epicode.Spring.security.payload.JWTAuthResponse;
 import com.epicode.Spring.security.payload.LoginDto;
 import com.epicode.Spring.security.payload.RegisterDto;
+import com.epicode.Spring.security.payload.RegisterResponse;
 import com.epicode.Spring.security.service.AuthService;
+import com.epicode.Spring.security.service.AuthServiceImpl;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -19,6 +21,7 @@ import com.epicode.Spring.security.service.AuthService;
 public class AuthController {
 
     private AuthService authService;
+    private AuthServiceImpl as;
 
     public AuthController(AuthService authService) {
         this.authService = authService;
@@ -26,7 +29,7 @@ public class AuthController {
 
     @PostMapping(value = {"/login", "/signin"})
     public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDto loginDto){
-           	
+
     	String token = authService.login(loginDto);
 
         JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
@@ -37,8 +40,8 @@ public class AuthController {
     }
 
     @PostMapping(value = {"/register", "/signup"})
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
-        String response = authService.register(registerDto);
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterDto registerDto){
+    	RegisterResponse response = authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

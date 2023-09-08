@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epicode.Spring.security.entity.Movie;
+import com.epicode.Spring.security.payload.MovieDto;
 import com.epicode.Spring.security.service.MovieService;
 
 @RestController
@@ -25,14 +26,14 @@ public class MovieController {
 	
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> create(@RequestBody Movie m) {
-        return new ResponseEntity<Movie>(movieService.create(m), HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody MovieDto m) {
+        return new ResponseEntity<MovieDto>(movieService.create(m), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable long id) {
-        return new ResponseEntity<Movie>(movieService.get(id), HttpStatus.OK);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<?> getById(@PathVariable long id) {
+//        return new ResponseEntity<MovieDto>(movieService.get(id), HttpStatus.OK);
+//    }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

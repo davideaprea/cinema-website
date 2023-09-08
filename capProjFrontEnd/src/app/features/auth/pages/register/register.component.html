@@ -1,0 +1,20 @@
+<div class="surface-card p-4 shadow-2 border-round">
+  <div class="text-center mb-5">
+    <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
+    <span class="text-600 font-medium line-height-3">Already have an account?</span>
+    <a [routerLink]="['/auth', 'login']" class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Log in!</a>
+  </div>
+
+  <form [formGroup]="f" (ngSubmit)="submit()">
+    <app-inp-text [group]="f" [control]="$any(f.get('name')!)" prop="Name"></app-inp-text>
+
+    <app-inp-text [group]="f" [control]="$any(f.get('username')!)" prop="Username"></app-inp-text>
+
+    <app-inp-text [group]="f" [control]="$any(f.get('email')!)" prop="Email"></app-inp-text>
+
+    <app-inp-password [group]="f"></app-inp-password>
+
+    <p-button [disabled]="f.invalid" type="submit" label="Submit"></p-button>
+  </form>
+</div>
+<p-toast></p-toast>

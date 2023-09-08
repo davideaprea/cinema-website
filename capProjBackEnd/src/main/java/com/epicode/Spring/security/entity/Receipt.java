@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import com.epicode.Spring.enums.TicketPrice;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -31,6 +32,7 @@ public class Receipt {
 	@ManyToOne
 	private User user;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL)
 	private Set<Booking> bookings;
 	
