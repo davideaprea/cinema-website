@@ -1,0 +1,39 @@
+<div class="surface-card p-4 shadow-2 border-round w-full md:w-6">
+  <div class="text-center mb-5">
+    <div class="text-900 text-3xl font-medium mb-3">Add a new movie</div>
+  </div>
+
+  <form [formGroup]="f" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <app-inp-text [group]="f" [control]="$any(f.get('title')!)" prop="Title"></app-inp-text>
+
+    <p-fileUpload (onSelect)="uploadCover($event)" mode="basic" chooseLabel="Movie cover" name="cover" accept="image/*"></p-fileUpload>
+
+    <app-inp-text [group]="f" [control]="$any(f.get('trailerLink')!)" prop="Trailer link"></app-inp-text>
+
+    <span class="p-float-label">
+      <p-calendar formControlName="releaseDate" [showIcon]="true" [maxDate]="today"></p-calendar>
+      <label for="description">Release date</label>
+    </span>
+
+    <app-inp-text [group]="f" [control]="$any(f.get('director')!)" prop="Director"></app-inp-text>
+
+    <app-inp-text [group]="f" [control]="$any(f.get('actors')!)" prop="Actors"></app-inp-text>
+
+    <span class="p-float-label">
+      <textarea formControlName="description" id="description" rows="5" cols="30" pInputTextarea></textarea>
+      <label for="description">Description</label>
+    </span>
+
+    <span class="p-float-label">
+      <p-inputNumber inputId="integeronly" formControlName="duration" [min]="0"> </p-inputNumber>
+      <label htmlFor="number-input">Duration</label>
+    </span>
+
+    <span class="p-float-label">
+      <p-multiSelect [showToggleAll]="false" display="chip" [options]="genres" formControlName="genres"></p-multiSelect>
+      <label for="ms-cities">Genres</label>
+    </span>
+
+    <p-button  type="submit" label="Submit"></p-button>
+  </form>
+</div>

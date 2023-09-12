@@ -1,5 +1,5 @@
 export interface IUser {
-  accessToken:string,
-  tokenType:string,
-  username:string
+  readonly accessToken:string,
+  readonly tokenType:string,
+  readonly username:string
 }

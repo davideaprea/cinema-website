@@ -1,6 +1,8 @@
 package com.epicode.Spring.security.configuration;
 
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import com.epicode.Spring.security.security.JwtAuthenticationEntryPoint;
 import com.epicode.Spring.security.security.JwtAuthenticationFilter;
@@ -53,9 +56,7 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    	//http.cors().and().csrf().disable() // -> deprecato
-    	http.cors(cors -> cors.disable())
-    	.csrf(csrf -> csrf.disable())
+    	http.cors().and().csrf().disable()
         .authorizeHttpRequests((authorize) -> authorize
         		.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
@@ -70,5 +71,23 @@ public class SecurityConfig {
 
     	return http.build();
     }
+    
+//    @Bean
+//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    	http.cors(cors -> cors.disable()).csrf(csrf -> csrf.disable())
+//        .authorizeHttpRequests((authorize) -> authorize
+//        		.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+//                .requestMatchers("/api/auth/**").permitAll()
+//                .anyRequest().authenticated())
+//        .exceptionHandling( exception -> exception
+//                .authenticationEntryPoint(authenticationEntryPoint)
+//        ).sessionManagement( session -> session
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        );
+//
+//    	http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//    	return http.build();
+//    }
 
 }

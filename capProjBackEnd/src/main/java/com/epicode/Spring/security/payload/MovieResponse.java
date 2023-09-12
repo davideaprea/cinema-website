@@ -3,7 +3,7 @@ package com.epicode.Spring.security.payload;
 import java.time.LocalDate;
 import java.util.Set;
 
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
 
 import com.epicode.Spring.enums.Genres;
 
@@ -14,9 +14,10 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-public class MovieDto {
+public class MovieResponse {
+	private Long id;
 	private String title;
-	private MultipartFile cover;
+	private Resource cover;
 	private String trailerLink;
 	private LocalDate releaseDate;
 	private Integer duration;
