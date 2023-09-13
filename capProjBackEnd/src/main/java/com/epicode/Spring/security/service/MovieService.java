@@ -1,11 +1,12 @@
 package com.epicode.Spring.security.service;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,31 +67,13 @@ public class MovieService {
 	public MovieResponse get(long id) {
 		if(!movieRepo.existsById(id)) throw new EntityNotFoundException("Couldn't find this movie.");
 		Movie movie=movieRepo.findById(id).get();
+		return getMovieWithCover(movie);
+	}
 
-		Path path=Paths.get(movie.getCover().getPath());
-		
-		try {
-			Resource resource = new UrlResource(path.toUri());
-			if(resource.exists() && resource.isReadable())
-				throw new EntityNotFoundException("Couldn't retrieve the movie cover.");
-			
-			return new MovieResponse(
-					movie.getId(),
-					movie.getTitle(),
-					resource,
-					movie.getTrailerLink(),
-					movie.getReleaseDate(),
-					movie.getDuration(),
-					movie.getDirector(),
-					movie.getActors(),
-					movie.getDescription(),
-					movie.getGenres(),
-					movie.getIsTridimensional()
-					);
-			
-		} catch (MalformedURLException e) {
-			throw new EntityNotFoundException("Couldn't retrieve the movie cover.");
-		}
+	public List<MovieResponse> getAll(){
+		List<MovieResponse> movies=new ArrayList<MovieResponse>();
+		for(Movie movie : movieRepo.findAll()) movies.add(getMovieWithCover(movie));
+		return movies;
 	}
 	
 	public Movie edit(long id, Movie m) {
@@ -102,5 +85,39 @@ public class MovieService {
 		if(!movieRepo.existsById(id)) throw new EntityNotFoundException("Couldn't find this movie.");
 		movieRepo.deleteById(id);
 		return "Movie deleted successfully.";
+	}
+	
+	public Movie getMovie(long id) {
+		if(!movieRepo.existsById(id)) throw new EntityNotFoundException("Couldn't find this movie.");
+		return movieRepo.findById(id).get();
+	}
+	
+	public MovieResponse getMovieWithCover(Movie movie) {
+		Path path=Paths.get(movie.getCover().getPath());
+		
+		try {
+			Resource resource = new UrlResource(path.toUri());
+			if(!resource.exists() || !resource.isReadable())
+				throw new EntityNotFoundException("Couldn't retrieve the movie cover.");
+			
+			byte[] cover=Files.readAllBytes(path);
+			
+			return new MovieResponse(
+					movie.getId(),
+					movie.getTitle(),
+					cover,
+					movie.getTrailerLink(),
+					movie.getReleaseDate(),
+					movie.getDuration(),
+					movie.getDirector(),
+					movie.getActors(),
+					movie.getDescription(),
+					movie.getGenres(),
+					movie.getIsTridimensional()
+					);
+			
+		} catch (IOException e) {
+			throw new EntityNotFoundException("Couldn't retrieve the movie cover.");
+		}
 	}
 }

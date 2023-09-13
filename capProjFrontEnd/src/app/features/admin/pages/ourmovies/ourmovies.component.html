@@ -1,0 +1,7 @@
+<div class="grid">
+  <div *ngFor="let movie of movies" class="col-3">
+    <app-card [cover]="movie.cover" [title]="movie.title" [director]="movie.director">
+      <p class="description">{{movie.description}}</p>
+    </app-card>
+  </div>
+</div>

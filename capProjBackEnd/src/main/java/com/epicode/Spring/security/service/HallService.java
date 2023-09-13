@@ -1,5 +1,7 @@
 package com.epicode.Spring.security.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,10 @@ public class HallService {
 	
 	public Hall create(Hall h) {
 		return hallRepository.save(h);
+	}
+	
+	public List<Hall> getAll() {
+		return (List<Hall>) hallRepository.findAll();
 	}
 	
 	public Hall get(long id) {

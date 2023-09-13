@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epicode.Spring.security.entity.ViewSchedule;
+import com.epicode.Spring.security.payload.ViewScheduleDto;
+import com.epicode.Spring.security.payload.ViewScheduleResponse;
 import com.epicode.Spring.security.service.ViewScheduleService;
 
 @RestController
@@ -25,13 +27,13 @@ public class ViewScheduleController {
 	
 	@PostMapping
 	@PreAuthorize("hasRole('MODERATOR') OR hasRole('ADMIN')")
-    public ResponseEntity<?> create(@RequestBody ViewSchedule vs) {
-        return new ResponseEntity<ViewSchedule>(scheduleService.create(vs), HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody ViewScheduleDto vs) {
+        return new ResponseEntity<ViewScheduleResponse>(scheduleService.create(vs), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
-        return new ResponseEntity<ViewSchedule>(scheduleService.get(id), HttpStatus.OK);
+        return new ResponseEntity<ViewScheduleResponse>(scheduleService.get(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

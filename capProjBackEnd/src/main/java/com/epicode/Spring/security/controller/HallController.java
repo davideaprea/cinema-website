@@ -1,5 +1,7 @@
 package com.epicode.Spring.security.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,11 @@ public class HallController {
 	@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(@RequestBody Hall h) {
         return new ResponseEntity<Hall>(hallService.create(h), HttpStatus.CREATED);
+    }
+	
+	@GetMapping
+    public ResponseEntity<?> getAll() {
+        return new ResponseEntity<List<Hall>>(hallService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

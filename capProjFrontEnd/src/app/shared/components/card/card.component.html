@@ -1,0 +1,10 @@
+<p-card [header]="title" [subheader]="director" [style]="{ width: '360px' }">
+  <ng-template pTemplate="header">
+      <img alt="cover" [src]="cover" />
+  </ng-template>
+  <ng-content select=".description"></ng-content>
+  <ng-template pTemplate="footer">
+      <p-button label="View" icon="pi pi-check"></p-button>
+      <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button>
+  </ng-template>
+</p-card>

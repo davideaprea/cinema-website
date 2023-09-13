@@ -36,6 +36,5 @@ export class MovieFormComponent {
 
   submit(){
     this.movieService.create(this.f.value);
-    /* this.movieService.creatTest(this.f.value.cover); */
   }
 }

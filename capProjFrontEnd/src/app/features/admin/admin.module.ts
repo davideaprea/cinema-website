@@ -13,12 +13,15 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { OurmoviesComponent } from './pages/ourmovies/ourmovies.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     MovieFormComponent,
-    ScheduleFormComponent
+    ScheduleFormComponent,
+    OurmoviesComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +34,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     CalendarModule,
     InputTextareaModule,
     InputNumberModule,
-    MultiSelectModule
+    MultiSelectModule,
+    DropdownModule
   ]
 })
 export class AdminModule { }

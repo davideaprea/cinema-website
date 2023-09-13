@@ -3,21 +3,22 @@ package com.epicode.Spring.security.payload;
 import java.time.LocalDate;
 import java.util.Set;
 
-import org.springframework.core.io.Resource;
-
 import com.epicode.Spring.enums.Genres;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class MovieResponse {
 	private Long id;
 	private String title;
-	private Resource cover;
+	//@JsonSerialize(using=ResourceSerializer.class)
+	private byte[] cover;
 	private String trailerLink;
 	private LocalDate releaseDate;
 	private Integer duration;

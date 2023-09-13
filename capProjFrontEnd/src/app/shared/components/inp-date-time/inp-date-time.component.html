@@ -1,0 +1,12 @@
+<span [formGroup]="group" class="p-float-label my-4">
+  <p-calendar
+  [formControl]="control"
+  [minDate]="today"
+  [showTime]="true"
+  [showSeconds]="true"
+  [showSeconds]="false"
+  [showIcon]="true"
+  [touchUI]="true">
+  </p-calendar>
+  <label htmlFor="inp">{{prop}}</label>
+</span>

@@ -1,17 +1,19 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Movie } from '../models/movie';
+import { MovieBody } from '../models/movie-body';
 import { environment } from 'src/environments/environment.development';
 import { Genres } from '../models/genres';
+import { Movie } from '../models/movie';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
+  cover: string = "";
 
   constructor(private http: HttpClient) { }
 
-  create(movie: Movie) {
+  create(movie: MovieBody) {
     const formData = new FormData();
     formData.append('title', movie.title);
     formData.append('trailerLink', movie.trailerLink);
@@ -29,16 +31,14 @@ export class MovieService {
     });
 
     formData.append('cover', movie.cover);
-
-    console.log(formData);
     this.http.post(environment.movies, formData).subscribe(res => console.log(res));
   }
 
-  /* creatTest(cover: File) {
-    const formData = new FormData();
-    formData.append('cover', cover);
+  get(id: number){
+    return this.http.get<Movie>(environment.movies + "/" + id);
+  }
 
-    console.log(cover);
-    this.http.post("http://localhost:8080/movies/uploadtest", formData).subscribe(res => console.log(res));
-  } */
+  getAll(){
+    return this.http.get<Movie[]>(environment.movies);
+  }
 }

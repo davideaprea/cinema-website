@@ -9,10 +9,12 @@ import com.epicode.Spring.enums.Genres;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class MovieDto {
 	private String title;
