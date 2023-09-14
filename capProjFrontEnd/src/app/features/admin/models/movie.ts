@@ -1,7 +1,7 @@
 import { Genres } from "./genres"
 
 export interface Movie {
-  readonly id?:number,
+  readonly id:number,
   title:string,
   cover:number[]
   trailerLink:string,

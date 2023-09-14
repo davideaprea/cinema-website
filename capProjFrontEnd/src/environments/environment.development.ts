@@ -4,4 +4,5 @@ export const environment = {
   movies: "http://localhost:8080/movies",
   schedules: "http://localhost:8080/schedules",
   halls: "http://localhost:8080/halls",
+  receipts: "http://localhost:8080/receipts",
 };

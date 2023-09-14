@@ -1,0 +1,7 @@
+<div class="grid">
+  <div *ngFor="let movie of scheduledMovies" class="col-3">
+    <app-card [id]="movie.id" [cover]="movie.cover" [title]="movie.title" [director]="movie.director">
+      <p class="description">{{movie.description}}</p>
+    </app-card>
+  </div>
+</div>

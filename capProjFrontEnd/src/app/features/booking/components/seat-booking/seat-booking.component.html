@@ -1,0 +1,18 @@
+<div>
+  <section class="flex my-2" *ngFor="let row of rows; index as i">
+    <div *ngFor="let seat of seats">
+      <div [ngClass]="{'bg-red-500': rows.length-i<=2}" class="seat mx-2"></div>
+    </div>
+  </section>
+
+  <section class="flex gap-4 justify-content-center align-items-center my-6">
+    <div class="flex gap-1 align-items-center">
+      <div class="seat"></div>
+      <span>=7.89€</span>
+    </div>
+    <div class="flex gap-1 align-items-center">
+      <div class="seat bg-red-500"></div>
+      <span>=9.5€</span>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,15 @@
+:host{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+$seat-size: 2rem;
+.seat{
+  width: $seat-size;
+  height: $seat-size;
+  background-color: darkturquoise;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+}

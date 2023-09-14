@@ -9,4 +9,5 @@ export class CardComponent {
   @Input() title!:string;
   @Input() director!:string;
   @Input() cover!:number[];
+  @Input() id!:number;
 }

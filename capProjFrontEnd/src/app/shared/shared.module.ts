@@ -13,6 +13,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { InpDateTimeComponent } from './components/inp-date-time/inp-date-time.component';
 import { CardModule } from 'primeng/card';
 import { CardComponent } from './components/card/card.component';
+import { SharedRoutingModule } from './shared-routing.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CardComponent } from './components/card/card.component';
     ReactiveFormsModule,
     GalleriaModule,
     CalendarModule,
-    CardModule
+    CardModule,
+    SharedRoutingModule
   ],
   exports: [
     InpTextComponent,

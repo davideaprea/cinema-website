@@ -1,5 +1,8 @@
 package com.epicode.Spring.security.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -46,6 +49,22 @@ public class ViewScheduleService {
 		ViewSchedule vs=viewScheduleRepo.findById(id).get();
 		MovieResponse movieResponse=movieService.getMovieWithCover(vs.getMovie());
 		return new ViewScheduleResponse(vs.getId(), movieResponse, vs.getHall(), vs.getStartTime(), vs.getEndTime());
+	}
+	
+	public List<ViewScheduleResponse> getMovieSchedules(long id){
+		Movie movie=movieService.getMovie(id);
+		List<ViewSchedule> movieSchedules=viewScheduleRepo.findMovieSchedules(movie);
+		
+		List<ViewScheduleResponse> movieWithCoverSchedules=new ArrayList<ViewScheduleResponse>();
+		for(ViewSchedule v : movieSchedules) movieWithCoverSchedules.add(get(v.getId()));
+		return movieWithCoverSchedules;
+	}
+	
+	public List<MovieResponse> getScheduledMovies() {
+		List<Movie> scheduledMovies= viewScheduleRepo.scheduledMovies();
+		List<MovieResponse> getMoviesWithCover=new ArrayList<MovieResponse>();
+		for(Movie m : scheduledMovies) getMoviesWithCover.add(movieService.getMovieWithCover(m));
+		return getMoviesWithCover;
 	}
 	
 	public ViewSchedule edit(long id, ViewSchedule vs) {

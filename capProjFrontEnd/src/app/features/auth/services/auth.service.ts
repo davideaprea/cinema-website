@@ -28,7 +28,8 @@ export class AuthService {
   isUserAdmin(): boolean {
     if (this.storageUser) {
       let decodedToken = this.jwtHelper.decodeToken(this.storageUser.accessToken);
-      return decodedToken.role[0].roleName == Role.ADMIN;
+      let role=decodedToken.role[0].roleName;
+      return role == Role.ADMIN || role==Role.MODERATOR;
     }
     return false;
   }

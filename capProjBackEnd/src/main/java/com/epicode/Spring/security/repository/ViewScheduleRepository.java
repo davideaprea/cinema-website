@@ -23,4 +23,10 @@ public interface ViewScheduleRepository extends CrudRepository<ViewSchedule, Lon
 
 	@Query("SELECT CASE WHEN COUNT(v) > 0 THEN true ELSE false END FROM ViewSchedule v WHERE v.movie = :movie AND (:startTime BETWEEN v.startTime AND v.endTime OR :endTime BETWEEN v.startTime AND v.endTime)")
 	public boolean checkMovieAvailability(Movie movie, LocalDateTime startTime, LocalDateTime endTime);
+	
+	@Query("SELECT DISTINCT v.movie FROM ViewSchedule v WHERE v.startTime > CURRENT_DATE")
+	public List<Movie> scheduledMovies();
+	
+	@Query("SELECT v FROM ViewSchedule v WHERE v.startTime > CURRENT_DATE AND v.movie=:movie")
+	public List<ViewSchedule> findMovieSchedules(Movie movie);
 }

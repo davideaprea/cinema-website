@@ -1,0 +1,26 @@
+<div *ngIf="movie">
+  <div class="mb-7">
+    <h1>{{movie.title | uppercase}}</h1>
+    <h2>Info and description</h2>
+    <p>Director: {{movie.director}}</p>
+    <p>Cast: {{movie.actors}}</p>
+    <p>Duration: {{movie.duration}} minutes</p>
+    <p>Release date: {{movie.releaseDate}}</p>
+    <p>{{movie.description}}</p>
+    <p>Genres: <span *ngFor="let genre of movie.genres">{{genre | lowercase}}; </span></p>
+  </div>
+
+  <div>
+    <h2>BUY YOUR TICKETS</h2>
+    <p-tabMenu (activeItemChange)="onActiveItemChange($event)" [scrollable]="true" [model]="items"
+      [activeItem]="activeItem"></p-tabMenu>
+
+    <div *ngFor="let schedule of selectedSchedules" class="p-3">
+      <a *ngIf="!isUserAdmin" (click)="saveSchedule(schedule)" pButton pRipple class="no-underline p-button-rounded p-button-info" [routerLink]="['/booking']">{{schedule.startTime |
+        date:'shortTime'}}</a>
+
+      <a *ngIf="isUserAdmin" pButton pRipple class="cursor-auto no-underline p-button-rounded p-button-info">{{schedule.startTime |
+        date:'shortTime'}}</a>
+    </div>
+  </div>
+</div>

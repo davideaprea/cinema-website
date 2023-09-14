@@ -1,5 +1,7 @@
 package com.epicode.Spring.security.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epicode.Spring.security.entity.ViewSchedule;
+import com.epicode.Spring.security.payload.MovieResponse;
 import com.epicode.Spring.security.payload.ViewScheduleDto;
 import com.epicode.Spring.security.payload.ViewScheduleResponse;
 import com.epicode.Spring.security.service.ViewScheduleService;
@@ -29,6 +32,16 @@ public class ViewScheduleController {
 	@PreAuthorize("hasRole('MODERATOR') OR hasRole('ADMIN')")
     public ResponseEntity<?> create(@RequestBody ViewScheduleDto vs) {
         return new ResponseEntity<ViewScheduleResponse>(scheduleService.create(vs), HttpStatus.CREATED);
+    }
+	
+	@GetMapping("/scheduled-movies")
+    public ResponseEntity<?> getScheduledMovies() {
+        return new ResponseEntity<List<MovieResponse>>(scheduleService.getScheduledMovies(), HttpStatus.OK);
+    }
+	
+	@GetMapping("/movie-schedules/{id}")
+    public ResponseEntity<?> getMovieSchedules(@PathVariable long id) {
+        return new ResponseEntity<List<ViewScheduleResponse>>(scheduleService.getMovieSchedules(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
