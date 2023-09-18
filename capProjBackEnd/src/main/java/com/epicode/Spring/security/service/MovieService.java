@@ -1,6 +1,7 @@
 package com.epicode.Spring.security.service;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -96,11 +99,12 @@ public class MovieService {
 		Path path=Paths.get(movie.getCover().getPath());
 		
 		try {
-			Resource resource = new UrlResource(path.toUri());
+			Resource resource = new ByteArrayResource(Files.readAllBytes(path));
 			if(!resource.exists() || !resource.isReadable())
 				throw new EntityNotFoundException("Couldn't retrieve the movie cover.");
 			
 //			byte[] cover=Files.readAllBytes(path);
+//			ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 			
 			return new MovieResponse(
 					movie.getId(),

@@ -5,27 +5,31 @@
     <p class="m-0">{{schedule.startTime | date:"short"}}</p>
   </div>
 </section>
-<section>
-  <div class="flex my-2" *ngFor="let row of seats; index as i">
-    <div *ngFor="let seat of row; index as j" (click)="manageSeats(i, j)" [ngClass]="{
-          'vip': seats.length-i<=3,
-          'regular': seats.length-i>3,
-          'booked': seat=='NOT_AVAILABLE' || seat=='BOOKED',
-          'selected': seat=='SELECTED'}" class="seat mx-2 flex justify-content-center align-items-center">
-      <i *ngIf="seat=='BOOKED'" class="pi pi-user"></i>
+<div>
+  <section class="flex">
+    <div>
+      <div class="flex my-2" *ngFor="let row of seats; index as i">
+        <div *ngFor="let seat of row; index as j" (click)="manageSeats(i, j)" [ngClass]="{
+              'vip': seats.length-i<=3,
+              'regular': seats.length-i>3,
+              'booked': seat=='NOT_AVAILABLE' || seat=='BOOKED',
+              'selected': seat=='SELECTED'}" class="seat mx-2 flex justify-content-center align-items-center">
+          <i *ngIf="seat=='BOOKED'" class="pi pi-user"></i>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="p-3 surface-card border-round" *ngIf="bookings.length>0">
-    <ul class="list-none m-0 p-0">
-      <li *ngFor="let booking of bookings">Row: {{booking.seat.nrow}}; Seat: {{booking.seat.nseat}};</li>
-    </ul>
-    <p class="text-3xl">Total: {{bookings.length*(schedule.hall.nrows - bookings[0].seat.nrow<3 ? 9.5 : 7.89) |
-        number:'1.2-2'}}€</p>
-        <a pButton pRipple class="no-underline p-button-rounded p-button-primary" label="Proceed to payment"
-          icon="pi pi-angle-double-right"></a>
-  </div>
-</section>
+    <div class="p-3 surface-card border-round" *ngIf="bookings.length>0">
+      <ul class="list-none m-0 p-0">
+        <li *ngFor="let booking of bookings">Row: {{booking.seat.nrow}}; Seat: {{booking.seat.nseat}};</li>
+      </ul>
+      <p class="text-3xl">Total: {{bookings.length*(schedule.hall.nrows - bookings[0].seat.nrow<3 ? 9.5 : 7.89) |
+          number:'1.2-2'}}€</p>
+          <a [routerLink]="['/booking', 'payment']" pButton pRipple class="no-underline p-button-rounded p-button-primary" label="Proceed to payment"
+            icon="pi pi-angle-double-right"></a>
+    </div>
+  </section>
+</div>
 
 <section class="flex gap-4 justify-content-center align-items-center">
   <div class="flex gap-1 align-items-center">
@@ -45,7 +49,7 @@
     <span>Not available</span>
   </div>
   <div class="flex gap-1 align-items-center">
-    <div class="booked seat"><i class="pi pi-user"></i></div>
+    <div class="booked seat flex justify-content-center align-items-center"><i class="pi pi-user"></i></div>
     <span>Booked</span>
   </div>
 </section>

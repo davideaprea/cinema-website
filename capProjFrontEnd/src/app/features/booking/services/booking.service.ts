@@ -12,8 +12,20 @@ import { Booking } from '../models/booking';
 export class BookingService {
 
   protected selectedSchedule?:Schedule;
+  protected receipt?:Receipt;
 
   constructor(private http:HttpClient) { }
+
+  setReceipt(receipt:Receipt){
+    this.receipt=receipt;
+    sessionStorage.setItem("receipt", JSON.stringify(receipt));
+  }
+
+  getReceipt(){
+    if(this.receipt) return this.selectedSchedule;
+    let receipt=JSON.parse(sessionStorage.getItem("receipt")!);
+    if(receipt) return receipt;
+  }
 
   setSchedule(schedule:Schedule){
     this.selectedSchedule=schedule;

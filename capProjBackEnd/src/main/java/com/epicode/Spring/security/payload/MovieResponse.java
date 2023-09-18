@@ -3,6 +3,7 @@ package com.epicode.Spring.security.payload;
 import java.time.LocalDate;
 import java.util.Set;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
 import com.epicode.Spring.enums.Genres;
@@ -21,7 +22,9 @@ import lombok.Setter;
 public class MovieResponse {
 	private Long id;
 	private String title;
-	@JsonSerialize(using=ResourceSerializer.class)
+//	@JsonSerialize(using=ResourceSerializer.class)
+//	private ByteArrayResource cover;
+//	@JsonSerialize(using=ResourceSerializer.class)
 	private Resource cover;
 //	private byte[] cover;
 	private String trailerLink;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,7 +40,7 @@ public class MovieController {
 		return new ResponseEntity<List<MovieResponse>>(movieService.getAll(), HttpStatus.OK);
     }
 	
-	@GetMapping("/{id}")
+	@GetMapping(value="/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
 		return new ResponseEntity<MovieResponse>(movieService.get(id), HttpStatus.OK);
     }
