@@ -8,6 +8,6 @@ import { Component, Input } from '@angular/core';
 export class CardComponent {
   @Input() title!:string;
   @Input() director!:string;
-  @Input() cover!:number[];
+  @Input() cover!:Blob;
   @Input() id!:number;
 }

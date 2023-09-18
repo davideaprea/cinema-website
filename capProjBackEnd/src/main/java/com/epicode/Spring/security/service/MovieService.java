@@ -35,7 +35,7 @@ public class MovieService {
 		
 		try {
 			String fileName=StringUtils.cleanPath(movieDto.getCover().getOriginalFilename());
-			String path = System.getProperty("user.home") + "/Desktop/Movie covers";
+			String path = "main/resources/Movie covers";
 			String coverImageName = UUID.randomUUID().toString() + "_" + fileName;
 			Path coverImagePath = Path.of(path, coverImageName);
 			if (!Files.exists(coverImagePath.getParent())) Files.createDirectories(coverImagePath.getParent());
@@ -100,12 +100,12 @@ public class MovieService {
 			if(!resource.exists() || !resource.isReadable())
 				throw new EntityNotFoundException("Couldn't retrieve the movie cover.");
 			
-			byte[] cover=Files.readAllBytes(path);
+//			byte[] cover=Files.readAllBytes(path);
 			
 			return new MovieResponse(
 					movie.getId(),
 					movie.getTitle(),
-					cover,
+					resource,
 					movie.getTrailerLink(),
 					movie.getReleaseDate(),
 					movie.getDuration(),

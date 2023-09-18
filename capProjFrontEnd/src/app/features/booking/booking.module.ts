@@ -7,7 +7,7 @@ import { StepsModule } from 'primeng/steps';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { SeatBookingComponent } from './components/seat-booking/seat-booking.component';
-
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import { SeatBookingComponent } from './components/seat-booking/seat-booking.com
   imports: [
     CommonModule,
     BookingRoutingModule,
-    StepsModule
+    StepsModule,
+    ButtonModule
   ]
 })
 export class BookingModule { }

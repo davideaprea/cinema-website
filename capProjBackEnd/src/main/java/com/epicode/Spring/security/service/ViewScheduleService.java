@@ -51,6 +51,11 @@ public class ViewScheduleService {
 		return new ViewScheduleResponse(vs.getId(), movieResponse, vs.getHall(), vs.getStartTime(), vs.getEndTime());
 	}
 	
+	public ViewSchedule getOriginalSchedule(long id) {
+		if(!viewScheduleRepo.existsById(id)) throw new EntityNotFoundException("Couldn't find this schedule.");
+		return viewScheduleRepo.findById(id).get();
+	}
+	
 	public List<ViewScheduleResponse> getMovieSchedules(long id){
 		Movie movie=movieService.getMovie(id);
 		List<ViewSchedule> movieSchedules=viewScheduleRepo.findMovieSchedules(movie);

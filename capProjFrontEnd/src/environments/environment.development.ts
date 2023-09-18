@@ -5,4 +5,5 @@ export const environment = {
   schedules: "http://localhost:8080/schedules",
   halls: "http://localhost:8080/halls",
   receipts: "http://localhost:8080/receipts",
+  bookings: "http://localhost:8080/bookings",
 };

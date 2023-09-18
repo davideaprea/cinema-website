@@ -1,15 +1,38 @@
 :host{
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2rem;
 }
 
 $seat-size: 2rem;
 .seat{
   width: $seat-size;
   height: $seat-size;
-  background-color: darkturquoise;
   border-radius: 10px 10px 0 0;
+  transition: scale 200ms;
   cursor: pointer;
+}
+
+.seat:hover{
+  scale: 1.2;
+}
+
+.regular{
+  background-color: darkturquoise;
+}
+
+.vip{
+  background-color: crimson;
+}
+
+.booked{
+  pointer-events: none;
+  background-color: gray;
+}
+
+.selected{
+  background-color: whitesmoke;
 }

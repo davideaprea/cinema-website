@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.epicode.Spring.security.entity.Receipt;
+import com.epicode.Spring.security.payload.ReceiptDto;
+import com.epicode.Spring.security.payload.ReceiptResponse;
 import com.epicode.Spring.security.service.ReceiptService;
 
 @RestController
@@ -25,20 +26,20 @@ public class ReceiptController {
 	
 	@PostMapping
 	@PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> create(@RequestBody Receipt r) {
-        return new ResponseEntity<Receipt>(receiptService.create(r), HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody ReceiptDto r) {
+        return new ResponseEntity<ReceiptResponse>(receiptService.create(r), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
-        return new ResponseEntity<Receipt>(receiptService.get(id), HttpStatus.OK);
+        return new ResponseEntity<ReceiptResponse>(receiptService.get(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> edit(@PathVariable long id, @RequestBody Receipt r) {
-        return new ResponseEntity<Receipt>(receiptService.edit(id, r), HttpStatus.OK);
-    }
+//    @PutMapping("/{id}")
+//    @PreAuthorize("hasRole('USER')")
+//    public ResponseEntity<?> edit(@PathVariable long id, @RequestBody Receipt r) {
+//        return new ResponseEntity<Receipt>(receiptService.edit(id, r), HttpStatus.OK);
+//    }
     
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
