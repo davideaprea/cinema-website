@@ -1,8 +1,16 @@
 package com.epicode.Spring.security.controller;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +48,41 @@ public class MovieController {
 		return new ResponseEntity<List<MovieResponse>>(movieService.getAll(), HttpStatus.OK);
     }
 	
-	@GetMapping(value="/{id}")
+	@GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
-		return new ResponseEntity<MovieResponse>(movieService.get(id), HttpStatus.OK);
+		MovieResponse movie=movieService.get(id);
+		String contentType = "application/octet-stream";
+        String headerValue = "attachment; filename=\"" + movie.getCover().getFilename() + "\"";
+		
+		return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                .body(movie);
+    }
+	
+	@GetMapping("cover/{coverName}")
+	public ResponseEntity<?> getCover(@PathVariable String coverName) {
+		String coverFolder=System.getProperty("user.home") + "/Desktop/Movie covers";
+		Path path=Paths.get(coverFolder, coverName).toAbsolutePath().normalize();
+		
+		try {
+			Resource resource = new UrlResource(path.toUri());
+        
+//	        HttpHeaders headers=new HttpHeaders();
+//	        headers.add("File-Name", coverName);
+//	        headers.add("Content-Disposition", "attachment; filename=" + resource.getFilename());
+//			
+//			return ResponseEntity.ok()
+//	                .contentType(MediaType.parseMediaType(Files.probeContentType(path)))
+//	                .headers(headers)
+//	                .body(resource);
+			return ResponseEntity.ok()
+	                .contentType(MediaType.parseMediaType("application/octet-stream"))
+	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename())
+	                .body(resource);
+		} catch (IOException e) {
+			return ResponseEntity.internalServerError().build();
+		}
     }
 
     @PutMapping("/{id}")

@@ -12,7 +12,6 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -38,7 +37,7 @@ public class MovieService {
 		
 		try {
 			String fileName=StringUtils.cleanPath(movieDto.getCover().getOriginalFilename());
-			String path = "main/resources/Movie covers";
+			String path = System.getProperty("user.home") + "/Desktop/Movie covers";
 			String coverImageName = UUID.randomUUID().toString() + "_" + fileName;
 			Path coverImagePath = Path.of(path, coverImageName);
 			if (!Files.exists(coverImagePath.getParent())) Files.createDirectories(coverImagePath.getParent());
@@ -99,12 +98,11 @@ public class MovieService {
 		Path path=Paths.get(movie.getCover().getPath());
 		
 		try {
-			Resource resource = new ByteArrayResource(Files.readAllBytes(path));
+			Resource resource = new UrlResource(path.toUri());
 			if(!resource.exists() || !resource.isReadable())
 				throw new EntityNotFoundException("Couldn't retrieve the movie cover.");
 			
 //			byte[] cover=Files.readAllBytes(path);
-//			ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 			
 			return new MovieResponse(
 					movie.getId(),
