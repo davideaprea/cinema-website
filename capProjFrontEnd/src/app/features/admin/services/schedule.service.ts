@@ -12,6 +12,7 @@ export class ScheduleService {
   constructor(private http:HttpClient) { }
 
   create(schedule:Schedule){
+    console.log(schedule)
     return this.http.post(environment.schedules, schedule);
   }
 
@@ -19,7 +20,7 @@ export class ScheduleService {
     return this.http.get<Movie[]>(environment.schedules+"/scheduled-movies");
   }
 
-  getMovieSchedules(id:number){
-    return this.http.get<Schedule[]>(environment.schedules+"/movie-schedules/"+id);
+  getMovieSchedules(movie:Movie){
+    return this.http.get<Schedule[]>(environment.schedules+"/movie-schedules/"+movie.id);
   }
 }

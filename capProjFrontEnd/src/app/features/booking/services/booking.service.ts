@@ -42,7 +42,7 @@ export class BookingService {
     return this.http.post(environment.receipts, receipt);
   }
 
-  getScheduleBookings(id:number){
-    return this.http.get<Booking[]>(environment.bookings+"/schedule-bookings/"+id);
+  getScheduleBookings(schedule:Schedule){
+    return this.http.get<Booking[]>(environment.bookings+"/schedule-bookings/"+schedule.id);
   }
 }

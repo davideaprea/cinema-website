@@ -1,8 +1,6 @@
 package com.epicode.Spring.security.controller;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -28,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.epicode.Spring.security.entity.Movie;
 import com.epicode.Spring.security.payload.MovieDto;
-import com.epicode.Spring.security.payload.MovieResponse;
 import com.epicode.Spring.security.service.MovieService;
 
 @RestController
@@ -40,24 +37,17 @@ public class MovieController {
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(@ModelAttribute MovieDto m) {
-        return new ResponseEntity<MovieDto>(movieService.create(m), HttpStatus.CREATED);
+        return new ResponseEntity<Movie>(movieService.create(m), HttpStatus.CREATED);
     }
 	
 	@GetMapping
     public ResponseEntity<?> getAll() {
-		return new ResponseEntity<List<MovieResponse>>(movieService.getAll(), HttpStatus.OK);
+		return new ResponseEntity<List<Movie>>(movieService.getAll(), HttpStatus.OK);
     }
 	
 	@GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
-		MovieResponse movie=movieService.get(id);
-		String contentType = "application/octet-stream";
-        String headerValue = "attachment; filename=\"" + movie.getCover().getFilename() + "\"";
-		
-		return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
-                .body(movie);
+		return new ResponseEntity<Movie>(movieService.get(id), HttpStatus.OK);
     }
 	
 	@GetMapping("cover/{coverName}")

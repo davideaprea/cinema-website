@@ -32,7 +32,7 @@ export class MovieDetailsComponent {
     movieService.get(id).subscribe(m => {
       this.movie = m;
 
-      scheduleService.getMovieSchedules(id).subscribe(s => {
+      scheduleService.getMovieSchedules(this.movie).subscribe(s => {
         this.schedules = s;
         for (let schedule of this.schedules) {
           let date = new Date(schedule.startTime);

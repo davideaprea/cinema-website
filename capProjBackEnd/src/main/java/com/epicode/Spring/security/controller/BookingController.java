@@ -1,6 +1,6 @@
 package com.epicode.Spring.security.controller;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.epicode.Spring.security.payload.BookingResponse;
+import com.epicode.Spring.security.entity.Booking;
 import com.epicode.Spring.security.service.BookingService;
 
 @RestController
@@ -22,6 +22,6 @@ public class BookingController {
 	
 	@GetMapping("/schedule-bookings/{id}")
 	public ResponseEntity<?> getById(@PathVariable long id) {
-		return new ResponseEntity<Set<BookingResponse>>(bookingService.getBySchedule(id), HttpStatus.OK);
+		return new ResponseEntity<List<Booking>>(bookingService.getBySchedule(id), HttpStatus.OK);
     }
 }

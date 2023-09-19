@@ -20,7 +20,7 @@ export class SeatBookingComponent {
 
   constructor(private bookingService: BookingService) {
     this.schedule = bookingService.getSchedule();
-    bookingService.getScheduleBookings(this.schedule.id).subscribe(bookings => {
+    bookingService.getScheduleBookings(this.schedule).subscribe(bookings => {
       this.bookedSeats = bookings;
       this.restoreSeats();
       console.log(bookings);
@@ -85,7 +85,7 @@ export class SeatBookingComponent {
 
   private addBooking(row: number, seat: number) {
     let booking: BookingBody = {
-      scheduleId: this.schedule.id,
+      schedule: this.schedule,
       seat: {
         nseat: seat + 1,
         nrow: row + 1

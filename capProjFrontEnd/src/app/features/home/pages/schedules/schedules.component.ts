@@ -17,13 +17,12 @@ export class SchedulesComponent {
       this.scheduledMovies=m;
       console.log(m);
     });
-    this.getCover();
   }
 
-  getCover(){
+  /* getCover(){
     this.movieService.getCover("2c0d71e9-9875-4fe6-88d0-3fa834198c34_oppenheimer-cover.jpg").subscribe(c=>{
       this.cover=URL.createObjectURL(c.body!);
       console.log(c);
     });
-  }
+  } */
 }

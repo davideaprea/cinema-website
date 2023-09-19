@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.epicode.Spring.security.payload.ReceiptDto;
-import com.epicode.Spring.security.payload.ReceiptResponse;
+import com.epicode.Spring.security.entity.Receipt;
 import com.epicode.Spring.security.service.ReceiptService;
 
 @RestController
@@ -26,13 +24,13 @@ public class ReceiptController {
 	
 	@PostMapping
 	@PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> create(@RequestBody ReceiptDto r) {
-        return new ResponseEntity<ReceiptResponse>(receiptService.create(r), HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody Receipt r) {
+        return new ResponseEntity<Receipt>(receiptService.create(r), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
-        return new ResponseEntity<ReceiptResponse>(receiptService.get(id), HttpStatus.OK);
+        return new ResponseEntity<Receipt>(receiptService.get(id), HttpStatus.OK);
     }
 
 //    @PutMapping("/{id}")

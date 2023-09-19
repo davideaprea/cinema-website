@@ -21,9 +21,9 @@ export class ScheduleFormComponent {
     hallService.getAll().subscribe(h=>this.halls=h);
 
     this.f=new FormGroup({
-      startTime:new FormControl(null, Validators.required),
       movie:new FormControl(null, Validators.required),
       hall:new FormControl(null, Validators.required),
+      startTime:new FormControl(null, Validators.required),
     });
   }
 
