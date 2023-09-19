@@ -1,14 +1,8 @@
-<p-card [header]="title" [subheader]="director" [style]="{
-  width: '100%',
-  maxHeight: '40rem'
-}">
-  <ng-template pTemplate="header">
-    <img alt="cover" [src]="cover" />
-  </ng-template>
-  <ng-content select=".description"></ng-content>
-  <ng-template pTemplate="footer">
-    <a [routerLink]="['/home', 'movie-details', id]" pButton pRipple class="p-button-outlined p-button-help">View</a>
+<div class="card h-20rem">
+  <img alt="cover" class="h-full border-round-3xl" [src]="cover" />
 
-    <ng-content select=".secondary-btn"></ng-content>
-  </ng-template>
-</p-card>
+  <div>
+    <h4 class="my-2 text-xl">{{title}}</h4>
+    <p class="my-2 text-sm"><span *ngFor="let genre of genres">{{genre}}; </span></p>
+  </div>
+</div>

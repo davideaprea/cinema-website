@@ -1,6 +1,6 @@
-<div class="grid grid-nogutter">
-  <div *ngFor="let movie of movies" class="col-3">
-    <app-card [cover]="'http://localhost:8080/movies/cover/'+movie.cover.name" [title]="movie.title" [director]="movie.director">
+<div class="grid grid-nogutter gap-2">
+  <div *ngFor="let movie of movies" class="col md:col-2">
+    <app-card [genres]="movie.genres" [cover]="'http://localhost:8080/movies/cover/'+movie.cover.name" [title]="movie.title" [director]="movie.director">
       <p class="description">{{movie.description}}</p>
     </app-card>
   </div>
