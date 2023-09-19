@@ -9,6 +9,6 @@ import { SafeUrl } from '@angular/platform-browser';
 export class CardComponent {
   @Input() title!:string;
   @Input() director!:string;
-  @Input() cover!:SafeUrl;
+  @Input() cover!:any;
   @Input() id!:number;
 }
