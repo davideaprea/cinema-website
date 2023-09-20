@@ -19,6 +19,7 @@ import { SchedulesComponent } from './pages/schedules/schedules.component';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ToastModule } from 'primeng/toast';
     DropdownModule,
     TableModule,
     InputTextModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ]
 })
 export class AdminModule { }

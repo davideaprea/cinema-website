@@ -1,6 +1,7 @@
 package com.epicode.Spring.security.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,5 +63,12 @@ public class ViewScheduleController {
     @PreAuthorize("hasRole('MODERATOR') OR hasRole('ADMIN')")
     public ResponseEntity<String> remove(@PathVariable long id) {
         return new ResponseEntity<String>(scheduleService.remove(id), HttpStatus.OK);
+    }
+    
+    @DeleteMapping
+    @PreAuthorize("hasRole('MODERATOR') OR hasRole('ADMIN')")
+    public ResponseEntity<?> remove(@RequestBody Set<Long> ids) {
+    	ids.forEach(id -> scheduleService.remove(id));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

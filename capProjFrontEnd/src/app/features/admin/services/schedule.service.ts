@@ -30,4 +30,8 @@ export class ScheduleService {
   edit(schedule:Omit<Schedule, "endTime">){
     return this.http.put<Schedule>(environment.schedules+"/"+schedule.id, schedule);
   }
+
+  delete(ids:number[]){
+    return this.http.delete(environment.schedules, {body: ids});
+  }
 }
