@@ -14,6 +14,7 @@ import { InpDateTimeComponent } from './components/inp-date-time/inp-date-time.c
 import { CardModule } from 'primeng/card';
 import { CardComponent } from './components/card/card.component';
 import { SharedRoutingModule } from './shared-routing.module';
+import { CardsGridComponent } from './macro-components/cards-grid/cards-grid.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SharedRoutingModule } from './shared-routing.module';
     InpCheckBoxComponent,
     GalleriaComponent,
     InpDateTimeComponent,
-    CardComponent
+    CardComponent,
+    CardsGridComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,9 @@ import { SharedRoutingModule } from './shared-routing.module';
     InpTextComponent,
     InpCheckBoxComponent,
     InpDateTimeComponent,
-    CardComponent
+    CardComponent,
+    CardsGridComponent,
+    GalleriaComponent
   ]
 })
 export class SharedModule { }

@@ -42,12 +42,26 @@ public class ViewScheduleService {
 		return viewScheduleRepo.findMovieSchedules(movie);
 	}
 	
+	public List<ViewSchedule> getCurrentSchedules(){
+		return viewScheduleRepo.findCurrentSchedules();
+	}
+	
 	public List<Movie> getScheduledMovies() {
 		return viewScheduleRepo.scheduledMovies();
 	}
 	
 	public ViewSchedule edit(long id, ViewSchedule vs) {
 		if(!viewScheduleRepo.existsById(id) || id!=vs.getId()) throw new EntityNotFoundException("Couldn't find this schedule.");
+		
+		if(viewScheduleRepo.checkHallAvailability(vs.getId(), vs.getHall(), vs.getStartTime(), vs.getEndTime()))
+			throw new DataIntegrityViolationException("This hall is not available at this time.");
+		
+		if(viewScheduleRepo.checkMovieAvailability(vs.getId(), vs.getMovie(), vs.getStartTime(), vs.getEndTime()))
+			throw new DataIntegrityViolationException("This movie is not available at this time.");
+		
+		if(vs.getHall().getStatus().equals(HallStatus.UNDER_MAINTENANCE))
+			throw new DataIntegrityViolationException("This hall is under maintenance.");
+		
 		return viewScheduleRepo.save(vs);
 	}
 	

@@ -39,6 +39,7 @@ public class MovieService {
 			Image cover = new Image();
 	        cover.setName(coverImageName);
 	        cover.setPath(coverImagePath.toString());
+	        cover.setEndPoint("http://localhost:8080/movies/cover/"+coverImageName);
 	        
 	        Movie movie = new Movie();
 	        movie.setTitle(movieDto.getTitle());

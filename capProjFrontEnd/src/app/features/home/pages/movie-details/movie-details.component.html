@@ -10,7 +10,7 @@
     <p>Genres: <span *ngFor="let genre of movie.genres">{{genre | lowercase}}; </span></p>
   </div>
 
-  <div>
+  <div *ngIf="schedules.length>0">
     <h2>BUY YOUR TICKETS</h2>
     <p-tabMenu (activeItemChange)="onActiveItemChange($event)" [scrollable]="true" [model]="items"
       [activeItem]="activeItem"></p-tabMenu>

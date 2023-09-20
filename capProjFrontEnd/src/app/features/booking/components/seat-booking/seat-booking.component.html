@@ -1,55 +1,61 @@
-<section>
-  <h1 class="text-center text-5xl my-1">{{schedule.movie.title | uppercase}}</h1>
-  <div class="flex gap-4 justify-content-center align-items-center text-2xl my-1">
-    <p class="m-0">Hall {{schedule.hall.id}}</p>
-    <p class="m-0">{{schedule.startTime | date:"short"}}</p>
-  </div>
-</section>
-<div>
-  <section class="flex">
+<div class="flex gap-4 justify-content-center align-items-center flex-column bg-bluegray-900 shadow-8 p-5 border-round-lg">
+  <section>
     <div>
-      <div class="flex my-2" *ngFor="let row of seats; index as i">
-        <div *ngFor="let seat of row; index as j" (click)="manageSeats(i, j)" [ngClass]="{
-              'vip': seats.length-i<=3,
-              'regular': seats.length-i>3,
-              'booked': seat=='NOT_AVAILABLE' || seat=='BOOKED',
-              'selected': seat=='SELECTED'}" class="seat mx-2 flex justify-content-center align-items-center">
-          <i *ngIf="seat=='BOOKED'" class="pi pi-user"></i>
-        </div>
-      </div>
+      <!-- <i class="pi pi-times-circle text-left text-4xl"></i> -->
+      <span class="text-center font-bold text-5xl my-1">{{schedule.movie.title | uppercase}}</span>
     </div>
 
-    <div class="p-3 surface-card border-round" *ngIf="bookings.length>0">
-      <ul class="list-none m-0 p-0">
-        <li *ngFor="let booking of bookings">Row: {{booking.seat.nrow}}; Seat: {{booking.seat.nseat}};</li>
-      </ul>
-      <p class="text-3xl">Total: {{bookings.length*(schedule.hall.nrows - bookings[0].seat.nrow<3 ? 9.5 : 7.89) |
-          number:'1.2-2'}}€</p>
-          <a [routerLink]="['/booking', 'payment']" pButton pRipple class="no-underline p-button-rounded p-button-primary" label="Proceed to payment"
-            icon="pi pi-angle-double-right"></a>
+    <div class="flex gap-4 justify-content-center align-items-center text-2xl my-1">
+      <p class="m-0">Hall {{schedule.hall.id}}</p>
+      <p class="m-0">{{schedule.startTime | date:"short"}}</p>
+    </div>
+  </section>
+  <div>
+    <section class="flex">
+      <div>
+        <div class="flex my-2" *ngFor="let row of seats; index as i">
+          <div *ngFor="let seat of row; index as j" (click)="manageSeats(i, j)" [ngClass]="{
+                'vip': seats.length-i<=3,
+                'regular': seats.length-i>3,
+                'booked': seat=='NOT_AVAILABLE' || seat=='BOOKED',
+                'selected': seat=='SELECTED'}" class="seat mx-2 flex justify-content-center align-items-center">
+            <i *ngIf="seat=='BOOKED'" class="pi pi-user"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-3 surface-card border-round" *ngIf="bookings.length>0">
+        <ul class="list-none m-0 p-0">
+          <li *ngFor="let booking of bookings">Row: {{booking.seat.nrow}}; Seat: {{booking.seat.nseat}};</li>
+        </ul>
+        <p class="text-3xl">Total: {{bookings.length*(schedule.hall.nrows - bookings[0].seat.nrow<3 ? 9.5 : 7.89) |
+            number:'1.2-2'}}€</p>
+            <a [routerLink]="['/booking', 'payment']" pButton pRipple class="no-underline p-button-rounded p-button-primary" label="Proceed to payment"
+              icon="pi pi-angle-double-right"></a>
+      </div>
+    </section>
+  </div>
+
+  <section class="flex gap-4 justify-content-center align-items-center">
+    <div class="flex gap-1 align-items-center">
+      <div class="seat regular"></div>
+      <span>Regular seat=7.89€</span>
+    </div>
+    <div class="flex gap-1 align-items-center">
+      <div class="seat vip"></div>
+      <span>VIP seat=9.5€</span>
+    </div>
+    <div class="flex gap-1 align-items-center">
+      <div class="selected seat"></div>
+      <span>Selected</span>
+    </div>
+    <div class="flex gap-1 align-items-center">
+      <div class="booked seat"></div>
+      <span>Not available</span>
+    </div>
+    <div class="flex gap-1 align-items-center">
+      <div class="booked seat flex justify-content-center align-items-center"><i class="pi pi-user"></i></div>
+      <span>Booked</span>
     </div>
   </section>
 </div>
-
-<section class="flex gap-4 justify-content-center align-items-center">
-  <div class="flex gap-1 align-items-center">
-    <div class="seat regular"></div>
-    <span>Regular seat=7.89€</span>
-  </div>
-  <div class="flex gap-1 align-items-center">
-    <div class="seat vip"></div>
-    <span>VIP seat=9.5€</span>
-  </div>
-  <div class="flex gap-1 align-items-center">
-    <div class="selected seat"></div>
-    <span>Selected</span>
-  </div>
-  <div class="flex gap-1 align-items-center">
-    <div class="booked seat"></div>
-    <span>Not available</span>
-  </div>
-  <div class="flex gap-1 align-items-center">
-    <div class="booked seat flex justify-content-center align-items-center"><i class="pi pi-user"></i></div>
-    <span>Booked</span>
-  </div>
-</section>

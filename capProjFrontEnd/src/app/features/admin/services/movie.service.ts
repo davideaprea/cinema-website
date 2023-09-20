@@ -4,7 +4,6 @@ import { MovieBody } from '../models/movie-body';
 import { environment } from 'src/environments/environment.development';
 import { Genres } from '../models/genres';
 import { Movie } from '../models/movie';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +40,5 @@ export class MovieService {
 
   getAll(){
     return this.http.get<Movie[]>(environment.movies);
-  }
-
-  getCover(fileName:string){
-    return this.http.get(environment.movies+"/cover/"+fileName, {
-      responseType: 'blob',
-      observe: 'response'
-    });
   }
 }

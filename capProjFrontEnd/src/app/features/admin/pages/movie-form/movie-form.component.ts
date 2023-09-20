@@ -24,7 +24,7 @@ export class MovieFormComponent {
       duration: new FormControl("", Validators.required),
       director: new FormControl("", Validators.required),
       actors: new FormControl("", Validators.required),
-      description: new FormControl("", Validators.required),
+      description: new FormControl("", [Validators.required, Validators.maxLength(600)]),
       genres: new FormControl("", Validators.required),
       isTridimensional: new FormControl(false)
     });

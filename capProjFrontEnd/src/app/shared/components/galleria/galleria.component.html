@@ -1,11 +1,6 @@
-<!-- <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
+<p-galleria [value]="photos" [autoPlay]="true"
+  [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5" [showThumbnails]="false">
   <ng-template pTemplate="item" let-item>
-      <img [src]="item.itemImageSrc" style="width: 100%;" />
-  </ng-template>
-  <ng-template pTemplate="thumbnail" let-item>
-      <div class="grid grid-nogutter justify-content-center">
-          <img [src]="item.thumbnailImageSrc" />
-      </div>
+    <img [src]="'http://localhost:8080/movies/cover/'+item" style="width: 100%;" />
   </ng-template>
 </p-galleria>
- -->

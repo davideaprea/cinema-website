@@ -6,5 +6,5 @@ export interface Schedule {
   readonly movie:Movie,
   readonly hall:Hall,
   startTime:Date,
-  readonly endTime:Date
+  endTime?:Date
 }

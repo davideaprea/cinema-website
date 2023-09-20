@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { MovieFormComponent } from './pages/movie-form/movie-form.component';
-import { ScheduleFormComponent } from './pages/schedule-form/schedule-form.component';
+import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ButtonModule } from 'primeng/button';
@@ -15,13 +15,18 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { OurmoviesComponent } from './pages/ourmovies/ourmovies.component';
+import { SchedulesComponent } from './pages/schedules/schedules.component';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
     AdminComponent,
     MovieFormComponent,
     ScheduleFormComponent,
-    OurmoviesComponent
+    OurmoviesComponent,
+    SchedulesComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +40,10 @@ import { OurmoviesComponent } from './pages/ourmovies/ourmovies.component';
     InputTextareaModule,
     InputNumberModule,
     MultiSelectModule,
-    DropdownModule
+    DropdownModule,
+    TableModule,
+    InputTextModule,
+    ToastModule
   ]
 })
 export class AdminModule { }

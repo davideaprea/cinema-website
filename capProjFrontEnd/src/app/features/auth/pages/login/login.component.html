@@ -1,4 +1,4 @@
-<div class="surface-card p-4 shadow-2 border-round w-full md:w-6">
+<div class="surface-card p-4 shadow-2 border-round">
   <div class="text-center mb-5">
     <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
     <span class="text-600 font-medium line-height-3">Don't have an account?</span>
@@ -19,6 +19,6 @@
       <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
     </div>
 
-    <p-button [disabled]="f.invalid" type="submit" label="Submit"></p-button>
+    <button [disabled]="f.invalid" pButton pRipple type="submit" label="Sign in" class="w-full"></button>
   </form>
 </div>

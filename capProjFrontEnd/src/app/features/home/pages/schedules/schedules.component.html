@@ -1,7 +1,5 @@
-<div class="grid grid-nogutter">
-  <div *ngFor="let movie of scheduledMovies" class="col-3">
-    <app-card [cover]="'http://localhost:8080/movies/cover/'+movie.cover.name" [id]="movie.id" [title]="movie.title" [director]="movie.director">
-      <p class="description">{{movie.description}}</p>
-    </app-card>
-  </div>
+<!-- <app-galleria [photos]="paths"></app-galleria> -->
+<div class="p-4">
+  <h2 class="text-4xl">In our halls</h2>
+  <app-cards-grid [movieArr]="scheduledMovies"></app-cards-grid>
 </div>

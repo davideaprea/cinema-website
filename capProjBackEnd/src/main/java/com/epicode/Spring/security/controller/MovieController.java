@@ -57,15 +57,6 @@ public class MovieController {
 		
 		try {
 			Resource resource = new UrlResource(path.toUri());
-        
-//	        HttpHeaders headers=new HttpHeaders();
-//	        headers.add("File-Name", coverName);
-//	        headers.add("Content-Disposition", "attachment; filename=" + resource.getFilename());
-//			
-//			return ResponseEntity.ok()
-//	                .contentType(MediaType.parseMediaType(Files.probeContentType(path)))
-//	                .headers(headers)
-//	                .body(resource);
 			return ResponseEntity.ok()
 	                .contentType(MediaType.parseMediaType("application/octet-stream"))
 	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename())

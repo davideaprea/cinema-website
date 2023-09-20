@@ -32,6 +32,11 @@ public class ViewScheduleController {
         return new ResponseEntity<ViewSchedule>(scheduleService.create(vs), HttpStatus.CREATED);
     }
 	
+	@GetMapping("/current-schedules")
+    public ResponseEntity<?> getCurrentSchedules() {
+        return new ResponseEntity<List<ViewSchedule>>(scheduleService.getCurrentSchedules(), HttpStatus.OK);
+    }
+	
 	@GetMapping("/scheduled-movies")
     public ResponseEntity<?> getScheduledMovies() {
         return new ResponseEntity<List<Movie>>(scheduleService.getScheduledMovies(), HttpStatus.OK);
