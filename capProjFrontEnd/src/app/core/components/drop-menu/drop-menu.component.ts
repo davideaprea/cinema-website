@@ -26,7 +26,7 @@ export class DropMenuComponent implements OnInit {
             label: 'Profile',
             icon: 'pi pi-user',
             command: () => {
-              this.router.navigate(["/profile"]);
+              this.authService.isUserAdmin() ? this.router.navigate(["/admin", "ourmovies"]) : this.router.navigate(["/profile"]);
             }
           },
           {

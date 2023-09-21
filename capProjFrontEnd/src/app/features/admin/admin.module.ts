@@ -20,6 +20,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     MovieFormComponent,
     ScheduleFormComponent,
     OurmoviesComponent,
-    SchedulesComponent
+    SchedulesComponent,
+    SidebarComponent
   ],
   imports: [
     CommonModule,

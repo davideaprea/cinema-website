@@ -1,0 +1,11 @@
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 900px){
+  :host {
+    flex-direction: row;
+  }
+}

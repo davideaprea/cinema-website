@@ -36,8 +36,8 @@ export class SeatBookingComponent {
         }
       }
       this.seats[row][seat] = SeatStatus.SELECTED;
-      if(this.seats[row][seat+1]!=SeatStatus.BOOKED) this.seats[row][seat+1] = SeatStatus.AVAILABLE;
-      if(this.seats[row][seat-1]!=SeatStatus.BOOKED) this.seats[row][seat-1] = SeatStatus.AVAILABLE;
+      if(this.seats[row][seat+1] && this.seats[row][seat+1]!=SeatStatus.BOOKED) this.seats[row][seat+1] = SeatStatus.AVAILABLE;
+      if(this.seats[row][seat-1] && this.seats[row][seat-1]!=SeatStatus.BOOKED) this.seats[row][seat-1] = SeatStatus.AVAILABLE;
 
       this.addBooking(row, seat);
       this.onSelection = true;

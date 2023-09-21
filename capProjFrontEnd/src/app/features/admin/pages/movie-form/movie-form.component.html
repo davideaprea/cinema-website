@@ -1,39 +1,54 @@
-<div class="surface-card p-4 shadow-2 border-round w-full md:w-6">
+<div class="surface-card p-4 border-round w-full xl:w-10">
   <div class="text-center mb-5">
     <div class="text-900 text-3xl font-medium mb-3">Add a new movie</div>
   </div>
 
   <form [formGroup]="f" (ngSubmit)="submit()" enctype="multipart/form-data">
-    <app-inp-text [group]="f" [control]="$any(f.get('title')!)" prop="Title"></app-inp-text>
+    <div class="grid">
+      <div [class]="columnStyles">
+        <app-inp-text [group]="f" [control]="$any(f.get('title')!)" prop="Title"></app-inp-text>
+      </div>
 
-    <p-fileUpload (onSelect)="uploadCover($event)" mode="basic" chooseLabel="Movie cover" name="cover" accept="image/*"></p-fileUpload>
+      <div [class]="columnStyles">
+        <p-fileUpload class="w-full" [style]="{'width':'100%'}" (onSelect)="uploadCover($event)" mode="basic"
+          chooseLabel="Movie cover" name="cover" accept="image/*"></p-fileUpload>
+      </div>
 
-    <app-inp-text [group]="f" [control]="$any(f.get('trailerLink')!)" prop="Trailer link"></app-inp-text>
+      <div [class]="columnStyles">
+        <span class="p-float-label">
+          <p-calendar class="w-full" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+            formControlName="releaseDate" [showIcon]="true" [maxDate]="today"></p-calendar>
+          <label for="description">Release date</label>
+        </span>
+      </div>
 
-    <span class="p-float-label">
-      <p-calendar formControlName="releaseDate" [showIcon]="true" [maxDate]="today"></p-calendar>
-      <label for="description">Release date</label>
-    </span>
+      <div [class]="columnStyles">
+        <app-inp-text [group]="f" [control]="$any(f.get('director')!)" prop="Director"></app-inp-text>
+      </div>
 
-    <app-inp-text [group]="f" [control]="$any(f.get('director')!)" prop="Director"></app-inp-text>
+      <div [class]="columnStyles">
+        <app-inp-text [group]="f" [control]="$any(f.get('actors')!)" prop="Actors"></app-inp-text>
+      </div>
 
-    <app-inp-text [group]="f" [control]="$any(f.get('actors')!)" prop="Actors"></app-inp-text>
+      <div [class]="columnStyles">
+        <p-multiSelect [style]="{'width':'100%'}" class="block w-full" defaultLabel="Genres" [showToggleAll]="false"
+          display="chip" [options]="genres" formControlName="genres"></p-multiSelect>
+      </div>
 
-    <span class="p-float-label">
-      <textarea formControlName="description" id="description" rows="5" cols="30" pInputTextarea></textarea>
-      <label for="description">Description</label>
-    </span>
+      <div [class]="columnStyles">
+        <span class="p-float-label">
+          <p-inputNumber inputId="integeronly" formControlName="duration" [min]="0"></p-inputNumber>
+          <label htmlFor="number-input">Duration (minutes)</label>
+        </span>
+      </div>
 
-    <span class="p-float-label">
-      <p-inputNumber inputId="integeronly" formControlName="duration" [min]="0"> </p-inputNumber>
-      <label htmlFor="number-input">Duration</label>
-    </span>
-
-    <span class="p-float-label">
-      <p-multiSelect [showToggleAll]="false" display="chip" [options]="genres" formControlName="genres"></p-multiSelect>
-      <label for="ms-cities">Genres</label>
-    </span>
-
+      <div class="col-12">
+        <span class="p-float-label">
+          <textarea formControlName="description" id="description" rows="5" class="w-full" pInputTextarea></textarea>
+          <label for="description">Description</label>
+        </span>
+      </div>
+    </div>
     <p-button [disabled]="f.invalid" type="submit" label="Submit"></p-button>
   </form>
 </div>

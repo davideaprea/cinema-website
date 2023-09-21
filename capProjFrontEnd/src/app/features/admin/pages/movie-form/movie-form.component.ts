@@ -9,6 +9,8 @@ import { MovieService } from '../../services/movie.service';
   styleUrls: ['./movie-form.component.scss']
 })
 export class MovieFormComponent {
+  columnStyles="col-12 sm:col-6 lg:col-4 xl:col-3";
+
   f!:FormGroup;
   today:Date;
   genres:Genres[];

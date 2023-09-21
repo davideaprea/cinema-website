@@ -1,0 +1,20 @@
+<nav class="p-5 bg-primary-600 h-full flex flex-column justify-content-between">
+  <ul class="m-0 p-0 list-none gap-3 flex flex-column">
+    <li *ngFor="let data of dataArr">
+      <a class="flex align-items-center gap-1 p-2 border-round hover:bg-primary-500" routerLinkActive="bg-primary-700"
+        [routerLink]="['/admin', data.route]">
+        <i class="{{data.icon}}"></i>
+        <span>{{data.text}}</span>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="m-0 p-0 list-none gap-3 flex flex-column">
+    <li>
+      <a (click)="authService.logout()" pButton pRipple class="flex align-items-center gap-1 p-2 border-round hover:bg-primary-500">
+        <i class="pi pi-sign-out"></i>
+        <span>Log out</span>
+      </a>
+    </li>
+  </ul>
+</nav>

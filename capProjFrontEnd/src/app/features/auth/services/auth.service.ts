@@ -53,6 +53,6 @@ export class AuthService {
     this.loggedUser.next(null);
     if (localStorage.getItem("user")) localStorage.removeItem("user");
     else sessionStorage.removeItem("user");
-    this.router.navigate(["/"]);
+    this.router.navigate(["/home", "schedules"]);
   }
 }
