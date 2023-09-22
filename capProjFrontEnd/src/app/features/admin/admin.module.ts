@@ -21,6 +21,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { HallsComponent } from './pages/halls/halls.component';
+import { HallFormComponent } from './components/hall-form/hall-form.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     ScheduleFormComponent,
     OurmoviesComponent,
     SchedulesComponent,
-    SidebarComponent
+    SidebarComponent,
+    HallsComponent,
+    HallFormComponent
   ],
   imports: [
     CommonModule,

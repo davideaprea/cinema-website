@@ -4,12 +4,14 @@ import { AdminComponent } from './admin.component';
 import { MovieFormComponent } from './pages/movie-form/movie-form.component';
 import { OurmoviesComponent } from './pages/ourmovies/ourmovies.component';
 import { SchedulesComponent } from './pages/schedules/schedules.component';
+import { HallsComponent } from './pages/halls/halls.component';
 
 const routes: Routes = [{
   path: '', component: AdminComponent, children: [
     { path: "addmovie", component: MovieFormComponent },
     { path: "ourmovies", component: OurmoviesComponent },
     { path: "schedules", component: SchedulesComponent },
+    { path: "halls", component: HallsComponent },
   ]
 }];
 

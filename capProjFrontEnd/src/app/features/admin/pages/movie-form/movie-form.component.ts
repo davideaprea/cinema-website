@@ -21,7 +21,7 @@ export class MovieFormComponent {
     this.f=new FormGroup({
       title: new FormControl("", Validators.required),
       cover: new FormControl(null, Validators.required),
-      trailerLink: new FormControl("", Validators.required),
+      trailerLink: new FormControl(""),
       releaseDate: new FormControl("", Validators.required),
       duration: new FormControl("", Validators.required),
       director: new FormControl("", Validators.required),

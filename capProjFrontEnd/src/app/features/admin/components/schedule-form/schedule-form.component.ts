@@ -20,7 +20,7 @@ export class ScheduleFormComponent {
 
   constructor(private movieService:MovieService, private hallService:HallService, private scheduleService:ScheduleService, private messageService:MessageService){
     movieService.getAll().subscribe(m=>this.movies=m);
-    hallService.getAll().subscribe(h=>this.halls=h);
+    hallService.getAvailableHalls().subscribe(h=>this.halls=h);
 
     this.f=new FormGroup({
       movie:new FormControl(null, Validators.required),
@@ -30,6 +30,9 @@ export class ScheduleFormComponent {
   }
 
   submit(){
-    this.scheduleService.create(this.f.value).subscribe(d=>this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Schedule added successfully.' }));
+    this.scheduleService.create(this.f.value).subscribe(d=>{
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Schedule added successfully.' });
+      this.f.reset();
+    });
   }
 }

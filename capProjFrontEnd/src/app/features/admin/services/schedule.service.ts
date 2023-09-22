@@ -23,6 +23,10 @@ export class ScheduleService {
     return this.http.get<Schedule[]>(environment.schedules+"/movie-schedules/"+movie.id);
   }
 
+  getNextSchedules(){
+    return this.http.get<Schedule[]>(environment.schedules+"/next-schedules");
+  }
+
   getCurrentSchedules(){
     return this.http.get<Schedule[]>(environment.schedules+"/current-schedules");
   }

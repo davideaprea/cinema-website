@@ -1,0 +1,16 @@
+<h1 class="text-center my-2">Our halls</h1>
+<div class="grid grid-nogutter">
+  <div *ngFor="let hall of halls" class="col-12 sm:col-6 md:col-4 xl:col-3 p-2">
+    <div class="bg-bluegray-400 p-2 border-round">
+      <div class="text-center mb-2">
+        <i class="pi pi-desktop text-7xl"></i>
+        <p class="my-1 text-2xl">Hall {{hall.id}}</p>
+      </div>
+      <div class="text-center">
+        <p class="my-1">Rows: {{hall.nrows}}; Seats: {{hall.nseatsPerRow}};</p>
+        <p class="my-1">Status: {{hall.status}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-hall-form></app-hall-form>

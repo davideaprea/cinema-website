@@ -25,6 +25,11 @@ export class AuthService {
     if (this.storageUser) this.loggedUser.next(this.storageUser);
   }
 
+  getUserRole():Role{
+    let decodedToken = this.jwtHelper.decodeToken(this.storageUser.accessToken);
+    return decodedToken.role[0].roleName;
+  }
+
   isUserAdmin(): boolean {
     if (this.storageUser) {
       let decodedToken = this.jwtHelper.decodeToken(this.storageUser.accessToken);

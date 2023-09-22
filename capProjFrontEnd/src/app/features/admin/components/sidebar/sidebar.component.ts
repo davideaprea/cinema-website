@@ -11,6 +11,7 @@ export class SidebarComponent {
     {icon: "pi pi-video", route: "ourmovies", text: "Our movies"},
     {icon: "pi pi-upload", route: "addmovie", text: "Add a new movie"},
     {icon: "pi pi-calendar", route: "schedules", text: "Schedules"},
+    {icon: "pi pi-desktop", route: "halls", text: "Halls"},
     {icon: "pi pi-chart-bar", route: "", text: "Dashboard"},
     {icon: "pi pi-users", route: "", text: "Admins & mods"},
   ];

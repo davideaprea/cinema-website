@@ -12,12 +12,6 @@ import com.epicode.Spring.security.entity.ViewSchedule;
 
 public interface ViewScheduleRepository extends CrudRepository<ViewSchedule, Long>{
 	
-//	@Query("SELECT v FROM ViewSchedule v WHERE v.hall=:hall AND (:startTime BETWEEN v.startTime AND v.endTime OR :endTime BETWEEN v.startTime AND v.endTime)")
-//	public ViewSchedule checkHallAvailability(Hall hall, LocalDateTime startTime, LocalDateTime endTime);
-//	
-//	@Query("SELECT v FROM ViewSchedule v WHERE v.movie=:movie AND (:startTime BETWEEN v.startTime AND v.endTime OR :endTime BETWEEN v.startTime AND v.endTime)")
-//	public ViewSchedule checkMovieAvailability(Movie movie, LocalDateTime startTime, LocalDateTime endTime);
-	
 	@Query("SELECT CASE WHEN COUNT(v) > 0 THEN true ELSE false END FROM ViewSchedule v WHERE v.hall = :hall AND (:startTime BETWEEN v.startTime AND v.endTime OR :endTime BETWEEN v.startTime AND v.endTime)")
 	public boolean checkHallAvailability(Hall hall, LocalDateTime startTime, LocalDateTime endTime);
 
@@ -37,5 +31,8 @@ public interface ViewScheduleRepository extends CrudRepository<ViewSchedule, Lon
 	public List<ViewSchedule> findMovieSchedules(Movie movie);
 	
 	@Query("SELECT v FROM ViewSchedule v WHERE v.startTime > CURRENT_TIMESTAMP")
+	public List<ViewSchedule> findNextSchedules();
+	
+	@Query("SELECT v FROM ViewSchedule v WHERE v.startTime > CURRENT_TIMESTAMP AND v.endTime < CURRENT_TIMESTAMP")
 	public List<ViewSchedule> findCurrentSchedules();
 }

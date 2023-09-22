@@ -1,0 +1,18 @@
+<p-toast></p-toast>
+<div *ngIf="authService.getUserRole()=='ROLE_ADMIN'" class="my-5">
+  <h2 class="text-center">Add a new hall</h2>
+  <form class="surface-card p-4 border-round" [formGroup]="f" (ngSubmit)="submit()">
+    <div class="flex gap-2 mb-3">
+      <span class="p-float-label">
+        <p-inputNumber [min]="1" inputId="integeronly" formControlName="rows"> </p-inputNumber>
+        <label htmlFor="number-input">Rows</label>
+      </span>
+      <span class="p-float-label">
+        <p-inputNumber [min]="1" inputId="integeronly" formControlName="seats"> </p-inputNumber>
+        <label htmlFor="number-input">Seats per row</label>
+      </span>
+    </div>
+
+    <p-button [style]="{'width':'100%'}" class="block w-full" [disabled]="f.invalid" type="submit" label="Submit"></p-button>
+  </form>
+</div>

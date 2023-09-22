@@ -42,6 +42,10 @@ public class ViewScheduleService {
 		return viewScheduleRepo.findMovieSchedules(movie);
 	}
 	
+	public List<ViewSchedule> getNextSchedules(){
+		return viewScheduleRepo.findNextSchedules();
+	}
+	
 	public List<ViewSchedule> getCurrentSchedules(){
 		return viewScheduleRepo.findCurrentSchedules();
 	}

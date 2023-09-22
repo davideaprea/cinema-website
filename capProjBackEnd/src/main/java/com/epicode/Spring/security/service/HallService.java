@@ -23,6 +23,10 @@ public class HallService {
 		return (List<Hall>) hallRepository.findAll();
 	}
 	
+	public List<Hall> getAllAvailableHalls() {
+		return (List<Hall>) hallRepository.findAvailableHalls();
+	}
+	
 	public Hall get(long id) {
 		if(!hallRepository.existsById(id)) throw new EntityNotFoundException("Couldn't find this hall.");
 		return hallRepository.findById(id).get();

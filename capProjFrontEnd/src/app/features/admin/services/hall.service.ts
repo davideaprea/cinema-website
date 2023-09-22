@@ -10,7 +10,16 @@ export class HallService {
 
   constructor(private http:HttpClient) { }
 
+  create(nrows:number, nseatsPerRow:number){
+    console.log(nrows, nseatsPerRow)
+    return this.http.post(environment.halls, {nrows, nseatsPerRow});
+  }
+
   getAll(){
     return this.http.get<Hall[]>(environment.halls);
+  }
+
+  getAvailableHalls(){
+    return this.http.get<Hall[]>(environment.halls+"/available-halls");
   }
 }

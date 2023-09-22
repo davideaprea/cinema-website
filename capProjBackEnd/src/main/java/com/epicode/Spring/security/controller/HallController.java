@@ -34,6 +34,11 @@ public class HallController {
     public ResponseEntity<?> getAll() {
         return new ResponseEntity<List<Hall>>(hallService.getAll(), HttpStatus.OK);
     }
+	
+	@GetMapping("/available-halls")
+    public ResponseEntity<?> getAllAvailable() {
+        return new ResponseEntity<List<Hall>>(hallService.getAllAvailableHalls(), HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {

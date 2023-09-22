@@ -33,6 +33,11 @@ public class ViewScheduleController {
         return new ResponseEntity<ViewSchedule>(scheduleService.create(vs), HttpStatus.CREATED);
     }
 	
+	@GetMapping("/next-schedules")
+    public ResponseEntity<?> getNextSchedules() {
+        return new ResponseEntity<List<ViewSchedule>>(scheduleService.getNextSchedules(), HttpStatus.OK);
+    }
+	
 	@GetMapping("/current-schedules")
     public ResponseEntity<?> getCurrentSchedules() {
         return new ResponseEntity<List<ViewSchedule>>(scheduleService.getCurrentSchedules(), HttpStatus.OK);

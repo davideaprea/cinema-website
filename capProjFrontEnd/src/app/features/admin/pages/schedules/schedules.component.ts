@@ -24,7 +24,7 @@ export class SchedulesComponent {
   schedulesToDelete: number[] = [];
 
   constructor(private confirmationService: ConfirmationService, private scheduleService: ScheduleService, private movieService: MovieService, private hallService: HallService, private messageService: MessageService) {
-    scheduleService.getCurrentSchedules().subscribe(schedules => {
+    scheduleService.getNextSchedules().subscribe(schedules => {
       schedules.forEach(el => {
         el.startTime = new Date(<Date>el.startTime);
         el.endTime = new Date(<Date>el.endTime);
