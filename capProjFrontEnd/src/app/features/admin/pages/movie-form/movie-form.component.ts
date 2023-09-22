@@ -9,7 +9,7 @@ import { MovieService } from '../../services/movie.service';
   styleUrls: ['./movie-form.component.scss']
 })
 export class MovieFormComponent {
-  columnStyles="col-12 sm:col-6 lg:col-4 xl:col-3";
+  readonly columnStyles="col-12 sm:col-6 lg:col-4 xl:col-3";
 
   f!:FormGroup;
   today:Date;
@@ -21,7 +21,7 @@ export class MovieFormComponent {
     this.f=new FormGroup({
       title: new FormControl("", Validators.required),
       cover: new FormControl(null, Validators.required),
-      trailerLink: new FormControl(""),
+      backgroundCover: new FormControl(null, Validators.required),
       releaseDate: new FormControl("", Validators.required),
       duration: new FormControl("", Validators.required),
       director: new FormControl("", Validators.required),
@@ -34,6 +34,10 @@ export class MovieFormComponent {
 
   uploadCover(event:any){
     this.f.controls['cover'].setValue(event.currentFiles[0]);
+  }
+
+  uploadBackgroundCover(event:any){
+    this.f.controls['backgroundCover'].setValue(event.currentFiles[0]);
   }
 
   submit(){

@@ -16,7 +16,6 @@ export class MovieService {
   create(movie: MovieBody) {
     const formData = new FormData();
     formData.append('title', movie.title);
-    formData.append('trailerLink', movie.trailerLink);
     formData.append('releaseDate', movie.releaseDate.toISOString().slice(0, 10));
     formData.append('duration', movie.duration.toString());
     formData.append('director', movie.director);
@@ -31,6 +30,7 @@ export class MovieService {
     });
 
     formData.append('cover', movie.cover);
+    formData.append('backgroundCover', movie.backgroundCover);
     this.http.post(environment.movies, formData).subscribe(res => console.log(res));
   }
 

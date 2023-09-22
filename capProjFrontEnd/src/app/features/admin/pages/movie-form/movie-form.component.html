@@ -15,6 +15,11 @@
       </div>
 
       <div [class]="columnStyles">
+        <p-fileUpload class="w-full" [style]="{'width':'100%'}" (onSelect)="uploadBackgroundCover($event)" mode="basic"
+          chooseLabel="Background cover" name="background-cover" accept="image/*"></p-fileUpload>
+      </div>
+
+      <div [class]="columnStyles">
         <span class="p-float-label">
           <p-calendar class="w-full" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
             formControlName="releaseDate" [showIcon]="true" [maxDate]="today"></p-calendar>

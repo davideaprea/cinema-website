@@ -13,7 +13,7 @@ export class SchedulesComponent {
   constructor(private scheduleService:ScheduleService, private movieService:MovieService){
     scheduleService.getScheduledMovies().subscribe(m=>{
       this.scheduledMovies=m;
-      this.paths=m.map(el=>el.cover.name)
+      /* this.paths=m.map(el=>el.cover.name) */
       console.log(m);
     });
   }

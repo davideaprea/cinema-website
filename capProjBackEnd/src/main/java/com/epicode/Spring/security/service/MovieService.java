@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.epicode.Spring.security.entity.Image;
 import com.epicode.Spring.security.entity.Movie;
 import com.epicode.Spring.security.payload.MovieDto;
 import com.epicode.Spring.security.repository.MovieRepository;
@@ -29,22 +29,12 @@ public class MovieService {
 			throw new EntityExistsException("This movie already exists.");
 		
 		try {
-			String fileName=StringUtils.cleanPath(movieDto.getCover().getOriginalFilename());
-			String path = System.getProperty("user.home") + "/Desktop/Movie covers";
-			String coverImageName = UUID.randomUUID().toString() + "_" + fileName;
-			Path coverImagePath = Path.of(path, coverImageName);
-			if (!Files.exists(coverImagePath.getParent())) Files.createDirectories(coverImagePath.getParent());
-			Files.copy(movieDto.getCover().getInputStream(), coverImagePath, StandardCopyOption.REPLACE_EXISTING);
-			
-			Image cover = new Image();
-	        cover.setName(coverImageName);
-	        cover.setPath(coverImagePath.toString());
-	        cover.setEndPoint("http://localhost:8080/movies/cover/"+coverImageName);
+			final String baseImageUrl="http://localhost:8080/movies/cover/";
 	        
 	        Movie movie = new Movie();
 	        movie.setTitle(movieDto.getTitle());
-	        movie.setCover(cover);
-	        movie.setTrailerLink(movieDto.getTrailerLink());
+	        movie.setCover(baseImageUrl+saveFileOnFolder(movieDto.getCover()));
+	        movie.setBackgroundCover(baseImageUrl+saveFileOnFolder(movieDto.getBackgroundCover()));
 	        movie.setReleaseDate(movieDto.getReleaseDate());
 	        movie.setDuration(movieDto.getDuration());
 	        movie.setDirector(movieDto.getDirector());
@@ -77,5 +67,15 @@ public class MovieService {
 		if(!movieRepo.existsById(id)) throw new EntityNotFoundException("Couldn't find this movie.");
 		movieRepo.deleteById(id);
 		return "Movie deleted successfully.";
+	}
+	
+	private String saveFileOnFolder(MultipartFile file) throws IOException {
+		String fileName=StringUtils.cleanPath(file.getOriginalFilename());
+		String path = System.getProperty("user.home") + "/Desktop/Movie covers";
+		String coverImageName = UUID.randomUUID().toString() + "_" + fileName;
+		Path coverImagePath = Path.of(path, coverImageName);
+		if (!Files.exists(coverImagePath.getParent())) Files.createDirectories(coverImagePath.getParent());
+		Files.copy(file.getInputStream(), coverImagePath, StandardCopyOption.REPLACE_EXISTING);
+		return coverImageName;
 	}
 }

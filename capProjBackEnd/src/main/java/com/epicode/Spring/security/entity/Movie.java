@@ -5,13 +5,11 @@ import java.util.Set;
 
 import com.epicode.Spring.enums.Genres;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -31,11 +29,11 @@ public class Movie {
 	@Column(nullable = false)
 	private String title;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Image cover;
+	@Column(nullable = false)
+	private String cover;
 	
 	@Column(nullable = false)
-	private String trailerLink;
+	private String backgroundCover;
 	
 	@Column(nullable = false)
 	private LocalDate releaseDate;

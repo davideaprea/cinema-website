@@ -1,6 +1,10 @@
 <div *ngIf="movie">
+
+  <div class="bg-cover bg-center h-30rem w-full background-cover flex align-items-end p-3" style="background-image: url('{{movie.backgroundCover}}');">
+    <h1 class="m-0">{{movie.title | uppercase}}</h1>
+  </div>
+
   <div class="mb-7">
-    <h1>{{movie.title | uppercase}}</h1>
     <h2>Info and description</h2>
     <p>Director: {{movie.director}}</p>
     <p>Cast: {{movie.actors}}</p>

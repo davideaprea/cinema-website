@@ -19,7 +19,7 @@ import lombok.Setter;
 public class MovieDto {
 	private String title;
 	private MultipartFile cover;
-	private String trailerLink;
+	private MultipartFile backgroundCover;
 	private LocalDate releaseDate;
 	private Integer duration;
 	private String director;
