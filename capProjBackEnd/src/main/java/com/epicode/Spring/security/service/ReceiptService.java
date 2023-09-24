@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.epicode.Spring.security.entity.Booking;
 import com.epicode.Spring.security.entity.Receipt;
+import com.epicode.Spring.security.payload.ReceiptDto;
 import com.epicode.Spring.security.repository.BookingRepository;
 import com.epicode.Spring.security.repository.ReceiptRepository;
+import com.epicode.Spring.security.repository.UserRepository;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,15 +21,20 @@ import jakarta.persistence.EntityNotFoundException;
 public class ReceiptService {
 	@Autowired private ReceiptRepository receiptRepo;
 	@Autowired private BookingRepository bookingRepo;
+	@Autowired private AuthServiceImpl userService;
 	
-	public Receipt create(Receipt r) {
+	public Receipt create(ReceiptDto r) {
 		
 		for(Booking b : r.getBookings()) {
 			if(bookingRepo.existsByViewScheduleAndSeat(b.getViewSchedule(), b.getSeat()))
 				throw new EntityExistsException("This seat is already booked.");
 		}
 		
-		return receiptRepo.save(r);
+		Receipt receipt=new Receipt();
+		receipt.setBookings(r.getBookings());
+		receipt.setUser(userService.getUserByEmailOrPassword(r.getUser().getUsername()));
+		
+		return receiptRepo.save(receipt);
 	}
 	
 	public Receipt get(long id) {

@@ -3,7 +3,6 @@ import { Genres } from "./genres"
 export interface Movie {
   readonly id:number,
   title:string,
-  /* readonly cover:{id:number, name:string, path:string, endPoint:string}, */
   readonly cover:string,
   readonly backgroundCover:string,
   releaseDate:Date,

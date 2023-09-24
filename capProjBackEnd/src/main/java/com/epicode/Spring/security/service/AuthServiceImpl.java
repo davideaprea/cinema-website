@@ -22,6 +22,8 @@ import com.epicode.Spring.security.repository.RoleRepository;
 import com.epicode.Spring.security.repository.UserRepository;
 import com.epicode.Spring.security.security.JwtTokenProvider;
 
+import jakarta.persistence.EntityNotFoundException;
+
 
 
 @Service
@@ -44,6 +46,12 @@ public class AuthServiceImpl implements AuthService {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
+    }
+    
+    public User getUserByEmailOrPassword(String credential) {
+    	if(!userRepository.existsByEmail(credential) && userRepository.existsByUsername(credential))
+    		throw new EntityNotFoundException("Couldn't find the user.");
+    	return userRepository.findByUsernameOrEmail(credential, credential).get();
     }
     
     @Override

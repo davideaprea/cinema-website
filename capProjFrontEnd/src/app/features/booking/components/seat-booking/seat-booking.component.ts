@@ -85,7 +85,7 @@ export class SeatBookingComponent {
 
   private addBooking(row: number, seat: number) {
     let booking: BookingBody = {
-      schedule: this.schedule,
+      viewSchedule: this.schedule,
       seat: {
         nseat: seat + 1,
         nrow: row + 1
@@ -101,6 +101,8 @@ export class SeatBookingComponent {
       bookings: this.bookings
     }
 
-    this.bookingService.bookSeats(receipt).subscribe(d => console.log(d));
+    this.bookingService.createOrder(receipt).subscribe(res=>console.log(res));
+
+    /* this.bookingService.bookSeats(receipt).subscribe(d => console.log(d)); */
   }
 }

@@ -22,4 +22,8 @@ export class HallService {
   getAvailableHalls(){
     return this.http.get<Hall[]>(environment.halls+"/available-halls");
   }
+
+  editHall(hall:Hall){
+    return this.http.put<Hall>(environment.halls+"/"+hall.id, hall);
+  }
 }

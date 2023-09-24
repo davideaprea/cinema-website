@@ -1,8 +1,8 @@
 <div class="flex gap-4 justify-content-center align-items-center flex-column bg-bluegray-900 shadow-8 p-5 border-round-lg">
   <section>
-    <div>
+    <div class="text-center">
       <!-- <i class="pi pi-times-circle text-left text-4xl"></i> -->
-      <span class="text-center font-bold text-5xl my-1">{{schedule.movie.title | uppercase}}</span>
+      <span class="font-bold text-5xl my-1">{{schedule.movie.title | uppercase}}</span>
     </div>
 
     <div class="flex gap-4 justify-content-center align-items-center text-2xl my-1">
@@ -30,8 +30,10 @@
         </ul>
         <p class="text-3xl">Total: {{bookings.length*(schedule.hall.nrows - bookings[0].seat.nrow<3 ? 9.5 : 7.89) |
             number:'1.2-2'}}€</p>
-            <a [routerLink]="['/booking', 'payment']" pButton pRipple class="no-underline p-button-rounded p-button-primary" label="Proceed to payment"
-              icon="pi pi-angle-double-right"></a>
+            <!-- <a [routerLink]="['/booking', 'payment']" pButton pRipple
+              class="no-underline p-button-rounded p-button-primary" label="Proceed to payment"
+              icon="pi pi-angle-double-right"></a> -->
+        <button (click)="book()">Compra</button>
       </div>
     </section>
   </div>

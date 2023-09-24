@@ -45,4 +45,9 @@ export class BookingService {
   getScheduleBookings(schedule:Schedule){
     return this.http.get<Booking[]>(environment.bookings+"/schedule-bookings/"+schedule.id);
   }
+
+  createOrder(receipt:ReceiptBody){
+    console.log(receipt)
+    return this.http.post(environment.paypal, receipt);
+  }
 }

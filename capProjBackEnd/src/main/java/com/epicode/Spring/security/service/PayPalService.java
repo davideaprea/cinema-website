@@ -1,16 +1,24 @@
 package com.epicode.Spring.security.service;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.epicode.Spring.security.entity.Receipt;
+import com.epicode.Spring.security.payload.ReceiptDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,36 +32,65 @@ public class PayPalService {
 	
 	private final String apiBaseUrl="https://api-m.sandbox.paypal.com";
 	
-	public String getAccessToken() throws Exception {
-		final String tokenApi=apiBaseUrl+"/v1/oauth2/token";
-		
-		HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBasicAuth(clientId, clientSecret);
-        
-        HttpEntity<String> request = new HttpEntity<>("grant_type=client_credentials", headers);
-        ResponseEntity<String> response = new RestTemplate().exchange(tokenApi, HttpMethod.POST, request, String.class);
-        
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(response.getBody());
-        return jsonNode.get("access_token").asText();
+	@Autowired private AuthServiceImpl userService;
+	
+	private String getAccessToken() {
+		try {
+			final String tokenApi=apiBaseUrl+"/v1/oauth2/token";
+			
+			MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+			requestBody.add("grant_type", "client_credentials");
+			
+			HttpHeaders headers = new HttpHeaders();
+	        headers.setBasicAuth(clientId, clientSecret);
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			
+	        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
+	        ResponseEntity<String> response = new RestTemplate().exchange(tokenApi, HttpMethod.POST, request, String.class);
+	        
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        JsonNode jsonNode = objectMapper.readTree(response.getBody());
+			return jsonNode.get("access_token").asText();
+		} catch (JsonProcessingException e) {
+			throw new DataIntegrityViolationException("Couldn't get the access token.");
+		}
 	}
 	
-	public void createOrder(Receipt r) throws Exception {
+	public String createOrder(ReceiptDto r) {
+		
+		Receipt receipt=new Receipt();
+		receipt.setBookings(r.getBookings());
+		receipt.setUser(userService.getUserByEmailOrPassword(r.getUser().getUsername()));
+		
 		String accessToken=getAccessToken();
-		final String url=apiBaseUrl+"v2/checkout/orders";
+		System.out.println(accessToken);
+		
+		final String url=apiBaseUrl+"/v2/checkout/orders";
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(accessToken);
         
-        HttpEntity<Receipt> request = new HttpEntity<Receipt>(r, headers);
+        String body = "{\n" +
+                "  \"intent\": \"CAPTURE\",\n" +
+                "  \"purchase_units\": [\n" +
+                "    {\n" +
+                "      \"amount\": {\n" +
+                "        \"currency_code\": \"USD\",\n" +
+                "        \"value\": \"" + receipt.getTotPrice() + "\"\n" +
+                "      }\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+        
+        HttpEntity<String> request = new HttpEntity<String>(body, headers);
         ResponseEntity<String> response = new RestTemplate().exchange(url, HttpMethod.POST, request, String.class);
+        return response.getBody();
 	}
 	
-	public JsonNode capturePayment(long orderId) throws Exception {
+	public String captureOrder(long orderId) {
 		String accessToken=getAccessToken();
-		final String url=apiBaseUrl+"v2/checkout/orders/"+orderId+"/capture";
+		final String url=apiBaseUrl+"/v2/checkout/orders/"+orderId+"/capture";
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -61,8 +98,6 @@ public class PayPalService {
         
         HttpEntity<String> request = new HttpEntity<>(headers);
         ResponseEntity<String> response = new RestTemplate().exchange(url, HttpMethod.POST, request, String.class);
-        
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readTree(response.getBody());
+        return response.getBody();
 	}
 }

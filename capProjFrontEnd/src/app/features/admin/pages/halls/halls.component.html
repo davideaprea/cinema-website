@@ -8,9 +8,10 @@
       </div>
       <div class="text-center">
         <p class="my-1">Rows: {{hall.nrows}}; Seats: {{hall.nseatsPerRow}};</p>
-        <p class="my-1">Status: {{hall.status}}</p>
+        <button (click)="toggleStatus(hall)" pButton pRipple icon="{{hall.status=='AVAILABLE' ? 'pi pi-check' : 'pi pi-times'}}" label="Status: {{hall.status}}" class="{{hall.status=='AVAILABLE' ? 'p-button-success' : 'p-button-danger'}} my-1"></button>
       </div>
     </div>
   </div>
 </div>
 <app-hall-form></app-hall-form>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

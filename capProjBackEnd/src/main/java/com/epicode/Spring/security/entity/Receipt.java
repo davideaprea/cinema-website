@@ -19,10 +19,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
 @Entity
+@ToString
 @Table(name="receipts")
 public class Receipt {
 	@Id

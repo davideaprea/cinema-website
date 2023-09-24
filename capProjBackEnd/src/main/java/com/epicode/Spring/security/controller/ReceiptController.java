@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epicode.Spring.security.entity.Receipt;
+import com.epicode.Spring.security.payload.ReceiptDto;
 import com.epicode.Spring.security.service.ReceiptService;
 
 @RestController
@@ -24,7 +25,7 @@ public class ReceiptController {
 	
 	@PostMapping
 	@PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> create(@RequestBody Receipt r) {
+    public ResponseEntity<?> create(@RequestBody ReceiptDto r) {
         return new ResponseEntity<Receipt>(receiptService.create(r), HttpStatus.CREATED);
     }
 

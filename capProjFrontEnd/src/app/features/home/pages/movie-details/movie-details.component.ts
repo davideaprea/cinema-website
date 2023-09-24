@@ -34,14 +34,18 @@ export class MovieDetailsComponent {
 
       scheduleService.getMovieSchedules(this.movie).subscribe(s => {
         this.schedules = s;
-        for (let schedule of this.schedules) {
-          let date = new Date(schedule.startTime);
-          let item: MenuItem = {
-            label: date.toLocaleDateString()
-          }
+        this.schedules.forEach(el=>el.startTime=new Date(el.startTime));
+        this.schedules.sort((a, b)=> a.startTime.getTime()-b.startTime.getTime());
 
-          this.items.push(item);
+        for (let schedule of this.schedules) {
+          let date = schedule.startTime.toLocaleDateString();
+
+          if (!this.items.some(item=>item.label==date)) {
+            let item: MenuItem = { label: date }
+            this.items.push(item);
+          }
         }
+
         this.activeItem = this.items[0];
         this.onActiveItemChange(this.activeItem);
       });
