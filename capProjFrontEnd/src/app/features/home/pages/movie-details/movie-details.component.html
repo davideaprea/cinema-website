@@ -17,7 +17,7 @@
 </div>
 
 <div *ngIf="schedules.length>0" class="p-3 my-2">
-  <h2>{{isUserAdmin ? "MOVIE SCHEDULES" : "BUY YOUR TICKETS"}}</h2>
+  <h2>{{isUserAdmin ? "SCHEDULES" : "BUY YOUR TICKETS"}}</h2>
   <p-tabMenu (activeItemChange)="onActiveItemChange($event)" [scrollable]="true" [model]="items"
     [activeItem]="activeItem"></p-tabMenu>
 

@@ -58,7 +58,9 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	http.cors().and().csrf().disable()
         .authorizeHttpRequests((authorize) -> authorize
-        		.requestMatchers(HttpMethod.GET, "/movies/cover/**").permitAll()
+        		.requestMatchers(HttpMethod.GET, "/schedules/scheduled-movies").permitAll()
+        		.requestMatchers(HttpMethod.GET, "/schedules/movie-schedules/**").permitAll()
+        		.requestMatchers(HttpMethod.GET, "/movies/**").permitAll()
         		.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated())

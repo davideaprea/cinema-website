@@ -1,8 +1,5 @@
 package com.epicode.Spring.security.service;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,15 +9,17 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.epicode.Spring.security.entity.Receipt;
 import com.epicode.Spring.security.payload.ReceiptDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import reactor.core.publisher.Mono;
 
 @Service
 public class PayPalService {
@@ -34,18 +33,16 @@ public class PayPalService {
 	
 	@Autowired private AuthServiceImpl userService;
 	
-	private String getAccessToken() {
+	public String getAccessToken() {
 		try {
 			final String tokenApi=apiBaseUrl+"/v1/oauth2/token";
-			
-			MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-			requestBody.add("grant_type", "client_credentials");
 			
 			HttpHeaders headers = new HttpHeaders();
 	        headers.setBasicAuth(clientId, clientSecret);
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 			
-	        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
+	        HttpEntity<String> request = new HttpEntity<>("grant_type=client_credentials", headers);
+	        System.out.println(request);
 	        ResponseEntity<String> response = new RestTemplate().exchange(tokenApi, HttpMethod.POST, request, String.class);
 	        
 	        ObjectMapper objectMapper = new ObjectMapper();

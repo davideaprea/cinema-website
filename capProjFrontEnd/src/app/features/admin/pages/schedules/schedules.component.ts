@@ -31,7 +31,6 @@ export class SchedulesComponent {
       });
 
       this.schedules = schedules;
-      console.log(this.schedules)
       this.loading = false;
     })
   }
@@ -51,7 +50,6 @@ export class SchedulesComponent {
     if (JSON.stringify(this.editedSchedule) !== JSON.stringify(schedule)) {
       delete schedule.endTime;
       this.scheduleService.edit(schedule).subscribe(r => {
-        console.log(r)
         this.editedSchedule = undefined;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Schedule edited successfully.' });
       });

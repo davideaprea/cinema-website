@@ -15,16 +15,16 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 4rem">
+        <th style="width: 5%">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
-        <th style="width:29%">
+        <th style="width:20%">
           <div class="flex align-items-center">
             Movie
             <p-columnFilter type="text" field="movie.title" display="menu"></p-columnFilter>
           </div>
         </th>
-        <th style="width:20%">
+        <th style="width: 5%">
           <div class="flex align-items-center">
             Hall n°
             <p-columnFilter type="text" field="hall.id" display="menu"></p-columnFilter>
@@ -42,7 +42,7 @@
             <p-columnFilter type="date" field="startTime" display="menu"></p-columnFilter>
           </div>
         </th>
-        <th style="width:20%"></th>
+        <th style="width:5%"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-schedule let-editing="editing" let-ri="rowIndex">

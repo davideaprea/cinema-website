@@ -16,6 +16,7 @@ import com.epicode.Spring.security.payload.RegisterDto;
 import com.epicode.Spring.security.repository.RoleRepository;
 import com.epicode.Spring.security.repository.UserRepository;
 import com.epicode.Spring.security.service.AuthService;
+import com.epicode.Spring.security.service.PayPalService;
 
 
 @Component
@@ -25,6 +26,7 @@ public class AuthRunner implements ApplicationRunner {
 	@Autowired UserRepository userRepository;
 	@Autowired PasswordEncoder passwordEncoder;
 	@Autowired AuthService authService;
+	@Autowired PayPalService payPalService;
 	
 	private Set<Role> adminRole;
 	private Set<Role> moderatorRole;
@@ -34,7 +36,6 @@ public class AuthRunner implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		System.out.println("Run...");
 		//setRoleDefault();
-		
 	}
 	
 	private void setRoleDefault() {

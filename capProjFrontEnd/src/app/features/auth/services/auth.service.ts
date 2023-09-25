@@ -46,11 +46,12 @@ export class AuthService {
   login(user: ILogUser, remember: boolean) {
     this.http.post<IUser>(environment.login, user).subscribe(u => {
       this.loggedUser.next(u);
+      this.storageUser=u;
 
       if (remember) localStorage.setItem("user", JSON.stringify(u));
       else sessionStorage.setItem("user", JSON.stringify(u));
 
-      this.router.navigate(["/home"]);
+      this.router.navigate(["/home", "schedules"]);
     });
   }
 
