@@ -1,5 +1,7 @@
 package com.epicode.Spring.security.entity;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -56,8 +58,14 @@ public class Receipt {
 		int selectedRow=bookings.iterator().next().getSeat().getNRow();
 		int hallRows=bookings.iterator().next().getViewSchedule().getHall().getNRows();
 		
-		this.totPrice=hallRows-selectedRow<=2 ? bookings.size()*TicketPrice.VIP.getValue() : bookings.size()*TicketPrice.REGULAR.getValue();
+		double totPrice=hallRows-selectedRow<=2 ? bookings.size()*TicketPrice.VIP.getValue() : bookings.size()*TicketPrice.REGULAR.getValue();
 		if(bookings.iterator().next().getViewSchedule().getMovie().getIsTridimensional()) this.totPrice+=bookings.size()*TicketPrice.TRIDIMENSIONAL.getValue();
+		
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+		symbols.setDecimalSeparator('.');
+		DecimalFormat df = new DecimalFormat("#.00", symbols);
+		String formatPrice=df.format(totPrice);
+		this.totPrice=Double.parseDouble(formatPrice);
 		
 		this.purchaseTime = LocalDateTime.now();
 	}

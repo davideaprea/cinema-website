@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Schedule } from '../../admin/models/schedule';
-import { Receipt } from '../models/receipt';
 import { environment } from 'src/environments/environment.development';
 import { ReceiptBody } from '../models/receipt-body';
 import { Booking } from '../models/booking';
@@ -12,17 +11,17 @@ import { Booking } from '../models/booking';
 export class BookingService {
 
   protected selectedSchedule?:Schedule;
-  protected receipt?:Receipt;
+  protected receipt?:ReceiptBody;
 
   constructor(private http:HttpClient) { }
 
-  setReceipt(receipt:Receipt){
+  setReceipt(receipt:ReceiptBody){
     this.receipt=receipt;
     sessionStorage.setItem("receipt", JSON.stringify(receipt));
   }
 
   getReceipt(){
-    if(this.receipt) return this.selectedSchedule;
+    if(this.receipt) return this.receipt;
     let receipt=JSON.parse(sessionStorage.getItem("receipt")!);
     if(receipt) return receipt;
   }
@@ -38,16 +37,7 @@ export class BookingService {
     if(selectedSchedule) return selectedSchedule;
   }
 
-  bookSeats(receipt:ReceiptBody){
-    return this.http.post(environment.receipts, receipt);
-  }
-
   getScheduleBookings(schedule:Schedule){
     return this.http.get<Booking[]>(environment.bookings+"/schedule-bookings/"+schedule.id);
-  }
-
-  createOrder(receipt:ReceiptBody){
-    console.log(receipt)
-    return this.http.post(environment.paypal, receipt);
   }
 }

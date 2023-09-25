@@ -6,5 +6,5 @@ export const environment = {
   halls: "http://localhost:8080/halls",
   receipts: "http://localhost:8080/receipts",
   bookings: "http://localhost:8080/bookings",
-  paypal: "http://localhost:8080/payments",
+  payments: "http://localhost:8080/payments",
 };

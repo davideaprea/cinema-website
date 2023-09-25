@@ -33,7 +33,7 @@ public class PayPalService {
 	
 	@Autowired private AuthServiceImpl userService;
 	
-	public String getAccessToken() {
+	private String getAccessToken() {
 		try {
 			final String tokenApi=apiBaseUrl+"/v1/oauth2/token";
 			
@@ -42,7 +42,6 @@ public class PayPalService {
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 			
 	        HttpEntity<String> request = new HttpEntity<>("grant_type=client_credentials", headers);
-	        System.out.println(request);
 	        ResponseEntity<String> response = new RestTemplate().exchange(tokenApi, HttpMethod.POST, request, String.class);
 	        
 	        ObjectMapper objectMapper = new ObjectMapper();
@@ -55,37 +54,43 @@ public class PayPalService {
 	
 	public String createOrder(ReceiptDto r) {
 		
-		Receipt receipt=new Receipt();
-		receipt.setBookings(r.getBookings());
-		receipt.setUser(userService.getUserByEmailOrPassword(r.getUser().getUsername()));
-		
-		String accessToken=getAccessToken();
-		System.out.println(accessToken);
-		
-		final String url=apiBaseUrl+"/v2/checkout/orders";
-		
-		HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(accessToken);
-        
-        String body = "{\n" +
-                "  \"intent\": \"CAPTURE\",\n" +
-                "  \"purchase_units\": [\n" +
-                "    {\n" +
-                "      \"amount\": {\n" +
-                "        \"currency_code\": \"USD\",\n" +
-                "        \"value\": \"" + receipt.getTotPrice() + "\"\n" +
-                "      }\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}";
-        
-        HttpEntity<String> request = new HttpEntity<String>(body, headers);
-        ResponseEntity<String> response = new RestTemplate().exchange(url, HttpMethod.POST, request, String.class);
-        return response.getBody();
+		try {
+			Receipt receipt=new Receipt();
+			receipt.setBookings(r.getBookings());
+			receipt.setUser(userService.getUserByEmailOrPassword(r.getUser().getUsername()));
+			String accessToken=getAccessToken();
+			
+			final String url=apiBaseUrl+"/v2/checkout/orders";
+			
+			HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_JSON);
+	        headers.setBearerAuth(accessToken);
+	        
+	        String body = "{\n" +
+	                "  \"intent\": \"CAPTURE\",\n" +
+	                "  \"purchase_units\": [\n" +
+	                "    {\n" +
+	                "      \"amount\": {\n" +
+	                "        \"currency_code\": \"USD\",\n" +
+	                "        \"value\": \"" + receipt.getTotPrice() + "\"\n" +
+	                "      }\n" +
+	                "    }\n" +
+	                "  ]\n" +
+	                "}";
+	        
+	        HttpEntity<String> request = new HttpEntity<String>(body, headers);
+	        ResponseEntity<String> response = new RestTemplate().exchange(url, HttpMethod.POST, request, String.class);
+
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        JsonNode jsonNode = objectMapper.readTree(response.getBody());
+	        System.out.println(jsonNode);
+			return jsonNode.get("id").asText();
+		}catch (JsonProcessingException e) {
+			throw new DataIntegrityViolationException("Error creating the order.");
+		}
 	}
 	
-	public String captureOrder(long orderId) {
+	public String captureOrder(String orderId) {
 		String accessToken=getAccessToken();
 		final String url=apiBaseUrl+"/v2/checkout/orders/"+orderId+"/capture";
 		

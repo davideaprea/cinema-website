@@ -31,7 +31,7 @@
         </ul>
         <p class="text-3xl">Total: {{bookings.length*(schedule.hall.nrows - bookings[0].seat.nrow<3 ? 9.5 : 7.89) |
             number:'1.2-2'}}€</p>
-        <a [routerLink]="['/booking', 'payment']" pButton pRipple
+        <a (click)="createReceipt()" [routerLink]="['/booking', 'payment']" pButton pRipple
             class="no-underline p-button-rounded p-button-primary" label="Proceed to payment"
             icon="pi pi-angle-double-right"></a>
       </div>

@@ -95,14 +95,12 @@ export class SeatBookingComponent {
     console.log(this.bookings);
   }
 
-  book() {
+  createReceipt() {
     const receipt: ReceiptBody = {
       user: JSON.parse(sessionStorage.getItem("user")!),
       bookings: this.bookings
     }
 
-    this.bookingService.createOrder(receipt).subscribe(res=>console.log(res));
-
-    /* this.bookingService.bookSeats(receipt).subscribe(d => console.log(d)); */
+    this.bookingService.setReceipt(receipt);
   }
 }

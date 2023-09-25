@@ -28,7 +28,7 @@ public class PayPalController {
 	
 	@PostMapping("/{orderId}")
 	@PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> create(@PathVariable long orderId) {
+    public ResponseEntity<?> create(@PathVariable String orderId) {
         return new ResponseEntity<String>(payPalService.captureOrder(orderId), HttpStatus.CREATED);
     }
 }
