@@ -31,7 +31,7 @@ export class MovieService {
 
     formData.append('cover', movie.cover);
     formData.append('backgroundCover', movie.backgroundCover);
-    this.http.post(environment.movies, formData).subscribe(res => console.log(res));
+    return this.http.post(environment.movies, formData);
   }
 
   get(id: number){

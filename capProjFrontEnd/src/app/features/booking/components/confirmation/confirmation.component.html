@@ -1,1 +1,8 @@
-<p>confirmation works!</p>
+<div class="p-3 bg-primary-600 payment-container border-round-lg sm:w-30rem">
+  <div class="my-3 text-center">
+    <h1 class="my-2">Thank you!</h1>
+    <p class="my-2">The payment has been successfully completed.</p>
+    <a [routerLink]="['/home', 'schedules']" pButton pRipple class="no-underline p-button-rounded p-button-primary"
+      label="Go back to the homepage" icon="pi pi-angle-double-right"></a>
+  </div>
+</div>

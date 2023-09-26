@@ -11,33 +11,36 @@ import { IUser } from '../../models/iuser';
 })
 export class DropMenuComponent implements OnInit {
   items: MenuItem[] | undefined;
-  user:IUser | null=null;
+  user: IUser | null = null;
 
-  constructor(private authService:AuthService, private router:Router){}
+  constructor(private authService: AuthService, private router: Router) {
+    this.authService.isUserLogged.subscribe(user => {
+      this.user=user;
+      this.items = [
+        {
+          label: 'Options',
+          items: [
+            {
+              label: 'Profile',
+              icon: 'pi pi-user',
+              command: () => {
+                this.authService.isUserAdmin(user) ? this.router.navigate(["/admin", "ourmovies"]) : this.router.navigate(["/profile"]);
+              }
+            },
+            {
+              label: 'Sign out',
+              icon: 'pi pi-sign-out',
+              command: () => {
+                this.authService.logout();
+              }
+            }
+          ]
+        }
+      ];
+    });
+  }
 
   ngOnInit(): void {
-    this.authService.isUserLogged.subscribe(u=>this.user=u);
 
-    this.items = [
-      {
-        label: 'Options',
-        items: [
-          {
-            label: 'Profile',
-            icon: 'pi pi-user',
-            command: () => {
-              this.authService.isUserAdmin() ? this.router.navigate(["/admin", "ourmovies"]) : this.router.navigate(["/profile"]);
-            }
-          },
-          {
-            label: 'Sign out',
-            icon: 'pi pi-sign-out',
-            command: () => {
-              this.authService.logout();
-            }
-          }
-        ]
-      }
-    ];
   }
 }

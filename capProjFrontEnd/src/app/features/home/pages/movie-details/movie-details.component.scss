@@ -1,4 +1,26 @@
+:host{
+  height: 100vh;
+  display: block;
+}
+
 .background-cover{
-  box-shadow: inset 129px 0px 169px 35px rgba(0,0,0,0.52);
-  min-height: 20rem;
+  filter: blur(5px);
+}
+
+.content{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+}
+
+.blurred-bg{
+  background-color: rgba(0,0,0, 0.4);
+}
+
+.cover{
+  height: 50rem;
+  width: 30rem;
 }

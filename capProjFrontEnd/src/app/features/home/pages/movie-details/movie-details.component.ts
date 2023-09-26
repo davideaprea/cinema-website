@@ -18,7 +18,7 @@ export class MovieDetailsComponent {
   selectedSchedules: Schedule[] = [];
   items: MenuItem[] = [];
   activeItem!: MenuItem;
-  isUserAdmin: boolean;
+  isUserAdmin!: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +26,8 @@ export class MovieDetailsComponent {
     private scheduleService: ScheduleService,
     private authService: AuthService,
     private bookingService: BookingService) {
-    this.isUserAdmin = authService.isUserAdmin();
+
+    authService.isUserLogged.subscribe(user=>this.isUserAdmin=authService.isUserAdmin(user));
 
     const id = Number(route.snapshot.paramMap.get("id"));
     movieService.get(id).subscribe(m => {
@@ -34,13 +35,13 @@ export class MovieDetailsComponent {
 
       scheduleService.getMovieSchedules(this.movie).subscribe(s => {
         this.schedules = s;
-        this.schedules.forEach(el=>el.startTime=new Date(el.startTime));
-        this.schedules.sort((a, b)=> a.startTime.getTime()-b.startTime.getTime());
+        this.schedules.forEach(el => el.startTime = new Date(el.startTime));
+        this.schedules.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
 
         for (let schedule of this.schedules) {
           let date = schedule.startTime.toLocaleDateString();
 
-          if (!this.items.some(item=>item.label==date)) {
+          if (!this.items.some(item => item.label == date)) {
             let item: MenuItem = { label: date }
             this.items.push(item);
           }

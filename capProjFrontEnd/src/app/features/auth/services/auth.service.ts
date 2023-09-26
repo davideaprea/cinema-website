@@ -30,9 +30,18 @@ export class AuthService {
     return decodedToken.role[0].roleName;
   }
 
-  isUserAdmin(): boolean {
+/*   isUserAdmin(): boolean {
     if (this.storageUser) {
       let decodedToken = this.jwtHelper.decodeToken(this.storageUser.accessToken);
+      let role=decodedToken.role[0].roleName;
+      return role == Role.ADMIN || role==Role.MODERATOR;
+    }
+    return false;
+  } */
+
+  isUserAdmin(user:IUser|null): boolean {
+    if (user) {
+      let decodedToken = this.jwtHelper.decodeToken(user.accessToken);
       let role=decodedToken.role[0].roleName;
       return role == Role.ADMIN || role==Role.MODERATOR;
     }

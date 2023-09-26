@@ -23,7 +23,6 @@ export class SeatBookingComponent {
     bookingService.getScheduleBookings(this.schedule).subscribe(bookings => {
       this.bookedSeats = bookings;
       this.restoreSeats();
-      console.log(bookings);
     });
   }
 
@@ -80,7 +79,6 @@ export class SeatBookingComponent {
   private removeBooking(row: number, seat: number) {
     let i = this.bookings.findIndex(booking => booking.seat.nrow == row + 1 && booking.seat.nseat == seat + 1)
     this.bookings.splice(i, 1);
-    console.log(this.bookings)
   }
 
   private addBooking(row: number, seat: number) {
@@ -92,7 +90,6 @@ export class SeatBookingComponent {
       }
     }
     this.bookings.push(booking);
-    console.log(this.bookings);
   }
 
   createReceipt() {

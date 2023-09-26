@@ -1,4 +1,4 @@
-<nav class="p-3 flex align-items-center justify-content-between bg-primary-900">
+<nav class="p-3 flex align-items-center justify-content-between">
   <a [routerLink]="['/home', 'schedules']" href=""><img src="" alt="logo"></a>
   <app-drop-menu *ngIf="user"></app-drop-menu>
   <a *ngIf="!user" [routerLink]="['/auth', 'login']" pButton pRipple class="p-button-outlined p-button-help">Login</a>

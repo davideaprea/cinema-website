@@ -37,7 +37,29 @@ export class BookingService {
     if(selectedSchedule) return selectedSchedule;
   }
 
+  getPrice():number{
+    let receipt=this.getReceipt();
+    if(receipt){
+      let nSeats=receipt.bookings.length;
+      let selectedRow=receipt.bookings[0].seat.nrow;
+      let hallRows=receipt.bookings[0].viewSchedule.hall.nrows;
+      return hallRows-selectedRow<3 ? nSeats*9.5 : nSeats*7.85;
+    }
+    return 0;
+  }
+
+  reset(){
+    this.selectedSchedule=undefined;
+    this.receipt=undefined;
+    sessionStorage.removeItem("schedule");
+    sessionStorage.removeItem("receipt");
+  }
+
   getScheduleBookings(schedule:Schedule){
     return this.http.get<Booking[]>(environment.bookings+"/schedule-bookings/"+schedule.id);
+  }
+
+  book(receipt:ReceiptBody){
+    return this.http.post(environment.receipts, receipt);
   }
 }
