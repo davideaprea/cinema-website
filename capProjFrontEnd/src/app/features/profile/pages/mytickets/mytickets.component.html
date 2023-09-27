@@ -1,0 +1,47 @@
+<h2 class="text-4xl text-center">YOUR TICKETS</h2>
+<div *ngIf="userReceipts" class="tickets">
+  <div *ngFor="let receipt of userReceipts" class="bg-purple-300 p-3 border-round-lg">
+    <div class="mb-3">
+      <h3 class="text-3xl text-black-alpha-90 my-1">{{receipt.bookings[0].viewSchedule.movie.title}}</h3>
+      <p class="text-xs text-black-alpha-90 my-1 flex gap-1">
+        <span class="border-solid border-1 border-round-sm p-1" *ngFor="let genre of receipt.bookings[0].viewSchedule.movie.genres">{{genre}}</span>
+      </p>
+    </div>
+
+    <div class="flex justify-content-between mb-3">
+      <div>
+        <span class="text-black-alpha-90">Date</span>
+        <p class="text-black-alpha-90 my-1 font-bold">{{receipt.bookings[0].viewSchedule.startTime | date:"M/d"}}</p>
+      </div>
+
+      <div>
+        <span class="text-black-alpha-90">Start time</span>
+        <p class="text-black-alpha-90 my-1 font-bold">{{receipt.bookings[0].viewSchedule.startTime | date:'shortTime'}}</p>
+      </div>
+
+      <div>
+        <span class="text-black-alpha-90">End time</span>
+        <p class="text-black-alpha-90 my-1 font-bold">{{receipt.bookings[0].viewSchedule.endTime | date:'shortTime'}}</p>
+      </div>
+    </div>
+
+    <div class="flex justify-content-between">
+      <div>
+        <span class="text-black-alpha-90">Hall</span>
+        <p class="text-black-alpha-90 my-1 font-bold">{{receipt.bookings[0].viewSchedule.hall.id}}</p>
+      </div>
+
+      <div>
+        <span class="text-black-alpha-90">Row</span>
+        <p class="text-black-alpha-90 my-1 font-bold">{{receipt.bookings[0].seat.nrow}}</p>
+      </div>
+
+      <div>
+        <span class="text-black-alpha-90">Seats</span>
+        <p class="text-black-alpha-90 my-1 font-bold flex gap-2">
+          <span *ngFor="let booking of receipt.bookings">{{booking.seat.nseat}};</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

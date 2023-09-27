@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import com.epicode.Spring.enums.TicketPrice;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -33,6 +34,7 @@ public class Receipt {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@JsonIgnore
 	@ManyToOne
 	private User user;
 	

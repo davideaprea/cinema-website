@@ -4,6 +4,8 @@ import { Schedule } from '../../admin/models/schedule';
 import { environment } from 'src/environments/environment.development';
 import { ReceiptBody } from '../models/receipt-body';
 import { Booking } from '../models/booking';
+import { IUser } from 'src/app/core/models/iuser';
+import { Receipt } from '../models/receipt';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +59,10 @@ export class BookingService {
 
   getScheduleBookings(schedule:Schedule){
     return this.http.get<Booking[]>(environment.bookings+"/schedule-bookings/"+schedule.id);
+  }
+
+  getReceiptsByUser(user:IUser){
+    return this.http.get<Receipt[]>(environment.receipts+"/all/"+user.username);
   }
 
   book(receipt:ReceiptBody){

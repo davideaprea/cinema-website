@@ -1,5 +1,7 @@
 package com.epicode.Spring.security.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,11 @@ public class ReceiptController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         return new ResponseEntity<Receipt>(receiptService.get(id), HttpStatus.OK);
+    }
+    
+    @GetMapping("/all/{credentials}")
+    public ResponseEntity<?> getById(@PathVariable String credentials) {
+        return new ResponseEntity<List<Receipt>>(receiptService.getAllByUser(credentials), HttpStatus.OK);
     }
 
 //    @PutMapping("/{id}")

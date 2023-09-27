@@ -1,5 +1,13 @@
-<nav class="p-3 flex align-items-center justify-content-between">
+<nav class="p-3 surface-card flex align-items-center justify-content-between">
+  <div class="flex align-items-center gap-3">
+    <i class="pi pi-facebook text-lg"></i>
+    <i class="pi pi-instagram text-lg"></i>
+    <i class="pi pi-twitter text-lg"></i>
+    <i class="pi pi-youtube text-lg"></i>
+  </div>
+
   <a [routerLink]="['/home', 'schedules']" href=""><img src="" alt="logo"></a>
+
   <app-drop-menu *ngIf="user"></app-drop-menu>
   <a *ngIf="!user" [routerLink]="['/auth', 'login']" pButton pRipple class="p-button-outlined p-button-help">Login</a>
 </nav>

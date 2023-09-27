@@ -60,7 +60,6 @@ export class PaymentComponent implements OnInit {
                 this.bookingService.reset();
                 this.ngZone.run(() => {
                   this.router.navigate(['/booking', 'confirmation'], { replaceUrl: true });
-                  history.pushState(null, '');
                 });
               });
             })
