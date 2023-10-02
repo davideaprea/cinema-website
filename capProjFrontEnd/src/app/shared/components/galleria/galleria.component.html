@@ -1,6 +1,6 @@
 <p-galleria [value]="photos" [circular]="true" [autoPlay]="true"
   [containerStyle]="{ 'width': '100%' }" [numVisible]="5" [showThumbnails]="false">
   <ng-template pTemplate="item" let-item>
-    <img [src]="item" style="width: 100%;" />
+    <img [src]="loadImage(item)" style="width: 100%;" #img/>
   </ng-template>
 </p-galleria>

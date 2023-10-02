@@ -24,12 +24,17 @@ export class SchedulesComponent {
   schedulesToDelete: number[] = [];
 
   constructor(private confirmationService: ConfirmationService, private scheduleService: ScheduleService, private movieService: MovieService, private hallService: HallService, private messageService: MessageService) {
-    scheduleService.getNextSchedules().subscribe(schedules => {
+    this.loadSchedules();
+  }
+
+  loadSchedules(){
+    this.scheduleService.getNextSchedules().subscribe(schedules => {
       schedules.forEach(el => {
         el.startTime = new Date(<Date>el.startTime);
         el.endTime = new Date(<Date>el.endTime);
       });
 
+      schedules.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
       this.schedules = schedules;
       this.loading = false;
     })
@@ -52,6 +57,7 @@ export class SchedulesComponent {
       this.scheduleService.edit(schedule).subscribe(r => {
         this.editedSchedule = undefined;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Schedule edited successfully.' });
+        this.loadSchedules();
       });
     }
   }
@@ -77,6 +83,7 @@ export class SchedulesComponent {
       accept: () => {
         this.scheduleService.delete(this.schedulesToDelete).subscribe(res=>{
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Schedules deleted successfully.' });
+          this.loadSchedules();
         })
       }
     })

@@ -28,6 +28,7 @@ public class PayPalService {
 	private final String apiBaseUrl="https://api-m.sandbox.paypal.com";
 	
 	@Autowired private AuthServiceImpl userService;
+	@Autowired private EmailService emailService;
 	
 	private String getAccessToken() {
 		try {
@@ -91,11 +92,17 @@ public class PayPalService {
 		final String url=apiBaseUrl+"/v2/checkout/orders/"+orderId+"/capture";
 		
 		HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(accessToken);
-        
-        HttpEntity<String> request = new HttpEntity<>(headers);
-        ResponseEntity<String> response = new RestTemplate().exchange(url, HttpMethod.POST, request, String.class);
-        return response.getBody();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setBearerAuth(accessToken);
+		
+		HttpEntity<String> request = new HttpEntity<>(headers);
+		ResponseEntity<String> response = new RestTemplate().exchange(url, HttpMethod.POST, request, String.class);
+
+//	        ObjectMapper objectMapper = new ObjectMapper();
+//	        JsonNode jsonNode = objectMapper.readTree(response.getBody());
+//	        String emailAddress = jsonNode.at("/payment_source/paypal/email_address").asText();
+//	        emailService.sendPaymentConfirmation(emailAddress);
+		
+		return response.getBody();
 	}
 }

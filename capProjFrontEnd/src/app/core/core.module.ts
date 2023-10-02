@@ -8,20 +8,25 @@ import { MenuModule } from 'primeng/menu';
 import { DropMenuComponent } from './components/drop-menu/drop-menu.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { FooterComponent } from './components/footer/footer.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    DropMenuComponent
+    DropMenuComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
     ButtonModule,
     RouterModule,
-    MenuModule
+    MenuModule,
+    InputTextModule
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   providers: [
     {

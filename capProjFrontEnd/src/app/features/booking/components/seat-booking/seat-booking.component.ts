@@ -22,6 +22,7 @@ export class SeatBookingComponent {
     this.schedule = bookingService.getSchedule();
     bookingService.getScheduleBookings(this.schedule).subscribe(bookings => {
       this.bookedSeats = bookings;
+      console.log(bookings)
       this.restoreSeats();
     });
   }
@@ -30,13 +31,13 @@ export class SeatBookingComponent {
     if (!this.onSelection) {
       for (let i = 0; i < this.seats.length; i++) {
         for (let j = 0; j < this.seats[i].length; j++) {
-          if(this.seats[i][j]==SeatStatus.BOOKED) continue;
+          if (this.seats[i][j] == SeatStatus.BOOKED) continue;
           this.seats[i][j] = SeatStatus.NOT_AVAILABLE;
         }
       }
       this.seats[row][seat] = SeatStatus.SELECTED;
-      if(this.seats[row][seat+1] && this.seats[row][seat+1]!=SeatStatus.BOOKED) this.seats[row][seat+1] = SeatStatus.AVAILABLE;
-      if(this.seats[row][seat-1] && this.seats[row][seat-1]!=SeatStatus.BOOKED) this.seats[row][seat-1] = SeatStatus.AVAILABLE;
+      if (this.seats[row][seat + 1] && this.seats[row][seat + 1] != SeatStatus.BOOKED) this.seats[row][seat + 1] = SeatStatus.AVAILABLE;
+      if (this.seats[row][seat - 1] && this.seats[row][seat - 1] != SeatStatus.BOOKED) this.seats[row][seat - 1] = SeatStatus.AVAILABLE;
 
       this.addBooking(row, seat);
       this.onSelection = true;
@@ -79,6 +80,7 @@ export class SeatBookingComponent {
   private removeBooking(row: number, seat: number) {
     let i = this.bookings.findIndex(booking => booking.seat.nrow == row + 1 && booking.seat.nseat == seat + 1)
     this.bookings.splice(i, 1);
+    console.log(this.bookings.map(b=>b.seat))
   }
 
   private addBooking(row: number, seat: number) {
@@ -90,6 +92,7 @@ export class SeatBookingComponent {
       }
     }
     this.bookings.push(booking);
+    console.log(this.bookings.map(b=>b.seat))
   }
 
   createReceipt() {

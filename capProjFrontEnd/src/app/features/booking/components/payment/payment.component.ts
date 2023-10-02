@@ -32,7 +32,7 @@ export class PaymentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let payPalButtons = paypal
+    paypal
       .Buttons({
         createOrder: (data: any) => {
           return fetch(environment.payments, {

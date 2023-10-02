@@ -8,12 +8,13 @@ import { ScheduleService } from 'src/app/features/admin/services/schedule.servic
   styleUrls: ['./schedules.component.scss']
 })
 export class SchedulesComponent {
-  scheduledMovies:Movie[]=[];
-  paths:string[]=[];
-  constructor(private scheduleService:ScheduleService, private movieService:MovieService){
-    scheduleService.getScheduledMovies().subscribe(m=>{
-      this.scheduledMovies=m;
-      /* this.paths=m.map(el=>el.backgroundCover) */
+  scheduledMovies: Movie[] = [];
+  paths: string[] = [];
+
+  constructor(private scheduleService: ScheduleService, private movieService: MovieService) {
+    scheduleService.getScheduledMovies().subscribe(m => {
+      this.scheduledMovies = m;
+      this.paths = m.map(el => el.backgroundCover);
     });
   }
 }

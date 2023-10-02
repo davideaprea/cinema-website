@@ -59,7 +59,7 @@ public class MovieController {
 			Resource resource = new UrlResource(path.toUri());
 			return ResponseEntity.ok()
 	                .contentType(MediaType.parseMediaType("application/octet-stream"))
-	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename())
+	                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + resource.getFilename())
 	                .body(resource);
 		} catch (IOException e) {
 			return ResponseEntity.internalServerError().build();
