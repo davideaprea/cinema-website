@@ -68,7 +68,7 @@ public class PayPalService {
 	                "  \"purchase_units\": [\n" +
 	                "    {\n" +
 	                "      \"amount\": {\n" +
-	                "        \"currency_code\": \"USD\",\n" +
+	                "        \"currency_code\": \"EUR\",\n" +
 	                "        \"value\": \"" + receipt.getTotPrice() + "\"\n" +
 	                "      }\n" +
 	                "    }\n" +

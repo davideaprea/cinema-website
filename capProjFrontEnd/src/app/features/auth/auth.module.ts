@@ -13,13 +13,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
+import { AccountVerificationComponent } from './pages/account-verification/account-verification.component';
 
 @NgModule({
   declarations: [
     RegisterComponent,
     LoginComponent,
     InpPasswordComponent,
-    AuthComponent
+    AuthComponent,
+    AccountVerificationComponent
   ],
   imports: [
     CommonModule,

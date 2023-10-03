@@ -55,6 +55,10 @@ export class AuthService {
     });
   }
 
+  verifyEmail(token:string){
+    return this.http.get(environment.verification+"/"+token);
+  }
+
   logout() {
     this.loggedUser.next(null);
     if (localStorage.getItem("user")) localStorage.removeItem("user");

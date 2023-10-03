@@ -1,8 +1,11 @@
 package com.epicode.Spring.security.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +24,7 @@ import com.epicode.Spring.security.service.AuthServiceImpl;
 public class AuthController {
 
     private AuthService authService;
-    private AuthServiceImpl as;
+    @Autowired private AuthServiceImpl as;
 
     public AuthController(AuthService authService) {
         this.authService = authService;
@@ -43,5 +46,10 @@ public class AuthController {
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterDto registerDto){
     	RegisterResponse response = authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+    
+    @GetMapping("/verification/{token}")
+    public ResponseEntity<?> verifyEmail(@PathVariable String token){
+    	return new ResponseEntity<>(as.verifyEmailVerificationToken(token));
     }
 }

@@ -3,6 +3,8 @@ package com.epicode.Spring.security.service;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenProvider jwtTokenProvider;
-
+    @Autowired private EmailService emailService;
 
     public AuthServiceImpl(AuthenticationManager authenticationManager,
                            UserRepository userRepository,
@@ -104,12 +106,27 @@ public class AuthServiceImpl implements AuthService {
         user.setRoles(roles);
         System.out.println(user);
         userRepository.save(user);
+        
+        String userEmail=registerDto.getEmail();
+        String emailVerificationToken=jwtTokenProvider.generateEmailVerificationToken(userEmail);
+        emailService.sendEmailConfirmation(userEmail, emailVerificationToken);
 
         return new RegisterResponse(
 				registerDto.getName(), 
 				registerDto.getUsername(), 
 				registerDto.getEmail(), 
 				"User registered successfully!.");
+    }
+    
+    public HttpStatus verifyEmailVerificationToken(String token) {
+    	if(!jwtTokenProvider.validateToken(token))
+    		throw new DataIntegrityViolationException("Verification token expired.");
+    	
+    	String email=jwtTokenProvider.getEmail(token);
+    	User user=userRepository.findByEmail(email).get();
+    	user.setVerified(true);
+    	userRepository.save(user);
+    	return HttpStatus.OK;
     }
     
     public ERole getRole(String role) {

@@ -6,9 +6,13 @@
   </div>
 
   <form [formGroup]="f" (ngSubmit)="submit()">
-    <app-inp-text [group]="f" [control]="$any(f.get('email')!)" prop="Email"></app-inp-text>
+    <div class="my-4">
+      <app-inp-text [group]="f" [control]="$any(f.get('email')!)" prop="Email"></app-inp-text>
+    </div>
 
-    <app-inp-password [group]="f"></app-inp-password>
+    <div class="my-4">
+      <app-inp-password [group]="f"></app-inp-password>
+    </div>
 
     <div class="flex align-items-center justify-content-between mb-6">
       <div class="flex align-items-center gap-2">

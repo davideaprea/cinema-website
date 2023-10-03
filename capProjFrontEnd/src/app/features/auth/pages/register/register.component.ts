@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class RegisterComponent {
   f!: FormGroup;
+  registrationCompleted:boolean=false;
 
   constructor(private authService: AuthService, private messageService: MessageService) {
     this.f = new FormGroup({
@@ -24,9 +25,10 @@ export class RegisterComponent {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registration completed.' });
   }
 
-  ngOnInit(): void { }
-
   submit() {
-    this.authService.register(this.f.value).subscribe(u => this.showSuccess());
+    this.authService.register(this.f.value).subscribe(u => {
+      this.showSuccess();
+      this.registrationCompleted=true;
+    });
   }
 }

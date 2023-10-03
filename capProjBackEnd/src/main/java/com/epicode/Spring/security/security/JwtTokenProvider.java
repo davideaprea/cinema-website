@@ -27,6 +27,17 @@ public class JwtTokenProvider {
     private long jwtExpirationDate;
     
     @Autowired private UserRepository userRepo;
+    
+    public String generateEmailVerificationToken(String email) {
+    	Date expirationDate = new Date(System.currentTimeMillis() + 86_400_000);
+    	byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
+    	
+        return Jwts.builder()
+            .setSubject(email)
+            .setExpiration(expirationDate)
+            .signWith(Keys.hmacShaKeyFor(keyBytes))
+            .compact();
+    }
 
     // generate JWT token
     public String generateToken(Authentication authentication){
@@ -66,6 +77,16 @@ public class JwtTokenProvider {
                 .getBody();
         String username = claims.getSubject();
         return username;
+    }
+    
+    public String getEmail(String token){
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        String email = claims.getSubject();
+        return email;
     }
 
     // validate Jwt token
