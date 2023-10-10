@@ -9,6 +9,7 @@ import { ILogUser } from '../../models/ilog-user';
 })
 export class LoginComponent implements OnInit{
   f!:FormGroup;
+  wrongCredentials=false;
 
   constructor(private authService:AuthService){
     this.f=new FormGroup({

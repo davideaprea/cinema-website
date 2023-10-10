@@ -10,7 +10,7 @@ export const bookingGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   return authSvc.isUserLogged.pipe(map(user=>{
-    if (user && !authSvc.isUserAdmin(user) && bookingSvc.getSchedule()) return true;
+    if (user && !authSvc.isUserAdmin(user) && bookingSvc.getSchedule() && authSvc.isUserVerified()) return true;
     else if(!user) router.navigate(["/auth", "login"]);
     else router.navigate(["/home", "schedules"]);
     return false;

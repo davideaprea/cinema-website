@@ -2,6 +2,7 @@
   <div class="my-3 text-center">
     <h1 class="my-2">Thank you!</h1>
     <p class="my-2">The payment has been successfully completed.</p>
+    <p class="my-2">Your tickets can be found <a [routerLink]="['/profile', 'mytickets']" class="no-underline ml-2 text-blue-500 cursor-pointer">here</a> in your personal area.</p>
     <a [routerLink]="['/home', 'schedules']" pButton pRipple class="no-underline p-button-rounded p-button-primary"
       label="Go back to the homepage" icon="pi pi-angle-double-right"></a>
   </div>

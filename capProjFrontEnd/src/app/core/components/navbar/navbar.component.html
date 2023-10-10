@@ -1,14 +1,14 @@
 <nav class="bg-primary-900">
   <section class="surface-card">
     <div class="w-10 mx-auto p-3 flex align-items-center justify-content-between">
-      <div class="flex align-items-center gap-3">
+      <div class="hidden sm:flex align-items-center gap-3">
         <i class="pi pi-facebook text-lg"></i>
         <i class="pi pi-instagram text-lg"></i>
         <i class="pi pi-twitter text-lg"></i>
         <i class="pi pi-youtube text-lg"></i>
       </div>
 
-      <a [routerLink]="['/home', 'schedules']" href=""><img src="" alt="logo"></a>
+      <app-logo></app-logo>
 
       <app-drop-menu *ngIf="user"></app-drop-menu>
       <a *ngIf="!user" [routerLink]="['/auth', 'login']" pButton pRipple
@@ -18,8 +18,15 @@
 
   <section>
     <div class="w-10 mx-auto p-3 flex justify-content-between align-items-center">
-      <ul class="flex gap-5 list-none m-0 p-0">
-        <li><a class="p-2" [routerLink]="['/home', 'schedules']" routerLinkActive="bg-primary-700 border-round-md underline">HOME</a></li>
+      <div class="lg:hidden">
+        <p-menu #menu [model]="items" [popup]="true"></p-menu>
+        <p-button icon="pi pi-bars" styleClass="p-button-rounded p-button-raised"
+          (click)="menu.toggle($event)"></p-button>
+      </div>
+
+      <ul class="hidden lg:flex gap-5 list-none m-0 p-0">
+        <li><a class="p-2" [routerLink]="['/home', 'schedules']"
+            routerLinkActive="bg-primary-700 border-round-md underline">HOME</a></li>
         <li><a class="p-2" [routerLink]="['']">SCHEDULES</a></li>
         <li><a class="p-2" [routerLink]="['']">MOVIES</a></li>
         <li><a class="p-2" [routerLink]="['']">PROMOTIONS</a></li>
@@ -27,7 +34,7 @@
 
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" pInputText />
+        <input class="border-round-3xl" type="text" pInputText />
       </span>
     </div>
   </section>

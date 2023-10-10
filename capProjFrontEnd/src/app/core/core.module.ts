@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { InputTextModule } from 'primeng/inputtext';
     ButtonModule,
     RouterModule,
     MenuModule,
-    InputTextModule
+    InputTextModule,
+    SharedModule
   ],
   exports: [
     NavbarComponent,

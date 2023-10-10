@@ -17,23 +17,29 @@ export class AuthService {
   private loggedUser = new BehaviorSubject<null | IUser>(null);
   isUserLogged = this.loggedUser.asObservable();
   private storageUser: IUser;
+  private decodedToken:any;
 
   constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) {
     if (localStorage.getItem("user")) this.storageUser = JSON.parse(localStorage.getItem("user")!);
     else this.storageUser = JSON.parse(sessionStorage.getItem("user")!);
 
-    if (this.storageUser) this.loggedUser.next(this.storageUser);
+    if (this.storageUser) {
+      this.loggedUser.next(this.storageUser);
+      this.decodedToken=this.jwtHelper.decodeToken(this.storageUser.accessToken);
+    }
+  }
+
+  isUserVerified():boolean{
+    return this.decodedToken ? this.decodedToken.verified : false;
   }
 
   getUserRole():Role{
-    let decodedToken = this.jwtHelper.decodeToken(this.storageUser.accessToken);
-    return decodedToken.role[0].roleName;
+    return this.decodedToken.role[0].roleName;
   }
 
   isUserAdmin(user:IUser|null): boolean {
     if (user) {
-      let decodedToken = this.jwtHelper.decodeToken(user.accessToken);
-      let role=decodedToken.role[0].roleName;
+      let role=this.getUserRole();
       return role == Role.ADMIN || role==Role.MODERATOR;
     }
     return false;
@@ -47,6 +53,7 @@ export class AuthService {
     this.http.post<IUser>(environment.login, user).subscribe(u => {
       this.loggedUser.next(u);
       this.storageUser=u;
+      this.decodedToken=this.jwtHelper.decodeToken(u.accessToken);
 
       if (remember) localStorage.setItem("user", JSON.stringify(u));
       else sessionStorage.setItem("user", JSON.stringify(u));

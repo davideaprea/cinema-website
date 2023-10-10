@@ -55,6 +55,7 @@ public class JwtTokenProvider {
         String token = Jwts.builder()
                 .setSubject(username)
                 .claim("role", user.getRoles())
+                .claim("verified", user.isVerified())
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
                 .signWith(key())

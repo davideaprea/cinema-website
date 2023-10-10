@@ -16,5 +16,11 @@ export class SidebarComponent {
     {icon: "pi pi-users", route: "", text: "Admins & mods"},
   ];
 
+  showMenu=false;
+
   constructor(protected authService:AuthService){}
+
+  toggleShow(){
+    this.showMenu=!this.showMenu;
+  }
 }

@@ -7,6 +7,7 @@ import { MovieService } from 'src/app/features/admin/services/movie.service';
 import { ScheduleService } from 'src/app/features/admin/services/schedule.service';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { BookingService } from '../../../booking/services/booking.service';
+import { IUser } from 'src/app/core/models/iuser';
 
 @Component({
   templateUrl: './movie-details.component.html',
@@ -18,7 +19,9 @@ export class MovieDetailsComponent {
   selectedSchedules: Schedule[] = [];
   items: MenuItem[] = [];
   activeItem!: MenuItem;
+  user!:IUser;
   isUserAdmin!: boolean;
+  isUserVerified!: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +30,11 @@ export class MovieDetailsComponent {
     private authService: AuthService,
     private bookingService: BookingService) {
 
-    authService.isUserLogged.subscribe(user=>this.isUserAdmin=authService.isUserAdmin(user));
+    authService.isUserLogged.subscribe(user=>{
+      this.user=user!;
+      this.isUserAdmin=authService.isUserAdmin(user);
+      this.isUserVerified=authService.isUserVerified();
+    });
 
     const id = Number(route.snapshot.paramMap.get("id"));
     movieService.get(id).subscribe(m => {

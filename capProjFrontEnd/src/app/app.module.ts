@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
     HttpClientModule,
     CoreModule,
     BrowserAnimationsModule,
-    ButtonModule
+    ButtonModule,
+    TooltipModule
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

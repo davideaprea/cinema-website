@@ -4,8 +4,9 @@
   flex-direction: column;
 }
 
-@media screen and (min-width: 900px){
+@media screen and (min-width: 768px){
   :host {
     flex-direction: row;
   }
 }
+

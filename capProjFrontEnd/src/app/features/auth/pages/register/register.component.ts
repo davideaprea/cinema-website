@@ -26,7 +26,8 @@ export class RegisterComponent {
   }
 
   submit() {
-    this.authService.register(this.f.value).subscribe(u => {
+    this.authService.register(this.f.value)
+    .subscribe(u => {
       this.showSuccess();
       this.registrationCompleted=true;
     });

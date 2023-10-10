@@ -1,21 +1,32 @@
 <nav class="p-5 bg-primary-600 h-full flex flex-column justify-content-between">
   <div>
-    <a [routerLink]="['/home', 'schedules']"><img src="" alt="logo"></a>
-    <ul class="m-0 p-0 list-none gap-3 flex flex-column">
-      <li *ngFor="let data of dataArr">
-        <a class="flex align-items-center gap-1 p-2 border-round hover:bg-primary-500" routerLinkActive="bg-primary-700"
-          [routerLink]="['/admin', data.route]">
-          <i class="{{data.icon}}"></i>
-          <span>{{data.text}}</span>
-        </a>
-      </li>
-    </ul>
+    <app-logo class="text-center"></app-logo>
+
+    <div class="relative ">
+      <button pButton pRipple class="text-left py-2 mt-3 md:hidden w-full" (click)="toggleShow()"><span class="pi pi-bars"></span></button>
+
+      <ul [ngClass]="showMenu ? 'block static' : 'absolute hidden'" class="md:block md:static m-0 p-0 mt-3 list-none">
+        <li *ngFor="let data of dataArr">
+          <a class="flex align-items-center gap-1 p-2 border-round hover:bg-primary-500 white-space-nowrap" routerLinkActive="bg-primary-700"
+            [routerLink]="['/admin', data.route]">
+            <i class="{{data.icon}}"></i>
+            <span>{{data.text}}</span>
+          </a>
+        </li>
+        <li class="md:hidden">
+          <a (click)="authService.logout()" class="cursor-pointer flex align-items-center gap-1 p-2 border-round hover:bg-primary-500 white-space-nowrap">
+            <i class="pi pi-sign-out"></i>
+            <span>Log out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <ul class="m-0 p-0 list-none gap-3 flex flex-column">
+  <ul class="hidden md:block m-0 p-0 list-none">
     <li>
       <a (click)="authService.logout()" pButton pRipple
-        class="flex align-items-center gap-1 p-2 border-round hover:bg-primary-500">
+        class="flex align-items-center gap-1 p-2 border-round hover:bg-primary-500 white-space-nowrap">
         <i class="pi pi-sign-out"></i>
         <span>Log out</span>
       </a>

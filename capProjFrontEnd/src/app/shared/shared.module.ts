@@ -15,6 +15,7 @@ import { CardModule } from 'primeng/card';
 import { CardComponent } from './components/card/card.component';
 import { SharedRoutingModule } from './shared-routing.module';
 import { CardsGridComponent } from './macro-components/cards-grid/cards-grid.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CardsGridComponent } from './macro-components/cards-grid/cards-grid.com
     GalleriaComponent,
     InpDateTimeComponent,
     CardComponent,
-    CardsGridComponent
+    CardsGridComponent,
+    LogoComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +45,8 @@ import { CardsGridComponent } from './macro-components/cards-grid/cards-grid.com
     InpDateTimeComponent,
     CardComponent,
     CardsGridComponent,
-    GalleriaComponent
+    GalleriaComponent,
+    LogoComponent
   ]
 })
 export class SharedModule { }
