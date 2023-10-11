@@ -9,6 +9,8 @@
     <form [formGroup]="f" (ngSubmit)="submit()">
       <div class="my-4">
         <app-inp-text [group]="f" [control]="$any(f.get('name')!)" prop="Name"></app-inp-text>
+
+        <p-message *ngIf="error" severity="error" text="{{error}}"></p-message>
       </div>
 
       <div class="my-4">

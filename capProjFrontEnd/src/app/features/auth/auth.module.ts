@@ -14,7 +14,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AccountVerificationComponent } from './pages/account-verification/account-verification.component';
-
+import { MessageModule } from "primeng/message";
 @NgModule({
   declarations: [
     RegisterComponent,
@@ -33,7 +33,8 @@ import { AccountVerificationComponent } from './pages/account-verification/accou
     ReactiveFormsModule,
     ButtonModule,
     ToastModule,
-    CheckboxModule
+    CheckboxModule,
+    MessageModule
   ]
 })
 export class AuthModule { }

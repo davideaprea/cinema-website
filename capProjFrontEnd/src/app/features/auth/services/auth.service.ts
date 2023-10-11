@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { IRegUser } from '../models/ireg-user';
 import { environment } from 'src/environments/environment.development';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError } from 'rxjs';
 import { ILogUser } from '../models/ilog-user';
 import { IUser } from 'src/app/core/models/iuser';
 import { JwtHelperService } from '@auth0/angular-jwt';

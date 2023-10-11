@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
+import { catchError } from 'rxjs';
 
 @Component({
   templateUrl: './register.component.html',
@@ -11,6 +12,7 @@ import { MessageService } from 'primeng/api';
 export class RegisterComponent {
   f!: FormGroup;
   registrationCompleted:boolean=false;
+  error?:string;
 
   constructor(private authService: AuthService, private messageService: MessageService) {
     this.f = new FormGroup({
@@ -27,9 +29,12 @@ export class RegisterComponent {
 
   submit() {
     this.authService.register(this.f.value)
+    .pipe(catchError(err => this.error=err.error.message))
     .subscribe(u => {
-      this.showSuccess();
-      this.registrationCompleted=true;
+      if(!this.error){
+        this.showSuccess();
+        this.registrationCompleted=true;
+      }
     });
   }
 }
