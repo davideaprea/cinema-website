@@ -7,8 +7,7 @@ import { MessageService, SelectItem } from 'primeng/api';
 @Component({
   selector: 'app-movie-form',
   templateUrl: './movie-form.component.html',
-  styleUrls: ['./movie-form.component.scss'],
-  providers: [MessageService]
+  styleUrls: ['./movie-form.component.scss']
 })
 export class MovieFormComponent {
   readonly columnStyles = "col-12 sm:col-6 lg:col-4 xl:col-3";

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.epicode.Spring.security.entity.Receipt;
 import com.epicode.Spring.security.payload.ReceiptDto;
 import com.epicode.Spring.security.service.ReceiptService;
+import com.epicode.Spring.security.statsResponses.PurchasesPerDay;
 
 @RestController
 @RequestMapping("/receipts")
@@ -34,6 +35,12 @@ public class ReceiptController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         return new ResponseEntity<Receipt>(receiptService.get(id), HttpStatus.OK);
+    }
+    
+    @GetMapping("last-month-receipts")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getLastMonthReceipts() {
+        return new ResponseEntity<List<PurchasesPerDay>>(receiptService.getLastMonthReceipts(), HttpStatus.OK);
     }
     
     @GetMapping("/all/{credentials}")

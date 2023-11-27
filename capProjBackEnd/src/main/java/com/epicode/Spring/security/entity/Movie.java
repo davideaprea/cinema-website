@@ -56,4 +56,7 @@ public class Movie {
 	@Column(nullable = false)
 	private Boolean isTridimensional=false;
 	
+	@Column(nullable = false)
+	private Boolean enableAutoScheduling=false;
+	
 }

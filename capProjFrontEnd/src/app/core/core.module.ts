@@ -11,6 +11,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { SharedModule } from '../shared/shared.module';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SharedModule } from '../shared/shared.module';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+    MessageService
   ]
 })
 export class CoreModule { }

@@ -30,7 +30,7 @@
         [activeItem]="activeItem"></p-tabMenu>
 
       <div class="py-3 flex gap-2">
-        <ng-container *ngFor="let schedule of selectedSchedules">
+        <ng-container *ngFor="let schedule of selectedSchedules; trackBy: trackByFn">
           <a *ngIf="!user || !isUserAdmin && isUserVerified; else dumbLink" (click)="saveSchedule(schedule)" pButton pRipple
             class="no-underline p-button-rounded p-button-info"
             [routerLink]="['/booking', 'seats']">{{schedule.startTime | date:'shortTime'}}</a>

@@ -1,6 +1,7 @@
 package com.epicode.Spring.security.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,9 @@ public class BookingService {
 	public List<Booking> getBySchedule(long id){
 		ViewSchedule viewSchedule = viewScheduleService.get(id);
 		return bookingRepository.findByViewSchedule(viewSchedule);
+	}
+	
+	public Map<Double, ViewSchedule> getSchedulesBookingPercentage(){
+		return bookingRepository.getSchedulesBookingPercentage();
 	}
 }

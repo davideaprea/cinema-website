@@ -1,7 +1,7 @@
 <div class="cards-grid">
-  <div *ngFor="let movie of movieArr">
+  <ng-container *ngFor="let movie of movieArr">
     <app-card [id]="movie.id" [genres]="movie.genres" [cover]="movie.cover" [title]="movie.title"
       [director]="movie.director">
     </app-card>
-  </div>
+  </ng-container>
 </div>

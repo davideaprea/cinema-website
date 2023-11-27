@@ -70,4 +70,8 @@ export class MovieDetailsComponent {
   saveSchedule(schedule: Schedule) {
     this.bookingService.setSchedule(schedule);
   }
+
+  trackByFn(index: number, name: Schedule): number {
+    return name.id;
+  }
 }

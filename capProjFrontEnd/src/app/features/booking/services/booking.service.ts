@@ -65,6 +65,10 @@ export class BookingService {
     return this.http.get<Receipt[]>(environment.receipts+"/all/"+user.username);
   }
 
+  getLastMonthReceipts(){
+    return this.http.get<{total: number, purchaseDate:Date}[]>(environment.receipts+"/last-month-receipts");
+  }
+
   book(receipt:ReceiptBody){
     return this.http.post(environment.receipts, receipt);
   }

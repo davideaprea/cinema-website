@@ -1,7 +1,9 @@
 package com.epicode.Spring.security.service;
 
+import java.sql.Date;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 
@@ -14,6 +16,7 @@ import com.epicode.Spring.security.entity.User;
 import com.epicode.Spring.security.payload.ReceiptDto;
 import com.epicode.Spring.security.repository.BookingRepository;
 import com.epicode.Spring.security.repository.ReceiptRepository;
+import com.epicode.Spring.security.statsResponses.PurchasesPerDay;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -36,6 +39,17 @@ public class ReceiptService {
 		receipt.setUser(userService.getUserByEmailOrPassword(r.getUser().getUsername()));
 		
 		return receiptRepo.save(receipt);
+	}
+	
+	public List<PurchasesPerDay> getLastMonthReceipts(){
+		List<Object[]> data=receiptRepo.getLastMonthReceipts();
+		List<PurchasesPerDay> purchasesPerDayList = new ArrayList<PurchasesPerDay>();
+		
+		for(Object[] stat: data)
+			purchasesPerDayList.add(
+					new PurchasesPerDay((Double)stat[0], (Date)stat[1])
+					);
+		return purchasesPerDayList;
 	}
 	
 	public Receipt get(long id) {

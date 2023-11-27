@@ -30,7 +30,7 @@ public interface ViewScheduleRepository extends CrudRepository<ViewSchedule, Lon
 	@Query("SELECT v FROM ViewSchedule v WHERE v.startTime > CURRENT_TIMESTAMP AND v.movie=:movie")
 	public List<ViewSchedule> findMovieSchedules(Movie movie);
 	
-	@Query("SELECT v FROM ViewSchedule v WHERE v.startTime > CURRENT_TIMESTAMP")
+	@Query("SELECT v FROM ViewSchedule v WHERE v.startTime > CURRENT_TIMESTAMP ORDER BY v.startTime ASC")
 	public List<ViewSchedule> findNextSchedules();
 	
 	@Query("SELECT v FROM ViewSchedule v WHERE v.startTime > CURRENT_TIMESTAMP AND v.endTime < CURRENT_TIMESTAMP")

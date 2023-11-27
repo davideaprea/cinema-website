@@ -5,6 +5,7 @@ import { MovieFormComponent } from './pages/movie-form/movie-form.component';
 import { OurmoviesComponent } from './pages/ourmovies/ourmovies.component';
 import { SchedulesComponent } from './pages/schedules/schedules.component';
 import { HallsComponent } from './pages/halls/halls.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [{
   path: '', component: AdminComponent, children: [
@@ -12,6 +13,7 @@ const routes: Routes = [{
     { path: "ourmovies", component: OurmoviesComponent },
     { path: "schedules", component: SchedulesComponent },
     { path: "halls", component: HallsComponent },
+    { path: "dashboard", component: DashboardComponent },
   ]
 }];
 

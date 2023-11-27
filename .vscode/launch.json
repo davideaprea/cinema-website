@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Spring7Application<Spring_7>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.epicode.Spring.Spring7Application",
+            "projectName": "Spring_7",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

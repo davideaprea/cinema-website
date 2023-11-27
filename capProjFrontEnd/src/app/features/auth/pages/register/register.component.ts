@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { MessageService } from 'primeng/api';
 import { catchError } from 'rxjs';
+import { NotificationService } from 'src/app/core/models/NotificationService';
 
 @Component({
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-  providers: [MessageService]
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
   f!: FormGroup;
   registrationCompleted:boolean=false;
   error?:string;
 
-  constructor(private authService: AuthService, private messageService: MessageService) {
+  constructor(private authService: AuthService, private messageService: NotificationService) {
     this.f = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
       password: new FormControl("", Validators.required),
@@ -24,7 +23,7 @@ export class RegisterComponent {
   }
 
   showSuccess() {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registration completed.' });
+    this.messageService.successMsg('Registration completed.');
   }
 
   submit() {

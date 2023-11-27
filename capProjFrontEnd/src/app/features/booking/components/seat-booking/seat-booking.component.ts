@@ -100,4 +100,12 @@ export class SeatBookingComponent {
 
     this.bookingService.setReceipt(receipt);
   }
+
+  trackByFnRow(index: number, row: SeatStatus[]): string {
+    return `row-${index}`;
+  }
+
+  trackByFnSeat(index: number, seat: SeatStatus): string {
+    return `seat-${index}`;
+  }
 }

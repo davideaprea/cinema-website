@@ -23,6 +23,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HallsComponent } from './pages/halls/halls.component';
 import { HallFormComponent } from './components/hall-form/hall-form.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ChartModule } from 'primeng/chart';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,9 @@ import { HallFormComponent } from './components/hall-form/hall-form.component';
     SchedulesComponent,
     SidebarComponent,
     HallsComponent,
-    HallFormComponent
+    HallFormComponent,
+    DashboardComponent,
+    BarChartComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +56,8 @@ import { HallFormComponent } from './components/hall-form/hall-form.component';
     TableModule,
     InputTextModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ChartModule
   ]
 })
 export class AdminModule { }

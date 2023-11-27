@@ -5,20 +5,19 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HallService } from '../../services/hall.service';
 import { Hall } from '../../models/hall';
 import { ScheduleService } from '../../services/schedule.service';
-import { MessageService } from 'primeng/api';
+import { NotificationService } from 'src/app/core/models/NotificationService';
 
 @Component({
   selector: 'app-schedule-form',
   templateUrl: './schedule-form.component.html',
-  styleUrls: ['./schedule-form.component.scss'],
-  providers: [MessageService]
+  styleUrls: ['./schedule-form.component.scss']
 })
 export class ScheduleFormComponent {
   movies:Movie[]=[];
   halls:Hall[]=[];
   f:FormGroup;
 
-  constructor(private movieService:MovieService, private hallService:HallService, private scheduleService:ScheduleService, private messageService:MessageService){
+  constructor(private movieService:MovieService, private hallService:HallService, private scheduleService:ScheduleService, private messageService:NotificationService){
     movieService.getAll().subscribe(m=>this.movies=m);
     hallService.getAvailableHalls().subscribe(h=>this.halls=h);
 
@@ -31,7 +30,7 @@ export class ScheduleFormComponent {
 
   submit(){
     this.scheduleService.create(this.f.value).subscribe(d=>{
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Schedule added successfully.' });
+      this.messageService.successMsg('Schedule added successfully.');
       this.f.reset();
     });
   }

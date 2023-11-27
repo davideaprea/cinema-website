@@ -14,8 +14,8 @@
   <div>
     <section class="flex">
       <div>
-        <div class="flex my-2" *ngFor="let row of seats; index as i">
-          <div *ngFor="let seat of row; index as j" (click)="manageSeats(i, j)" [ngClass]="{
+        <div class="flex my-2" *ngFor="let row of seats; index as i; trackBy: trackByFnRow">
+          <div *ngFor="let seat of row; index as j; trackBy: trackByFnSeat" (click)="manageSeats(i, j)" [ngClass]="{
                 'vip': seats.length-i<=3,
                 'regular': seats.length-i>3,
                 'booked': seat=='NOT_AVAILABLE' || seat=='BOOKED',
