@@ -1,6 +1,6 @@
 <h1 class="text-center my-2">Our halls</h1>
 <div class="grid grid-nogutter">
-  <div *ngFor="let hall of halls" class="col-12 sm:col-6 md:col-4 xl:col-3 p-2">
+  <div *ngFor="let hall of halls; trackBy: trackByFn" class="col-12 sm:col-6 md:col-4 xl:col-3 p-2">
     <div class="bg-bluegray-400 p-2 border-round">
       <div class="text-center mb-2">
         <i class="pi pi-desktop text-7xl"></i>
@@ -13,5 +13,5 @@
     </div>
   </div>
 </div>
-<app-hall-form></app-hall-form>
+<app-hall-form (emitHall)="onHallCreation($event)"></app-hall-form>
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

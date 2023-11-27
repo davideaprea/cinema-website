@@ -17,6 +17,10 @@ export class HallsComponent {
     hallService.getAll().subscribe(h => this.halls = h);
   }
 
+  onHallCreation(hall:Hall){
+    this.halls.push(hall);
+  }
+
   toggleStatus(hall: Hall) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to set this hall unavailable?',
@@ -27,5 +31,9 @@ export class HallsComponent {
         this.hallService.editHall(hall).subscribe();
       }
     })
+  }
+
+  trackByFn(index: number, name: Hall): number {
+    return name.id;
   }
 }

@@ -12,7 +12,7 @@ export class HallService {
 
   create(nrows:number, nseatsPerRow:number){
     console.log(nrows, nseatsPerRow)
-    return this.http.post(environment.halls, {nrows, nseatsPerRow});
+    return this.http.post<Hall>(environment.halls, {nrows, nseatsPerRow});
   }
 
   getAll(){
