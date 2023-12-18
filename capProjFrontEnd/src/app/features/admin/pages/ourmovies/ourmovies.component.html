@@ -1,1 +1,4 @@
-<app-cards-grid [movieArr]="movies"></app-cards-grid>
+<div class="cards-grid card-container">
+  <app-card *ngFor="let movie of movies" [title]="movie.title" [director]="movie.director" [cover]="movie.cover"
+    [id]="movie.id" [genres]="movie.genres"></app-card>
+</div>

@@ -11,7 +11,6 @@ export class BarChartComponent implements OnInit {
   options: any;
 
   ngOnInit() {
-    console.log(this.stats)
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');

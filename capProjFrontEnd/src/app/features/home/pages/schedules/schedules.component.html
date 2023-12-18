@@ -2,6 +2,9 @@
 <!-- <app-galleria [photos]="paths"></app-galleria> -->
 <div class="p-4">
   <h2 class="text-4xl text-center m-0 mb-5">IN OUR HALLS</h2>
-  <app-cards-grid [movieArr]="scheduledMovies"></app-cards-grid>
+  <div class="cards-grid card-container">
+    <app-card *ngFor="let movie of scheduledMovies" [title]="movie.title" [director]="movie.director" [cover]="movie.cover"
+      [id]="movie.id" [genres]="movie.genres"></app-card>
+  </div>
 </div>
 <app-footer></app-footer>

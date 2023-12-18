@@ -14,7 +14,6 @@ import { InpDateTimeComponent } from './components/inp-date-time/inp-date-time.c
 import { CardModule } from 'primeng/card';
 import { CardComponent } from './components/card/card.component';
 import { SharedRoutingModule } from './shared-routing.module';
-import { CardsGridComponent } from './macro-components/cards-grid/cards-grid.component';
 import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { LogoComponent } from './components/logo/logo.component';
     GalleriaComponent,
     InpDateTimeComponent,
     CardComponent,
-    CardsGridComponent,
     LogoComponent
   ],
   imports: [
@@ -44,7 +42,6 @@ import { LogoComponent } from './components/logo/logo.component';
     InpCheckBoxComponent,
     InpDateTimeComponent,
     CardComponent,
-    CardsGridComponent,
     GalleriaComponent,
     LogoComponent
   ]

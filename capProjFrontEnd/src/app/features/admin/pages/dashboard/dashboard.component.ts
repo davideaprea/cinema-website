@@ -10,9 +10,6 @@ export class DashboardComponent {
   lastMonthPurchases:{total: number, purchaseDate:Date}[]=[];
 
   constructor(private receiptService:BookingService){
-    receiptService.getLastMonthReceipts().subscribe(data => {
-      this.lastMonthPurchases=data;
-      console.log(this.lastMonthPurchases)
-    });
+    receiptService.getLastMonthReceipts().subscribe(data => this.lastMonthPurchases=data);
   }
 }

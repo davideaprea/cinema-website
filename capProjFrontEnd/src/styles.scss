@@ -8,3 +8,22 @@ body{
     color: white;
   }
 }
+
+.card-container:hover .card:not(:hover) {
+  transform: scale(0.95);
+  filter: brightness(50%)  blur(3px);
+}
+
+.cards-grid{
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+@media screen and (min-width: 960px){
+  .cards-grid{
+    max-width: 80%;
+  }
+}
+

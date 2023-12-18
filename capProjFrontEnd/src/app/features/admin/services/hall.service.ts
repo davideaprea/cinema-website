@@ -11,7 +11,6 @@ export class HallService {
   constructor(private http:HttpClient) { }
 
   create(nrows:number, nseatsPerRow:number){
-    console.log(nrows, nseatsPerRow)
     return this.http.post<Hall>(environment.halls, {nrows, nseatsPerRow});
   }
 
