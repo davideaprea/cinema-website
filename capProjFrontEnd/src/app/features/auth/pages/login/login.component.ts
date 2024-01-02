@@ -7,7 +7,7 @@ import { ILogUser } from '../../models/ilog-user';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent{
   f!:FormGroup;
   wrongCredentials=false;
 
@@ -19,18 +19,19 @@ export class LoginComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {}
-
   submit(){
-    const username:string=this.f.value.email;
-    const password:string=this.f.value.password;
-    const remember:boolean=this.f.value.remember[0];
-
     const credentials:ILogUser={
-      username: username,
-      password: password
+      username: this.f.value.email,
+      password: this.f.value.password
     }
 
-    this.authService.login(credentials, remember);
+    this.authService.login(credentials, this.f.value.remember[0]).subscribe(
+      {
+        error: e => {
+          this.wrongCredentials=true;
+          this.f.reset();
+        }
+      }
+    );
   }
 }

@@ -10,7 +10,7 @@ import { MovieService } from '../../services/movie.service';
 export class OurmoviesComponent {
   movies: Movie[] = [];
 
-  constructor(private movieService: MovieService) {
+  constructor(protected movieService: MovieService) {
     movieService.getAll().subscribe(m => this.movies = m);
   }
 }

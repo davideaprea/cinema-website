@@ -12,6 +12,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { SharedModule } from '../shared/shared.module';
 import { MessageService } from 'primeng/api';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,11 @@ import { MessageService } from 'primeng/api';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true
     },
     MessageService

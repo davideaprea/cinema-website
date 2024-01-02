@@ -9,16 +9,21 @@
     <form [formGroup]="f" (ngSubmit)="submit()">
       <div class="my-4">
         <app-inp-text [group]="f" [control]="$any(f.get('name')!)" prop="Name"></app-inp-text>
+      </div>
+      <div class="my-4">
+        <app-inp-text [group]="f" [control]="$any(usernameControl)" prop="Username"></app-inp-text>
+      </div>
 
-        <p-message *ngIf="error" severity="error" text="{{error}}"></p-message>
+      <div class="my-4" *ngIf="this.usernameControl.errors?.['credentialTaken']">
+        <p-message class="block" [style]="{'width':'100%'}" severity="error" [text]="usernameError"></p-message>
       </div>
 
       <div class="my-4">
-        <app-inp-text [group]="f" [control]="$any(f.get('username')!)" prop="Username"></app-inp-text>
+        <app-inp-text [group]="f" [control]="$any(emailControl)" prop="Email"></app-inp-text>
       </div>
 
-      <div class="my-4">
-        <app-inp-text [group]="f" [control]="$any(f.get('email')!)" prop="Email"></app-inp-text>
+      <div class="my-4" *ngIf="this.emailControl.errors?.['credentialTaken']">
+        <p-message class="block" [style]="{'width':'100%'}" severity="error" [text]="emailError"></p-message>
       </div>
 
       <div class="my-4">

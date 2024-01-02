@@ -14,6 +14,10 @@
       <app-inp-password [group]="f"></app-inp-password>
     </div>
 
+    <div class="w-full my-4" *ngIf="wrongCredentials">
+      <p-message severity="error" text="Wrong credentials. Please, try again."></p-message>
+    </div>
+
     <div class="flex align-items-center justify-content-between mb-6">
       <div class="flex align-items-center gap-2">
         <p-checkbox formControlName="remember" inputId="rm" [value]="true"></p-checkbox>

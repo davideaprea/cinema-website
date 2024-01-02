@@ -1,29 +1,30 @@
 @import "primeicons/primeicons.css";
 
-body{
+body {
   margin: 0;
   font-family: var(--font-family);
-  a{
+
+  a {
     text-decoration: none;
     color: white;
   }
 }
 
-.card-container:hover .card:not(:hover) {
-  transform: scale(0.95);
-  filter: brightness(50%)  blur(3px);
+app-card:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 0.75rem rgba(240, 240, 240, 0.829));
 }
 
-.cards-grid{
+app-card:hover~app-card:not(:hover),
+app-card:not(:hover):has(~ app-card:hover) {
+  transform: scale(0.95);
+  filter: brightness(50%) blur(3px);
+}
+
+.cards-grid {
   margin: 0 auto;
   display: grid;
   gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  width: Min(960px, 100%);
 }
-
-@media screen and (min-width: 960px){
-  .cards-grid{
-    max-width: 80%;
-  }
-}
-

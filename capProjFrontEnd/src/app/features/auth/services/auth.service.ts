@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { IRegUser } from '../models/ireg-user';
 import { environment } from 'src/environments/environment.development';
 import { Router } from '@angular/router';
-import { BehaviorSubject, catchError } from 'rxjs';
+import { BehaviorSubject, catchError, tap } from 'rxjs';
 import { ILogUser } from '../models/ilog-user';
 import { IUser } from 'src/app/core/models/iuser';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -17,7 +17,7 @@ export class AuthService {
   private loggedUser = new BehaviorSubject<null | IUser>(null);
   isUserLogged = this.loggedUser.asObservable();
   private storageUser: IUser;
-  private decodedToken:any;
+  private decodedToken: any;
 
   constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) {
     if (localStorage.getItem("user")) this.storageUser = JSON.parse(localStorage.getItem("user")!);
@@ -25,22 +25,22 @@ export class AuthService {
 
     if (this.storageUser) {
       this.loggedUser.next(this.storageUser);
-      this.decodedToken=this.jwtHelper.decodeToken(this.storageUser.accessToken);
+      this.decodedToken = this.jwtHelper.decodeToken(this.storageUser.accessToken);
     }
   }
 
-  isUserVerified():boolean{
+  isUserVerified(): boolean {
     return this.decodedToken ? this.decodedToken.verified : false;
   }
 
-  getUserRole():Role{
+  getUserRole(): Role {
     return this.decodedToken.role[0].roleName;
   }
 
-  isUserAdmin(user:IUser|null): boolean {
+  isUserAdmin(user: IUser | null): boolean {
     if (user) {
-      let role=this.getUserRole();
-      return role == Role.ADMIN || role==Role.MODERATOR;
+      let role = this.getUserRole();
+      return role == Role.ADMIN || role == Role.MODERATOR;
     }
     return false;
   }
@@ -50,20 +50,22 @@ export class AuthService {
   }
 
   login(user: ILogUser, remember: boolean) {
-    this.http.post<IUser>(environment.login, user).subscribe(u => {
-      this.loggedUser.next(u);
-      this.storageUser=u;
-      this.decodedToken=this.jwtHelper.decodeToken(u.accessToken);
+    return this.http.post<IUser>(environment.login, user).pipe(
+      tap(u => {
+        this.loggedUser.next(u);
+        this.storageUser = u;
+        this.decodedToken = this.jwtHelper.decodeToken(u.accessToken);
 
-      if (remember) localStorage.setItem("user", JSON.stringify(u));
-      else sessionStorage.setItem("user", JSON.stringify(u));
+        if (remember) localStorage.setItem("user", JSON.stringify(u));
+        else sessionStorage.setItem("user", JSON.stringify(u));
 
-      this.router.navigate(["/home", "schedules"]);
-    });
+        this.router.navigate(["/home", "schedules"]);
+      })
+    )
   }
 
-  verifyEmail(token:string){
-    return this.http.get(environment.verification+"/"+token);
+  verifyEmail(token: string) {
+    return this.http.get(environment.verification + "/" + token);
   }
 
   logout() {
