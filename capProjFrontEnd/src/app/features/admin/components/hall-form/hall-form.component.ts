@@ -2,8 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { HallService } from '../../services/hall.service';
-import { NotificationService } from 'src/app/core/models/NotificationService';
 import { Hall } from '../../models/hall';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-hall-form',

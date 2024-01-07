@@ -7,7 +7,7 @@ import { Hall } from '../../models/hall';
 import { HallService } from '../../services/hall.service';
 import { MovieService } from '../../services/movie.service';
 import { ConfirmationService } from 'primeng/api';
-import { NotificationService } from 'src/app/core/models/NotificationService';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-schedules',

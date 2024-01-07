@@ -8,6 +8,7 @@ import { ILogUser } from '../models/ilog-user';
 import { IUser } from 'src/app/core/models/iuser';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Role } from 'src/app/core/models/role';
+import { UtilityService } from 'src/app/core/services/utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,14 @@ export class AuthService {
 
   private loggedUser = new BehaviorSubject<null | IUser>(null);
   isUserLogged = this.loggedUser.asObservable();
-  private storageUser: IUser;
+  private storageUser: IUser | undefined;
   private decodedToken: any;
 
-  constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) {
-    if (localStorage.getItem("user")) this.storageUser = JSON.parse(localStorage.getItem("user")!);
-    else this.storageUser = JSON.parse(sessionStorage.getItem("user")!);
+  constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService, private utilityService:UtilityService) {
+    /* if (localStorage.getItem("user")) this.storageUser = JSON.parse(localStorage.getItem("user")!);
+    else this.storageUser = JSON.parse(sessionStorage.getItem("user")!); */
+
+    this.storageUser=utilityService.getLocalStorageItem("user") || utilityService.getSessionStorageItem("user");
 
     if (this.storageUser) {
       this.loggedUser.next(this.storageUser);

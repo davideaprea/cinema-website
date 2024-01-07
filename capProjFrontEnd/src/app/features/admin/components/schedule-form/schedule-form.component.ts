@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HallService } from '../../services/hall.service';
 import { Hall } from '../../models/hall';
 import { ScheduleService } from '../../services/schedule.service';
-import { NotificationService } from 'src/app/core/models/NotificationService';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-schedule-form',
