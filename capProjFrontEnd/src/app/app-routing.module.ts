@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { formGuard } from './core/guards/form.guard';
-import { adminGuard } from './core/guards/admin.guard';
-import { bookingGuard } from './core/guards/booking.guard';
-import { profileGuard } from './core/guards/profile.guard';
+import { formGuard } from './features/auth/guards/form.guard';
+import { adminGuard } from './features/admin/guards/admin.guard';
+import { bookingGuard } from './features/booking/guards/booking.guard';
+import { authGuard } from './features/auth/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home/schedules', pathMatch: 'full' },
@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule), canActivate:[formGuard] },
   { path: 'admin', loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule), canActivate:[adminGuard] },
   { path: 'booking', loadChildren: () => import('./features/booking/booking.module').then(m => m.BookingModule), canActivate:[bookingGuard] },
-  { path: 'profile', loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule), canActivate:[profileGuard] }
+  { path: 'profile', loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule), canActivate:[authGuard] }
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
 export interface IFormComponent {
   isFormDirty():boolean;
-  openConfirmationDialog():boolean;
+  openConfirmationDialog(): Promise<boolean>;
 }

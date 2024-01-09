@@ -8,13 +8,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   return authSvc.isUserLogged.pipe(
-    map((user) => {
+    map(user => {
       if (user) return true;
-      else
-      {
-        router.navigate(["/auth", "error"]);
-        return false;
-      }
+      router.navigate(["/auth", "login"]);
+      return false;
     })
   )
 };
