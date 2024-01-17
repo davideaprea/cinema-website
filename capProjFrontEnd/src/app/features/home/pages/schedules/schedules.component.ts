@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Movie } from 'src/app/features/admin/models/movie';
 import { ScheduleService } from 'src/app/features/admin/services/schedule.service';
 
@@ -7,13 +8,9 @@ import { ScheduleService } from 'src/app/features/admin/services/schedule.servic
   styleUrls: ['./schedules.component.scss']
 })
 export class SchedulesComponent {
-  scheduledMovies: Movie[] = [];
-  paths: string[] = [];
+  scheduledMovies$!: Observable<Movie[]>;
 
   constructor(private scheduleService: ScheduleService) {
-    scheduleService.getScheduledMovies().subscribe(m => {
-      this.scheduledMovies = m;
-      this.paths = m.map(el => el.backgroundCover);
-    });
+    this.scheduledMovies$=scheduleService.getScheduledMovies();
   }
 }

@@ -1,15 +1,11 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn } from '@angular/router';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { map } from 'rxjs';
+import { Role } from 'src/app/core/models/role';
 
 export const adminGuard: CanActivateFn = (route, state) => {
-  const authSvc: AuthService = inject(AuthService);
-  const router = inject(Router);
-
-  return authSvc.isUserLogged.pipe(
-    map(user => {
-      return authSvc.isUserAdmin(user);
-    })
+  return inject(AuthService).user.pipe(
+    map(user => user?.role==Role.ADMIN)
   );
 };

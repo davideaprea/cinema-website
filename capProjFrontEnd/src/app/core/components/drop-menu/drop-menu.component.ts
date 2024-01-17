@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { User } from 'src/app/features/auth/models/user';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
-import { IUser } from '../../models/iuser';
+import { Role } from '../../models/role';
 
 @Component({
   selector: 'app-drop-menu',
   templateUrl: './drop-menu.component.html',
   styleUrls: ['./drop-menu.component.scss']
 })
-export class DropMenuComponent implements OnInit {
+export class DropMenuComponent {
   items: MenuItem[] | undefined;
-  user: IUser | null = null;
+  user: User | null = null;
 
   constructor(private authService: AuthService, private router: Router) {
-    this.authService.isUserLogged.subscribe(user => {
+    this.authService.user.subscribe(user => {
       this.user=user;
       this.items = [
         {
@@ -24,7 +25,7 @@ export class DropMenuComponent implements OnInit {
               label: 'Profile',
               icon: 'pi pi-user',
               command: () => {
-                this.authService.isUserAdmin(user) ? this.router.navigate(["/admin", "ourmovies"]) : this.router.navigate(["/profile", "mytickets"]);
+                user?.role==Role.ADMIN ? this.router.navigate(["/admin", "ourmovies"]) : this.router.navigate(["/profile", "mytickets"]);
               }
             },
             {
@@ -38,9 +39,5 @@ export class DropMenuComponent implements OnInit {
         }
       ];
     });
-  }
-
-  ngOnInit(): void {
-
   }
 }

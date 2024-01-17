@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { IRegUser } from '../models/ireg-user';
 import { environment } from 'src/environments/environment.development';
 import { Router } from '@angular/router';
-import { BehaviorSubject, catchError, tap } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { ILogUser } from '../models/ilog-user';
 import { IUser } from 'src/app/core/models/iuser';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Role } from 'src/app/core/models/role';
 import { UtilityService } from 'src/app/core/services/utility.service';
+import { DecodedToken } from '../models/decoded-token';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -16,36 +17,26 @@ import { UtilityService } from 'src/app/core/services/utility.service';
 export class AuthService {
 
   private loggedUser = new BehaviorSubject<null | IUser>(null);
-  isUserLogged = this.loggedUser.asObservable();
+  user = this.loggedUser.asObservable().pipe(
+    map(rawUser => {
+      if(!rawUser) return null;
+
+      const decodedToken:DecodedToken=this.jwtHelper.decodeToken(rawUser.accessToken)!;
+      return <User> {
+        username: rawUser.username,
+        role: decodedToken.role[0].roleName,
+        isVerified: decodedToken.verified,
+        accessToken: rawUser.accessToken
+      }
+    })
+  );
   private storageUser: IUser | undefined;
-  private decodedToken: any;
 
   constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService, private utilityService:UtilityService) {
-    /* if (localStorage.getItem("user")) this.storageUser = JSON.parse(localStorage.getItem("user")!);
-    else this.storageUser = JSON.parse(sessionStorage.getItem("user")!); */
 
     this.storageUser=utilityService.getLocalStorageItem("user") || utilityService.getSessionStorageItem("user");
 
-    if (this.storageUser) {
-      this.loggedUser.next(this.storageUser);
-      this.decodedToken = this.jwtHelper.decodeToken(this.storageUser.accessToken);
-    }
-  }
-
-  isUserVerified(): boolean {
-    return this.decodedToken ? this.decodedToken.verified : false;
-  }
-
-  getUserRole(): Role {
-    return this.decodedToken.role[0].roleName;
-  }
-
-  isUserAdmin(user: IUser | null): boolean {
-    if (user) {
-      let role = this.getUserRole();
-      return role == Role.ADMIN || role == Role.MODERATOR;
-    }
-    return false;
+    if (this.storageUser) this.loggedUser.next(this.storageUser);
   }
 
   register(user: IRegUser) {
@@ -57,7 +48,6 @@ export class AuthService {
       tap(u => {
         this.loggedUser.next(u);
         this.storageUser = u;
-        this.decodedToken = this.jwtHelper.decodeToken(u.accessToken);
 
         if (remember) localStorage.setItem("user", JSON.stringify(u));
         else sessionStorage.setItem("user", JSON.stringify(u));

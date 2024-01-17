@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Genres } from 'src/app/features/admin/models/genres';
 
 @Component({
@@ -13,4 +13,6 @@ export class CardComponent {
   @Input() cover!:any;
   @Input() id!:number;
   @Input() genres!:Genres[]
+
+  constructor(public router:Router){}
 }

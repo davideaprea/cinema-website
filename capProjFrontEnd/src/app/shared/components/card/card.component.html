@@ -2,7 +2,7 @@
   <img [src]="cover" alt="">
 
   <div>
-    <h4 class="my-2 overflow-hidden white-space-nowrap text-overflow-ellipsis"><a [routerLink]="['/home', 'movie-details', id]" class="hover:underline">{{title}}</a></h4>
+    <h4 class="my-2 overflow-hidden white-space-nowrap text-overflow-ellipsis"><a (click)="router.navigate(['/home', 'movie-details', id])" class="hover:underline">{{title}}</a></h4>
     <p class="my-2 text-sm"><span *ngFor="let genre of genres">{{genre}} </span></p>
   </div>
 </div>

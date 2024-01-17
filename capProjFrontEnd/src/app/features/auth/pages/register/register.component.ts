@@ -8,8 +8,6 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegisterComponent {
   f!: FormGroup;
-  emailControl!:AbstractControl;
-  usernameControl!:AbstractControl;
   registrationCompleted: boolean = false;
   emailError?: string;
   usernameError?: string;
@@ -23,9 +21,14 @@ export class RegisterComponent {
       username: new FormControl("", [Validators.required, this.takenCredentialsValidator]),
       name: new FormControl("")
     });
+  }
 
-    this.emailControl=this.f.get("email")!;
-    this.usernameControl=this.f.get("username")!;
+  public get emailControl(){
+    return this.f.get("email")!;
+  }
+
+  public get usernameControl(){
+    return this.f.get("username")!;
   }
 
   submit() {

@@ -4,8 +4,8 @@ import { Schedule } from 'src/app/features/admin/models/schedule';
 import { ReceiptBody } from '../../models/receipt-body';
 import { environment } from 'src/environments/environment.development';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
-import { IUser } from 'src/app/core/models/iuser';
 import { Router } from '@angular/router';
+import { User } from 'src/app/features/auth/models/user';
 
 declare var paypal: any;
 
@@ -17,14 +17,14 @@ declare var paypal: any;
 export class PaymentComponent implements OnInit {
   @ViewChild('paypal', { static: true }) paypalElement!: ElementRef;
 
-  private user: IUser | null = null;
+  private user: User | null = null;
   selectedSchedule!: Schedule;
   receipt!: ReceiptBody;
   price!: number;
   error: string = "";
 
   constructor(private bookingService: BookingService, private authService: AuthService, private router: Router, private ngZone: NgZone) {
-    authService.isUserLogged.subscribe(u => this.user = u);
+    authService.user.subscribe(u => this.user = u);
 
     this.selectedSchedule = bookingService.getSchedule();
     this.receipt = bookingService.getReceipt();

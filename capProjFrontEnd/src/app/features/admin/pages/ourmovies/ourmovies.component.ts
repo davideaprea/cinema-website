@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Movie } from '../../models/movie';
 import { MovieService } from '../../services/movie.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-ourmovies',
@@ -8,9 +9,9 @@ import { MovieService } from '../../services/movie.service';
   styleUrls: ['./ourmovies.component.scss']
 })
 export class OurmoviesComponent {
-  movies: Movie[] = [];
+  movies$!: Observable<Movie[]>;
 
   constructor(protected movieService: MovieService) {
-    movieService.getAll().subscribe(m => this.movies = m);
+    this.movies$=movieService.getAll();
   }
 }

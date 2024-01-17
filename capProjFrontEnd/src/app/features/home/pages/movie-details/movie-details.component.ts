@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Movie } from 'src/app/features/admin/models/movie';
@@ -7,56 +7,60 @@ import { MovieService } from 'src/app/features/admin/services/movie.service';
 import { ScheduleService } from 'src/app/features/admin/services/schedule.service';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { BookingService } from '../../../booking/services/booking.service';
-import { IUser } from 'src/app/core/models/iuser';
+import { BehaviorSubject, filter, switchMap, tap, zip } from 'rxjs';
+import { FastAverageColor } from 'fast-average-color';
+import { User } from 'src/app/features/auth/models/user';
 
 @Component({
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.scss']
 })
-export class MovieDetailsComponent {
+export class MovieDetailsComponent implements AfterViewInit {
+  private loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   movie!: Movie;
   schedules: Schedule[] = [];
   selectedSchedules: Schedule[] = [];
   items: MenuItem[] = [];
   activeItem!: MenuItem;
-  user!:IUser;
-  isUserAdmin!: boolean;
-  isUserVerified!: boolean;
+  user!: User | null;
+  beforeBgColor!: string;
+  @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
+  @ViewChild('description') descriptionContainer!: ElementRef<HTMLDivElement>;
 
-  constructor(
-    private route: ActivatedRoute,
-    private movieService: MovieService,
-    private scheduleService: ScheduleService,
-    private authService: AuthService,
-    private bookingService: BookingService) {
-
-    authService.isUserLogged.subscribe(user=>{
-      this.user=user!;
-      this.isUserAdmin=authService.isUserAdmin(user);
-      this.isUserVerified=authService.isUserVerified();
-    });
-
+  constructor(private renderer: Renderer2, private host: ElementRef, private route: ActivatedRoute, private movieService: MovieService, private scheduleService: ScheduleService, private authService: AuthService, private bookingService: BookingService) {
     const id = Number(route.snapshot.paramMap.get("id"));
-    movieService.get(id).subscribe(m => {
-      this.movie = m;
+    zip(
+      authService.user,
+      movieService.get(id).pipe(
+        tap(movie => this.movie = movie),
+        switchMap(movie => scheduleService.getMovieSchedules(movie))
+      )
+    ).subscribe(res => {
+      this.user = res[0]!;
 
-      scheduleService.getMovieSchedules(this.movie).subscribe(s => {
-        this.schedules = s;
-        this.schedules.forEach(el => el.startTime = new Date(el.startTime));
-        this.schedules.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
-
-        for (let schedule of this.schedules) {
-          let date = schedule.startTime.toLocaleDateString();
-
-          if (!this.items.some(item => item.label == date)) {
-            let item: MenuItem = { label: date }
-            this.items.push(item);
-          }
-        }
-
-        this.activeItem = this.items[0];
-        this.onActiveItemChange(this.activeItem);
+      this.schedules = res[1];
+      this.schedules.forEach(schedule => {
+        schedule.startTime = new Date(schedule.startTime);
+        let date = schedule.startTime.toLocaleDateString();
+        if (!this.items.some(item => item.label == date)) this.items.push({ label: date });
       });
+
+      this.activeItem = this.items[0];
+      this.onActiveItemChange(this.activeItem);
+      this.loading$.next(false);
+    }
+    );
+  }
+
+  ngAfterViewInit(): void {
+    this.loading$
+    .pipe(filter(loading => !loading))
+    .subscribe(() => {
+      this.renderer.setStyle(this.host.nativeElement, 'background-image', `url(${this.movie.backgroundCover})`);
+      let image: HTMLImageElement = this.imageElement.nativeElement;
+      const fac = new FastAverageColor();
+      const colors = fac.getColor(image).value;
+      this.beforeBgColor = `rgba(${colors[0]}, ${colors[1]}, ${colors[2]}, 0.4)`;
     });
   }
 

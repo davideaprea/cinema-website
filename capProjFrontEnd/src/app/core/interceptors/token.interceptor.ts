@@ -7,15 +7,15 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
-import { IUser } from '../models/iuser';
+import { User } from 'src/app/features/auth/models/user';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  private user: IUser | null = null;
+  private user: User | null = null;
 
   constructor(private authSvc: AuthService) {
-    authSvc.isUserLogged.subscribe(user => this.user = user);
+    authSvc.user.subscribe(user => this.user = user);
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

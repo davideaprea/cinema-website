@@ -7,7 +7,7 @@ export const formGuard: CanActivateFn = (route, state) => {
   const authSvc: AuthService = inject(AuthService);
   const router = inject(Router);
 
-  return authSvc.isUserLogged.pipe(
+  return authSvc.user.pipe(
     map((user) => {
       if (!user) return true;
       else

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
-import { IUser } from '../../models/iuser';
 import { MenuItem } from 'primeng/api';
+import { User } from 'src/app/features/auth/models/user';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +9,7 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  user: IUser | null = null;
+  user: User | null = null;
 
   items: MenuItem[] = [
     {
@@ -45,6 +45,6 @@ export class NavbarComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
   ngOnInit(): void {
-    this.authService.isUserLogged.subscribe(u => this.user = u);
+    this.authService.user.subscribe(u => this.user = u);
   }
 }

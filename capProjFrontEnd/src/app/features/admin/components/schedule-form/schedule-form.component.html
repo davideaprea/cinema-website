@@ -8,10 +8,10 @@
       prop="Start time"></app-inp-date-time>
 
     <p-dropdown [style]="{'width':'100%'}" class="inp-group w-full" placeholder="Select a movie" formControlName="movie"
-      [options]="movies" optionLabel="title"></p-dropdown>
+      [options]="(allMovies$ | async)!" optionLabel="title"></p-dropdown>
 
     <p-dropdown [style]="{'width':'100%'}" class="inp-group w-full" placeholder="Select a hall" formControlName="hall"
-      [options]="halls" optionLabel="id"></p-dropdown>
+      [options]="(availableHalls$ | async)!" optionLabel="id"></p-dropdown>
 
     <button pButton pRipple class="inp-group w-full" [disabled]="f.invalid" type="submit" label="Submit"></button>
   </form>
