@@ -17,7 +17,7 @@ export class RegisterComponent {
   constructor(private authService: AuthService) {
     this.f = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email, this.takenCredentialsValidator]),
-      password: new FormControl("", Validators.required),
+      password: new FormControl("", [Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$")]),
       username: new FormControl("", [Validators.required, this.takenCredentialsValidator]),
       name: new FormControl("")
     });
