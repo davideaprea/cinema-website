@@ -2,7 +2,6 @@ package com.epicode.Spring.security.runner;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -10,13 +9,12 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.epicode.Spring.cinema.services.PayPalService;
 import com.epicode.Spring.security.entity.ERole;
 import com.epicode.Spring.security.entity.Role;
-import com.epicode.Spring.security.payload.RegisterDto;
 import com.epicode.Spring.security.repository.RoleRepository;
 import com.epicode.Spring.security.repository.UserRepository;
 import com.epicode.Spring.security.service.AuthService;
-import com.epicode.Spring.security.service.PayPalService;
 
 
 @Component
