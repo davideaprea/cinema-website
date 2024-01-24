@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { HallService } from '../../services/hall.service';
 import { Hall } from '../../models/hall';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/features/auth/models/user';
 
 @Component({
   selector: 'app-hall-form',
@@ -13,12 +15,15 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 export class HallFormComponent {
   f!:FormGroup;
   @Output() emitHall = new EventEmitter<Hall>;
+  user$: Observable<User | null>;
 
   constructor(private hallService:HallService, protected authService:AuthService, private messageService:NotificationService){
     this.f=new FormGroup({
       rows: new FormControl(null, Validators.required),
       seats: new FormControl(null, Validators.required)
     });
+
+    this.user$=authService.user;
   }
 
   submit(){

@@ -4,9 +4,8 @@
 
   <app-schedule-form></app-schedule-form>
 
-  <p-table (onRowSelect)="addScheduleToDelete($event.data)" (onRowUnselect)="removeScheduleToDelete($event.data)" #dt1
-    [value]="schedules" dataKey="id" editMode="row" [rows]="5" [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[5, 10, 20]" [loading]="loading" [paginator]="true"
+  <p-table [(selection)]="schedulesToDelete" #dt1 [value]="schedules" dataKey="id" editMode="row" [rows]="5"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5, 10, 20]" [loading]="loading" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [globalFilterFields]="['movie.title', 'hall.id', 'startTime', 'endTime']">
     <ng-template pTemplate="caption">
@@ -14,43 +13,50 @@
         <button pButton label="Clear filters" class="p-button-outlined" icon="pi pi-filter-slash"
           (click)="clear(dt1)"></button>
 
+        <button pButton label="Add new schedule" class="p-button-outlined" icon="pi pi-plus"
+          (click)="toggleRowCreation()"></button>
+
         <button *ngIf="schedulesToDelete.length>0" (click)="schedulesRemovalConfirmation()" pButton icon="pi pi-trash"
           label="Delete schdules" class="p-button-outlined p-button-danger"></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 5%">
+        <th>
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
-        <th style="width:20%">
+        <th *ngFor="let header of tableHeaders">
           <div class="flex align-items-center">
-            Movie
-            <p-columnFilter type="text" field="movie.title" display="menu"></p-columnFilter>
+            {{header.name}}
+            <p-columnFilter [type]="header.type" [field]="header.field" display="menu"></p-columnFilter>
           </div>
         </th>
-        <th style="width: 10%">
-          <div class="flex align-items-center">
-            Hall n°
-            <p-columnFilter type="text" field="hall.id" display="menu"></p-columnFilter>
-          </div>
-        </th>
-        <th style="width:29%">
-          <div class="flex align-items-center">
-            Start time
-            <p-columnFilter type="date" field="startTime" display="menu"></p-columnFilter>
-          </div>
-        </th>
-        <th style="width:29%">
-          <div class="flex align-items-center">
-            End time
-            <p-columnFilter type="date" field="startTime" display="menu"></p-columnFilter>
-          </div>
-        </th>
-        <th style="width:5%"></th>
+        <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-schedule let-editing="editing" let-ri="rowIndex">
+      <tr *ngIf="rowCreation">
+        <td></td>
+        <td>
+            <p-dropdown placeholder="Select a movie" [options]="movies" optionLabel="title"></p-dropdown>
+        </td>
+        <td>
+            <p-dropdown placeholder="Select a hall" [options]="halls" optionLabel="id"></p-dropdown>
+        </td>
+        <td>
+            <p-calendar [minDate]="today!" [showTime]="true" [showSeconds]="false" [showIcon]="true" [touchUI]="true"></p-calendar>
+        </td>
+        <td></td>
+        <td>
+          <div class="flex align-items-center justify-content-center gap-2">
+            <button pButton pRipple type="button" icon="pi pi-check" (click)="onRowCreate(schedule)"
+              class="p-button-rounded p-button-text p-button-success mr-2"></button>
+
+            <button pButton pRipple type="button" icon="pi pi-times" (click)="toggleRowCreation()"
+              class="p-button-rounded p-button-text p-button-danger"></button>
+          </div>
+        </td>
+      </tr>
       <tr [pEditableRow]="schedule">
         <td>
           <p-tableCheckbox [value]="schedule"></p-tableCheckbox>
@@ -97,12 +103,9 @@
         </td>
         <td>
           <div class="flex align-items-center justify-content-center gap-2">
-            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-              (click)="onRowEditInit(schedule)" class="p-button-rounded p-button-text"></button>
-            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-              (click)="onRowEditSave(schedule)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
-            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-              (click)="onRowEditCancel()" class="p-button-rounded p-button-text p-button-danger"></button>
+            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(schedule)" class="p-button-rounded p-button-text"></button>
+            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(schedule)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel()" class="p-button-rounded p-button-text p-button-danger"></button>
           </div>
         </td>
       </tr>

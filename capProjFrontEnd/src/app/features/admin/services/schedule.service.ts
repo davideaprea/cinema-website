@@ -12,7 +12,7 @@ export class ScheduleService {
   constructor(private http:HttpClient) { }
 
   create(schedule:Schedule){
-    return this.http.post(environment.schedules, schedule);
+    return this.http.post<Schedule>(environment.schedules, schedule);
   }
 
   getScheduledMovies(){

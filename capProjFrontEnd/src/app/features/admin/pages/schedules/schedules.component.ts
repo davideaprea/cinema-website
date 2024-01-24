@@ -8,6 +8,7 @@ import { HallService } from '../../services/hall.service';
 import { MovieService } from '../../services/movie.service';
 import { ConfirmationService } from 'primeng/api';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { PTableHeader } from '../../models/ptable-header';
 
 @Component({
   selector: 'app-schedules',
@@ -18,17 +19,21 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 export class SchedulesComponent {
   schedules: Schedule[] = [];
   movies: Movie[] = [];
-  halls: Hall[] = [];
+  halls: Hall[]= [];
   loading = true;
   editedSchedule?: Schedule;
-  today?: Date;
-  schedulesToDelete: number[] = [];
+  today = new Date();
+  schedulesToDelete: Schedule[] = [];
+  rowCreation=false;
+  readonly tableHeaders: PTableHeader[]=[
+    { type: "text", field: "movie.title", name: "Movie" },
+    { type: "text", field: "hall.id", name: "Hall n°" },
+    { type: "date", field: "startTime", name: "Start time" },
+    { type: "date", field: "endTime", name: "End time" },
+  ];
+  tableData:{}[]=[];
 
   constructor(private confirmationService: ConfirmationService, private scheduleService: ScheduleService, private movieService: MovieService, private hallService: HallService, private messageService: NotificationService) {
-    this.loadSchedules();
-  }
-
-  private loadSchedules() {
     this.scheduleService.getNextSchedules().subscribe(schedules => {
       schedules.forEach(el => {
         el.startTime = new Date(<Date>el.startTime);
@@ -37,29 +42,36 @@ export class SchedulesComponent {
 
       this.schedules = schedules;
       this.loading = false;
-    })
+    });
   }
 
   clear(table: Table) {
     table.clear();
   }
 
+  toggleRowCreation(){
+    this.rowCreation=!this.rowCreation;
+  }
+
+  onRowCreate(schedule:Schedule){
+    this.scheduleService.create(schedule).subscribe(res => {
+      this.handleRowActions(res, "Schedule created successfully.");
+      this.rowCreation=false;
+    });
+  }
+
   onRowEditInit(schedule: Schedule) {
-    if (this.movies.length == 0) this.movieService.getAll().subscribe(m => this.movies = m);
-    if (this.halls.length == 0) this.hallService.getAll().subscribe(h => this.halls = h);
-    this.today = new Date();
+    if (this.movies.length==0) this.movieService.getAll().subscribe(m => this.movies = m);
+    if (this.halls.length==0) this.hallService.getAll().subscribe(h => this.halls=h);
     this.editedSchedule = { ...schedule };
   }
 
   onRowEditSave(schedule: Schedule) {
     if (JSON.stringify(this.editedSchedule) !== JSON.stringify(schedule)) {
       delete schedule.endTime;
-      this.scheduleService.edit(schedule).subscribe(r => {
-        let i = this.schedules.findIndex(sc => sc.id == schedule.id);
-        this.schedules[i] = schedule;
-
+      this.scheduleService.edit(schedule).subscribe(res => {
+        this.handleRowActions(res, "Schedule edited successfully.");
         this.editedSchedule = undefined;
-        this.messageService.successMsg('Schedule edited successfully.');
       });
     }
   }
@@ -68,31 +80,30 @@ export class SchedulesComponent {
     this.editedSchedule = undefined;
   }
 
-  addScheduleToDelete(schedule: Schedule) {
-    this.schedulesToDelete.push(schedule.id);
-  }
-
-  removeScheduleToDelete(schedule: Schedule) {
-    let index = this.schedulesToDelete.findIndex(id => id == schedule.id);
-    this.schedulesToDelete.splice(index, 1);
-  }
-
   schedulesRemovalConfirmation() {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete these schedules?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.scheduleService.delete(this.schedulesToDelete).subscribe(res => {
-          for(let scToDelete of this.schedulesToDelete){
+        const ids=this.schedulesToDelete.map(schedule => schedule.id);
+        this.scheduleService.delete(ids).subscribe(res => {
+          for (let scToDelete of ids) {
             let i = this.schedules.findIndex(sc => sc.id == scToDelete);
             this.schedules.splice(i, 1);
           }
-          this.schedulesToDelete=[];
+
+          this.schedulesToDelete = [];
 
           this.messageService.successMsg('Schedules deleted successfully.');
         })
       }
     })
+  }
+
+  private handleRowActions(schedule: Schedule, msg: string){
+    let i = this.schedules.findIndex(sc => sc.id == schedule.id);
+    this.schedules[i] = schedule;
+    this.messageService.successMsg(msg);
   }
 }
