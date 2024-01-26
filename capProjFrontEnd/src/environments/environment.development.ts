@@ -1,11 +1,13 @@
+const baseUrl="http://localhost:8080";
+
 export const environment = {
-  register: "http://localhost:8080/api/auth/register",
-  verification: "http://localhost:8080/api/auth/verification",
-  login: "http://localhost:8080/api/auth/login",
-  movies: "http://localhost:8080/movies",
-  schedules: "http://localhost:8080/schedules",
-  halls: "http://localhost:8080/halls",
-  receipts: "http://localhost:8080/receipts",
-  bookings: "http://localhost:8080/bookings",
-  payments: "http://localhost:8080/payments",
+  register: baseUrl+"/api/auth/register",
+  verification: baseUrl+"/api/auth/verification",
+  login: baseUrl+"/api/auth/login",
+  movies: baseUrl+"/movies",
+  schedules: baseUrl+"/schedules",
+  halls: baseUrl+"/halls",
+  receipts: baseUrl+"/receipts",
+  bookings: baseUrl+"/bookings",
+  payments: baseUrl+"/payments",
 };

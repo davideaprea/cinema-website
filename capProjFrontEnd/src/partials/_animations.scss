@@ -1,0 +1,10 @@
+.focusable:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 0.75rem rgba(240, 240, 240, 0.829));
+}
+
+.focusable:hover~.focusable:not(:hover),
+.focusable:not(:hover):has(~ .focusable:hover) {
+  transform: scale(0.95);
+  filter: brightness(50%) blur(3px);
+}

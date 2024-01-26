@@ -1,4 +1,4 @@
-<div class="cards-grid card-container">
-  <app-card *ngFor="let movie of movies$ | async" [title]="movie.title" [director]="movie.director" [cover]="movie.cover"
+<div class="fluid-grid card-container">
+  <app-card class="focusable" *ngFor="let movie of movies$ | async" [title]="movie.title" [director]="movie.director" [cover]="movie.cover"
     [id]="movie.id" [genres]="movie.genres"></app-card>
 </div>

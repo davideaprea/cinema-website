@@ -1,3 +1,5 @@
+@use "partials/layouts";
+@use "partials/animations";
 @import "primeicons/primeicons.css";
 
 body {
@@ -9,23 +11,4 @@ body {
     color: white;
     cursor: pointer;
   }
-}
-
-app-card:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 0 0.75rem rgba(240, 240, 240, 0.829));
-}
-
-app-card:hover~app-card:not(:hover),
-app-card:not(:hover):has(~ app-card:hover) {
-  transform: scale(0.95);
-  filter: brightness(50%) blur(3px);
-}
-
-.cards-grid {
-  margin: 0 auto;
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  width: Min(960px, 100%);
 }

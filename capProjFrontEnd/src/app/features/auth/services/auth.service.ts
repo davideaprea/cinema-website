@@ -30,13 +30,10 @@ export class AuthService {
       }
     })
   );
-  private storageUser: IUser | undefined;
 
   constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService, private utilityService:UtilityService) {
-
-    this.storageUser=utilityService.getLocalStorageItem("user") || utilityService.getSessionStorageItem("user");
-
-    if (this.storageUser) this.loggedUser.next(this.storageUser);
+    const storageUser=utilityService.getLocalStorageItem<IUser>("user") || utilityService.getSessionStorageItem<IUser>("user");
+    if (storageUser) this.loggedUser.next(storageUser);
   }
 
   register(user: IRegUser) {
@@ -47,7 +44,6 @@ export class AuthService {
     return this.http.post<IUser>(environment.login, user).pipe(
       tap(u => {
         this.loggedUser.next(u);
-        this.storageUser = u;
 
         if (remember) localStorage.setItem("user", JSON.stringify(u));
         else sessionStorage.setItem("user", JSON.stringify(u));
