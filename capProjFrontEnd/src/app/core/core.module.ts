@@ -13,12 +13,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SharedModule } from '../shared/shared.module';
 import { MessageService } from 'primeng/api';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { AvgImageColorDirective } from './directives/avg-image-background-color.directive';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     DropMenuComponent,
-    FooterComponent
+    FooterComponent,
+    AvgImageColorDirective
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
   ],
   exports: [
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    AvgImageColorDirective
   ],
   providers: [
     {

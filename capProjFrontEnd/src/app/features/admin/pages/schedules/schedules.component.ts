@@ -24,14 +24,12 @@ export class SchedulesComponent {
   editedSchedule?: Schedule;
   today = new Date();
   schedulesToDelete: Schedule[] = [];
-  rowCreation=false;
   readonly tableHeaders: PTableHeader[]=[
     { type: "text", field: "movie.title", name: "Movie" },
     { type: "text", field: "hall.id", name: "Hall n°" },
     { type: "date", field: "startTime", name: "Start time" },
     { type: "date", field: "endTime", name: "End time" },
   ];
-  tableData:{}[]=[];
 
   constructor(private confirmationService: ConfirmationService, private scheduleService: ScheduleService, private movieService: MovieService, private hallService: HallService, private messageService: NotificationService) {
     this.scheduleService.getNextSchedules().subscribe(schedules => {
@@ -47,17 +45,6 @@ export class SchedulesComponent {
 
   clear(table: Table) {
     table.clear();
-  }
-
-  toggleRowCreation(){
-    this.rowCreation=!this.rowCreation;
-  }
-
-  onRowCreate(schedule:Schedule){
-    this.scheduleService.create(schedule).subscribe(res => {
-      this.handleRowActions(res, "Schedule created successfully.");
-      this.rowCreation=false;
-    });
   }
 
   onRowEditInit(schedule: Schedule) {

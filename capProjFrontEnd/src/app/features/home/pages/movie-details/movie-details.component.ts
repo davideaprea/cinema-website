@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Movie } from 'src/app/features/admin/models/movie';
@@ -8,7 +8,6 @@ import { ScheduleService } from 'src/app/features/admin/services/schedule.servic
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { BookingService } from '../../../booking/services/booking.service';
 import { BehaviorSubject, filter, switchMap, tap, zip } from 'rxjs';
-import { FastAverageColor } from 'fast-average-color';
 import { User } from 'src/app/features/auth/models/user';
 
 @Component({
@@ -24,8 +23,6 @@ export class MovieDetailsComponent implements AfterViewInit {
   activeItem!: MenuItem;
   user!: User | null;
   beforeBgColor!: string;
-  @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
-  @ViewChild('description') descriptionContainer!: ElementRef<HTMLDivElement>;
 
   constructor(private renderer: Renderer2, private host: ElementRef, private route: ActivatedRoute, private movieService: MovieService, private scheduleService: ScheduleService, private authService: AuthService, private bookingService: BookingService) {
     const id = Number(route.snapshot.paramMap.get("id"));
@@ -55,13 +52,7 @@ export class MovieDetailsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.loading$
     .pipe(filter(loading => !loading))
-    .subscribe(() => {
-      this.renderer.setStyle(this.host.nativeElement, 'background-image', `url(${this.movie.backgroundCover})`);
-      let image: HTMLImageElement = this.imageElement.nativeElement;
-      const fac = new FastAverageColor();
-      const colors = fac.getColor(image).value;
-      this.beforeBgColor = `rgba(${colors[0]}, ${colors[1]}, ${colors[2]}, 0.4)`;
-    });
+    .subscribe(() => this.renderer.setStyle(this.host.nativeElement, 'background-image', `url(${this.movie.backgroundCover})`));
   }
 
   onActiveItemChange(event: MenuItem) {

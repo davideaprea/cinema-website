@@ -13,9 +13,6 @@
         <button pButton label="Clear filters" class="p-button-outlined" icon="pi pi-filter-slash"
           (click)="clear(dt1)"></button>
 
-        <button pButton label="Add new schedule" class="p-button-outlined" icon="pi pi-plus"
-          (click)="toggleRowCreation()"></button>
-
         <button *ngIf="schedulesToDelete.length>0" (click)="schedulesRemovalConfirmation()" pButton icon="pi pi-trash"
           label="Delete schdules" class="p-button-outlined p-button-danger"></button>
       </div>
@@ -35,28 +32,6 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-schedule let-editing="editing" let-ri="rowIndex">
-      <tr *ngIf="rowCreation">
-        <td></td>
-        <td>
-            <p-dropdown placeholder="Select a movie" [options]="movies" optionLabel="title"></p-dropdown>
-        </td>
-        <td>
-            <p-dropdown placeholder="Select a hall" [options]="halls" optionLabel="id"></p-dropdown>
-        </td>
-        <td>
-            <p-calendar [minDate]="today!" [showTime]="true" [showSeconds]="false" [showIcon]="true" [touchUI]="true"></p-calendar>
-        </td>
-        <td></td>
-        <td>
-          <div class="flex align-items-center justify-content-center gap-2">
-            <button pButton pRipple type="button" icon="pi pi-check" (click)="onRowCreate(schedule)"
-              class="p-button-rounded p-button-text p-button-success mr-2"></button>
-
-            <button pButton pRipple type="button" icon="pi pi-times" (click)="toggleRowCreation()"
-              class="p-button-rounded p-button-text p-button-danger"></button>
-          </div>
-        </td>
-      </tr>
       <tr [pEditableRow]="schedule">
         <td>
           <p-tableCheckbox [value]="schedule"></p-tableCheckbox>

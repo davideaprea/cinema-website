@@ -1,8 +1,8 @@
 <section *ngIf="movie">
   <div class="content">
-    <img #imageElement [src]="movie.cover" crossorigin>
+    <img #imageElement appAvgImageColor (avgImgColor)="beforeBgColor=$event" [src]="movie.cover" crossorigin>
 
-    <div #description class="shadow-8 p-3" [ngStyle]="{'--before-bg-color': beforeBgColor}">
+    <div class="shadow-8 p-3" [ngStyle]="{'--before-bg-color': beforeBgColor}">
       <div>
         <h1 class="m-0 text-6xl">{{movie.title | uppercase}}</h1>
 
@@ -32,8 +32,7 @@
               [routerLink]="['/booking', 'seats']">{{schedule.startTime | date:'shortTime'}}</a>
 
             <ng-template #dumbLink>
-              <a pTooltip="{{user?.role=='ROLE_ADMIN' ? 'You must log in as a user to access this section.' : 'You must verify your account to access this section.'}}" pButton pRipple class="cursor-auto no-underline p-button-rounded p-button-info">{{schedule.startTime |
-                date:'shortTime'}}</a>
+              <a pTooltip="{{user?.role=='ROLE_ADMIN' ? 'You must log in as a user to access this section.' : 'You must verify your account to access this section.'}}" pButton pRipple class="cursor-auto no-underline p-button-rounded p-button-info">{{schedule.startTime | date:'shortTime'}}</a>
             </ng-template>
           </ng-container>
         </div>
