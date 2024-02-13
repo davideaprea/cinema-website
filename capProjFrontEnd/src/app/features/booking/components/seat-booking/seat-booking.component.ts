@@ -5,6 +5,7 @@ import { ReceiptBody } from '../../models/receipt-body';
 import { BookingBody } from '../../models/booking-body';
 import { SeatStatus } from './seat-status';
 import { Booking } from '../../models/booking';
+import { SharingBookingDataService } from '../../services/sharing-booking-data.service';
 
 @Component({
   selector: "app-seat-booking",
@@ -18,8 +19,8 @@ export class SeatBookingComponent {
   bookedSeats: Booking[] = [];
   onSelection = false;
 
-  constructor(private bookingService: BookingService) {
-    this.schedule = bookingService.getSchedule();
+  constructor(private bookingService: BookingService, private sharingBookingDataService: SharingBookingDataService) {
+    this.schedule = sharingBookingDataService.schedule!;
     bookingService.getScheduleBookings(this.schedule).subscribe(bookings => {
       this.bookedSeats = bookings;
       this.restoreSeats();
@@ -98,7 +99,7 @@ export class SeatBookingComponent {
       bookings: this.bookings
     }
 
-    this.bookingService.setReceipt(receipt);
+    this.sharingBookingDataService.receipt = receipt;
   }
 
   trackByFnRow(index: number, row: SeatStatus[]): string {

@@ -6,9 +6,9 @@ import { Schedule } from 'src/app/features/admin/models/schedule';
 import { MovieService } from 'src/app/features/admin/services/movie.service';
 import { ScheduleService } from 'src/app/features/admin/services/schedule.service';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
-import { BookingService } from '../../../booking/services/booking.service';
 import { BehaviorSubject, filter, switchMap, tap, zip } from 'rxjs';
 import { User } from 'src/app/features/auth/models/user';
+import { SharingBookingDataService } from 'src/app/features/booking/services/sharing-booking-data.service';
 
 @Component({
   templateUrl: './movie-details.component.html',
@@ -24,7 +24,7 @@ export class MovieDetailsComponent implements AfterViewInit {
   user!: User | null;
   beforeBgColor!: string;
 
-  constructor(private renderer: Renderer2, private host: ElementRef, private route: ActivatedRoute, private movieService: MovieService, private scheduleService: ScheduleService, private authService: AuthService, private bookingService: BookingService) {
+  constructor(private renderer: Renderer2, private host: ElementRef, private route: ActivatedRoute, private movieService: MovieService, private scheduleService: ScheduleService, private authService: AuthService, private bookingService: SharingBookingDataService) {
     const id = Number(route.snapshot.paramMap.get("id"));
     zip(
       authService.user,
@@ -63,7 +63,7 @@ export class MovieDetailsComponent implements AfterViewInit {
   }
 
   saveSchedule(schedule: Schedule) {
-    this.bookingService.setSchedule(schedule);
+    this.bookingService.schedule=schedule;
   }
 
   trackByFn(index: number, name: Schedule): number {

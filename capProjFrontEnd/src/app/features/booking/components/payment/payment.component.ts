@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment.development';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/features/auth/models/user';
+import { SharingBookingDataService } from '../../services/sharing-booking-data.service';
 
 declare var paypal: any;
 
@@ -23,12 +24,12 @@ export class PaymentComponent implements OnInit {
   price!: number;
   error: string = "";
 
-  constructor(private bookingService: BookingService, private authService: AuthService, private router: Router, private ngZone: NgZone) {
+  constructor(private bookingService: BookingService, private sharingBookingDataService: SharingBookingDataService, private authService: AuthService, private router: Router, private ngZone: NgZone) {
     authService.user.subscribe(u => this.user = u);
 
-    this.selectedSchedule = bookingService.getSchedule();
-    this.receipt = bookingService.getReceipt();
-    this.price = bookingService.getPrice();
+    this.selectedSchedule = sharingBookingDataService.schedule!;
+    this.receipt = sharingBookingDataService.receipt!;
+    this.price = sharingBookingDataService.getPrice();
   }
 
   ngOnInit(): void {
@@ -57,7 +58,7 @@ export class PaymentComponent implements OnInit {
             .then((response) => response.json())
             .then(json => {
               this.bookingService.book(this.receipt).subscribe(data => {
-                this.bookingService.reset();
+                this.sharingBookingDataService.reset();
                 this.ngZone.run(() => {
                   this.router.navigate(['/booking', 'confirmation'], { replaceUrl: true });
                 });
