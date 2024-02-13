@@ -1,14 +1,5 @@
+@use "partials/reset";
+@use "partials/typography";
 @use "partials/layouts";
 @use "partials/animations";
 @import "primeicons/primeicons.css";
-
-body {
-  margin: 0;
-  font-family: var(--font-family);
-
-  a {
-    text-decoration: none;
-    color: white;
-    cursor: pointer;
-  }
-}

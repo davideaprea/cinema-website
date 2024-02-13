@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="p-4">
-  <h2 class="text-4xl text-center m-0 mb-5">IN OUR HALLS</h2>
+  <h2 class="text-4xl text-center m-0 mb-5 semi-underline">IN OUR HALLS</h2>
   <div class="fluid-grid card-container">
     <app-card class="focusable" *ngFor="let movie of scheduledMovies$ | async" [title]="movie.title" [director]="movie.director" [cover]="movie.cover"
       [id]="movie.id" [genres]="movie.genres"></app-card>
