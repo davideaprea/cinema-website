@@ -9,9 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./ourmovies.component.scss']
 })
 export class OurmoviesComponent {
-  movies$!: Observable<Movie[]>;
+  movies$: Observable<Movie[]> = this.movieService.getAll();
 
-  constructor(protected movieService: MovieService) {
-    this.movies$=movieService.getAll();
-  }
+  constructor(protected movieService: MovieService) { }
 }

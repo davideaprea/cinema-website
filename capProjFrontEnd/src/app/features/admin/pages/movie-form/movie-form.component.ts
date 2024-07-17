@@ -63,7 +63,7 @@ export class MovieFormComponent implements IFormComponent {
   }
 
   submit() {
-    this.movieService.create(this.f.value).subscribe(res => {
+    this.movieService.create(this.f.value).subscribe(() => {
       this.f.reset();
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Movie added successfully.' });
     });

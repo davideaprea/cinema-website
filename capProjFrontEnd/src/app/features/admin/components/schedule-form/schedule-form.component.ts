@@ -14,23 +14,23 @@ import { Observable } from 'rxjs';
   styleUrls: ['./schedule-form.component.scss']
 })
 export class ScheduleFormComponent {
-  allMovies$!: Observable<Movie[]>;
-  availableHalls$!: Observable<Hall[]>;
-  f: FormGroup;
+  allMovies$: Observable<Movie[]> = this.movieService.getAll();
+  availableHalls$: Observable<Hall[]> = this.hallService.getAvailableHalls();
+  f: FormGroup = new FormGroup({
+    movie: new FormControl(null, Validators.required),
+    hall: new FormControl(null, Validators.required),
+    startTime: new FormControl(null, Validators.required),
+  });
 
-  constructor(private movieService: MovieService, private hallService: HallService, private scheduleService: ScheduleService, private messageService: NotificationService) {
-    this.allMovies$ = movieService.getAll();
-    this.availableHalls$ = hallService.getAvailableHalls();
-
-    this.f = new FormGroup({
-      movie: new FormControl(null, Validators.required),
-      hall: new FormControl(null, Validators.required),
-      startTime: new FormControl(null, Validators.required),
-    });
-  }
+  constructor(
+    private movieService: MovieService,
+    private hallService: HallService,
+    private scheduleService: ScheduleService,
+    private messageService: NotificationService
+  ) { }
 
   submit() {
-    this.scheduleService.create(this.f.value).subscribe(d => {
+    this.scheduleService.create(this.f.value).subscribe(() => {
       this.messageService.successMsg('Schedule added successfully.');
       this.f.reset();
     });

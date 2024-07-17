@@ -11,12 +11,13 @@ import { Role } from '../../models/role';
   styleUrls: ['./drop-menu.component.scss']
 })
 export class DropMenuComponent {
-  items: MenuItem[] | undefined;
+  items: MenuItem[] = [];
   user: User | null = null;
 
   constructor(private authService: AuthService, private router: Router) {
     this.authService.user.subscribe(user => {
-      this.user=user;
+      this.user = user;
+
       this.items = [
         {
           label: 'Options',
@@ -25,7 +26,7 @@ export class DropMenuComponent {
               label: 'Profile',
               icon: 'pi pi-user',
               command: () => {
-                user?.role==Role.ADMIN ? this.router.navigate(["/admin", "ourmovies"]) : this.router.navigate(["/profile", "mytickets"]);
+                user?.role == Role.ADMIN ? this.router.navigate(["/admin", "ourmovies"]) : this.router.navigate(["/profile", "mytickets"]);
               }
             },
             {
